@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VortexPay — Проверка безопасности</title>
-    <!-- Скрипт Telegram WebApp -->
+    <title>VortexPay — Система</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
             --bg-color: #0b0f19;
             --card-bg: #151c2c;
+            --card-border: rgba(255, 255, 255, 0.08);
             --accent: #3b82f6;
-            --accent-glow: rgba(59, 130, 246, 0.4);
+            --accent-glow: rgba(59, 130, 246, 0.35);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --danger: #ef4444;
@@ -23,26 +23,36 @@
             margin: 0;
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* ====== КОНТЕЙНЕР АВТОРИЗАЦИИ ====== */
+        .auth-wrapper {
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            width: 100%;
             padding: 20px;
         }
 
         .container {
             background-color: var(--card-bg);
             width: 100%;
-            max-width: 380px;
-            border-radius: 20px;
+            max-width: 390px;
+            border-radius: 22px;
             padding: 28px 24px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px var(--accent-glow);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.55), 0 0 20px var(--accent-glow);
+            border: 1px solid var(--card-border);
             text-align: center;
         }
 
@@ -53,7 +63,7 @@
             background: linear-gradient(90deg, #60a5fa, #a855f7);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .subtitle {
@@ -66,25 +76,25 @@
             background: rgba(255, 255, 255, 0.04);
             border-left: 4px solid var(--accent);
             padding: 12px 14px;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 13px;
             color: #cbd5e1;
             text-align: left;
-            margin-bottom: 22px;
+            margin-bottom: 20px;
             line-height: 1.45;
         }
 
         .captcha-box {
             background: rgba(0, 0, 0, 0.25);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
+            border-radius: 14px;
             padding: 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             cursor: pointer;
             transition: 0.25s ease;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
 
         .captcha-box:hover {
@@ -103,9 +113,6 @@
             height: 26px;
             border: 2px solid var(--text-muted);
             border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             transition: 0.2s;
         }
 
@@ -120,10 +127,7 @@
             to { transform: rotate(360deg); }
         }
 
-        .step {
-            display: none;
-        }
-
+        .step { display: none; }
         .step.active {
             display: block;
             animation: fadeIn 0.3s ease;
@@ -162,14 +166,8 @@
             color: var(--text-muted);
         }
 
-        .timer span {
-            color: var(--accent);
-            font-weight: 800;
-        }
-
-        .timer.expired span {
-            color: var(--danger);
-        }
+        .timer span { color: var(--accent); font-weight: 800; }
+        .timer.expired span { color: var(--danger); }
 
         .btn {
             width: 100%;
@@ -185,10 +183,7 @@
             box-shadow: 0 4px 15px var(--accent-glow);
         }
 
-        .btn:active {
-            transform: scale(0.98);
-        }
-
+        .btn:active { transform: scale(0.98); }
         .btn:disabled {
             background: #334155;
             box-shadow: none;
@@ -208,60 +203,391 @@
             font-weight: 600;
             min-height: 18px;
         }
-
         .error { color: var(--danger); }
         .success { color: var(--success); }
+
+        /* ====== ГЛАВНАЯ СИСТЕМА И ПРОФИЛЬ ====== */
+        .app-wrapper {
+            display: none;
+            width: 100%;
+            max-width: 440px;
+            min-height: 100vh;
+            padding: 16px 18px 30px;
+            flex-direction: column;
+        }
+
+        .app-wrapper.active {
+            display: flex;
+            animation: fadeIn 0.35s ease;
+        }
+
+        /* Верхняя панель с аватаркой */
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--card-bg);
+            padding: 12px 18px;
+            border-radius: 18px;
+            border: 1px solid var(--card-border);
+            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.35);
+        }
+
+        .topbar-logo {
+            font-size: 20px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #60a5fa, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Аватарка сверху и тултип "Профиль" при наведении */
+        .avatar-trigger {
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .top-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            background: #1e293b;
+        }
+
+        .avatar-trigger:hover .top-avatar {
+            transform: scale(1.06);
+            box-shadow: 0 0 12px var(--accent);
+        }
+
+        .online-dot-small {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 12px;
+            height: 12px;
+            background-color: var(--success);
+            border: 2px solid var(--card-bg);
+            border-radius: 50%;
+        }
+
+        .avatar-tooltip {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: #0f172a;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-5px);
+            transition: 0.2s ease;
+            border: 1px solid rgba(255,255,255,0.12);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.5);
+            z-index: 20;
+        }
+
+        .avatar-trigger:hover .avatar-tooltip {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Карточки внутри системы */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 22px;
+            margin-bottom: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .balance-title {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .balance-amount {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 18px;
+        }
+
+        /* Экран Профиля */
+        .profile-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .back-btn {
+            align-self: flex-start;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.2s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.12);
+        }
+
+        .profile-avatar-box {
+            position: relative;
+            width: 104px;
+            height: 104px;
+            margin-bottom: 14px;
+            cursor: pointer;
+        }
+
+        .profile-avatar-lg {
+            width: 104px;
+            height: 104px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+            background: #1e293b;
+        }
+
+        .avatar-edit-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: 0.2s ease;
+            font-size: 11px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .profile-avatar-box:hover .avatar-edit-overlay {
+            opacity: 1;
+        }
+
+        .change-avatar-link {
+            font-size: 13px;
+            color: var(--accent);
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 14px;
+            display: inline-block;
+        }
+
+        .profile-name {
+            font-size: 21px;
+            font-weight: 800;
+            margin-bottom: 6px;
+            word-break: break-all;
+        }
+
+        .profile-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--success);
+            padding: 5px 13px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .profile-status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--success);
+        }
+
+        .info-block {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 14px 16px;
+            text-align: left;
+            margin-bottom: 14px;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .info-sub {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 3px;
+        }
+
+        .reviews-placeholder {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 14px;
+            padding: 20px 16px;
+            text-align: center;
+        }
+
+        .badge-dev {
+            display: inline-block;
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 8px;
+            margin-top: 8px;
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="logo">⚡ VortexPay</div>
-    <div class="subtitle">Система защиты от автоматических ботов</div>
+<!-- ОБЕРТКА АВТОРИЗАЦИИ (ШАГ 1 И ШАГ 2) -->
+<div class="auth-wrapper" id="auth-wrapper">
+    <div class="container">
+        <div class="logo">⚡ VortexPay</div>
+        <div class="subtitle">Система защиты от автоматических ботов</div>
 
-    <!-- ШАГ 1: Капча "Я не робот" -->
-    <div id="step-1" class="step active">
-        <blockquote>
-            <b>Проверка безопасности:</b><br>
-            Подтвердите, что вы реальный человек. После нажатия бот отправит вам в личные сообщения <b>6-значный код</b>.
-        </blockquote>
+        <!-- ШАГ 1: Капча -->
+        <div id="step-1" class="step active">
+            <blockquote>
+                <b>Проверка безопасности:</b><br>
+                Подтвердите, что вы реальный человек. После нажатия бот отправит вам в личные сообщения <b>6-значный код</b>.
+            </blockquote>
 
-        <div class="captcha-box" id="captcha-btn">
-            <div class="captcha-left">
-                <div class="checkbox" id="checkbox-icon"></div>
-                <span style="font-weight: 600; font-size: 15px;">Я не робот</span>
+            <div class="captcha-box" id="captcha-btn">
+                <div class="captcha-left">
+                    <div class="checkbox" id="checkbox-icon"></div>
+                    <span style="font-weight: 600; font-size: 15px;">Я не робот</span>
+                </div>
+                <span style="font-size: 20px;">🛡️</span>
             </div>
-            <span style="font-size: 20px;">🛡️</span>
-        </div>
-        <div id="step1-status" class="status-msg"></div>
-    </div>
-
-    <!-- ШАГ 2: Ввод 6-значного кода -->
-    <div id="step-2" class="step">
-        <blockquote>
-            📩 <b>Код отправлен в чат с ботом!</b><br>
-            Сверните или посмотрите уведомление от <b>VortexPay</b> и введите полученный 6-значный код ниже:
-        </blockquote>
-
-        <input type="text" id="code-input" class="code-input" maxlength="6" placeholder="••••••" inputmode="numeric">
-
-        <div class="timer" id="timer-box">
-            Осталось времени: <span id="time-left">30</span> сек.
+            <div id="step1-status" class="status-msg"></div>
         </div>
 
-        <button class="btn" id="verify-btn">Подтвердить код</button>
-        <button class="btn btn-secondary" id="resend-btn" style="display: none;">Отправить новый код</button>
-        <div id="step2-status" class="status-msg"></div>
+        <!-- ШАГ 2: Ввод 6-значного кода -->
+        <div id="step-2" class="step">
+            <blockquote>
+                📩 <b>Код отправлен в чат с ботом!</b><br>
+                Скопируйте полученный 6-значный код от <b>VortexPay</b> и введите его ниже:
+            </blockquote>
+
+            <input type="text" id="code-input" class="code-input" maxlength="6" placeholder="••••••" inputmode="numeric">
+
+            <div class="timer" id="timer-box">
+                Осталось времени: <span id="time-left">30</span> сек.
+            </div>
+
+            <button class="btn" id="verify-btn">Подтвердить и войти</button>
+            <button class="btn btn-secondary" id="resend-btn" style="display: none;">Отправить новый код</button>
+            <div id="step2-status" class="status-msg"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ГЛАВНАЯ СИСТЕМА (ПОСЛЕ ВВОДА КОДА) -->
+<div class="app-wrapper" id="app-wrapper">
+    <!-- Верхняя шапка с аватаркой -->
+    <div class="topbar">
+        <div class="topbar-logo">⚡ VortexPay</div>
+        
+        <div class="avatar-trigger" id="open-profile-btn" title="Профиль">
+            <img src="" alt="Avatar" class="top-avatar" id="top-avatar-img">
+            <span class="online-dot-small"></span>
+            <div class="avatar-tooltip">Профиль</div>
+        </div>
     </div>
 
-    <!-- ШАГ 3: Успешный вход -->
-    <div id="step-3" class="step">
-        <div style="font-size: 52px; margin-bottom: 10px;">✅</div>
-        <h3 style="margin-bottom: 10px;">Верификация пройдена!</h3>
-        <blockquote>
-            Ваш аккаунт успешно подтвержден в системе <b>VortexPay</b>. Теперь вам доступен весь функционал кошелька.
-        </blockquote>
-        <button class="btn" onclick="window.Telegram.WebApp.close()">Перейти в бота</button>
+    <!-- ЭКРАН 1: Главная панель (Дашборд) -->
+    <div id="dashboard-view" class="step active">
+        <div class="card">
+            <div class="balance-title">Общий баланс VortexPay</div>
+            <div class="balance-amount">0.00 ₽</div>
+            <blockquote>
+                Добро пожаловать в <b>VortexPay</b>! Нажмите на вашу <b>аватарку в правом верхнем углу</b>, чтобы открыть личный профиль и настройки.
+            </blockquote>
+            <button class="btn" id="go-profile-main-btn">👤 Перейти в мой профиль</button>
+        </div>
+    </div>
+
+    <!-- ЭКРАН 2: Профиль пользователя -->
+    <div id="profile-view" class="step">
+        <div class="card profile-header">
+            <button class="back-btn" id="back-to-dash-btn">← Назад в меню</button>
+
+            <!-- Аватарка с возможностью смены -->
+            <div class="profile-avatar-box" id="avatar-upload-trigger">
+                <img src="" alt="Profile Avatar" class="profile-avatar-lg" id="profile-avatar-img">
+                <div class="avatar-edit-overlay">
+                    <span>📷</span>
+                    <span>Изменить</span>
+                </div>
+            </div>
+            <span class="change-avatar-link" id="change-avatar-text">Изменить аватарку</span>
+            <input type="file" id="avatar-file-input" accept="image/*" style="display: none;">
+
+            <!-- Имя и статус Онлайн -->
+            <div class="profile-name" id="profile-username">tetetetetetetetete</div>
+            <div class="profile-status">
+                <span class="profile-status-dot"></span>
+                <span>Онлайн</span>
+            </div>
+
+            <!-- Блок: Дата регистрации -->
+            <div class="info-block">
+                <div class="info-label">Дата регистрации</div>
+                <div class="info-value" id="reg-date-exact">12 сентября, 10:00</div>
+                <div class="info-sub" id="reg-date-relative">месяц назад</div>
+            </div>
+
+            <!-- Блок: Отзывы (В разработке) -->
+            <div class="info-block" style="margin-bottom: 0;">
+                <div class="info-label">Отзывы пользователя</div>
+                <div class="reviews-placeholder">
+                    <div style="font-size: 24px; margin-bottom: 4px;">💬</div>
+                    <div style="font-size: 14px; font-weight: 700; color: #cbd5e1;">Отзывов пока нет</div>
+                    <div class="badge-dev">🛠️ В разработке</div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -271,7 +597,6 @@
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
     import { getDatabase, ref, set, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-    // Ваша конфигурация Firebase
     const firebaseConfig = {
         apiKey: "AIzaSyBZ8Qm4BeX6U1vCMNb-_FgNBp0OQUkC-9k",
         authDomain: "tetete-d31c8.firebaseapp.com",
@@ -287,16 +612,34 @@
     const analytics = getAnalytics(app);
     const db = getDatabase(app);
 
-    // Инициализация Telegram WebApp
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    // Получаем ID пользователя из Telegram (или тестовый ID, если открыто в браузере)
-    const userId = tg.initDataUnsafe?.user?.id || new URLSearchParams(window.location.search).get('uid') || "123456789";
+    // Данные пользователя из Telegram (или дефолтные tetetetetetetetete)
+    const tgUser = tg.initDataUnsafe?.user;
+    const userId = tgUser?.id || new URLSearchParams(window.location.search).get('uid') || "123456789";
+    const displayUsername = tgUser?.username || tgUser?.first_name || "tetetetetetetetete";
 
+    // Дефолтная красивая SVG-аватарка
+    const defaultAvatar = "data:image/svg+xml;utf8," + encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+            <defs>
+                <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#3b82f6"/>
+                    <stop offset="100%" stop-color="#9333ea"/>
+                </linearGradient>
+            </defs>
+            <rect width="120" height="120" fill="url(#g)"/>
+            <circle cx="60" cy="44" r="22" fill="#ffffff" fill-opacity="0.9"/>
+            <path d="M24 106 C24 78, 96 78, 96 106" fill="#ffffff" fill-opacity="0.9"/>
+        </svg>
+    `);
+
+    // Элементы DOM
+    const authWrapper = document.getElementById('auth-wrapper');
+    const appWrapper = document.getElementById('app-wrapper');
     const step1 = document.getElementById('step-1');
     const step2 = document.getElementById('step-2');
-    const step3 = document.getElementById('step-3');
 
     const captchaBtn = document.getElementById('captcha-btn');
     const checkboxIcon = document.getElementById('checkbox-icon');
@@ -309,10 +652,76 @@
     const timerBox = document.getElementById('timer-box');
     const step2Status = document.getElementById('step2-status');
 
+    // Элементы профиля
+    const topAvatarImg = document.getElementById('top-avatar-img');
+    const profileAvatarImg = document.getElementById('profile-avatar-img');
+    const profileUsernameEl = document.getElementById('profile-username');
+    const regDateExactEl = document.getElementById('reg-date-exact');
+    const regDateRelativeEl = document.getElementById('reg-date-relative');
+
+    const dashboardView = document.getElementById('dashboard-view');
+    const profileView = document.getElementById('profile-view');
+    const openProfileBtn = document.getElementById('open-profile-btn');
+    const goProfileMainBtn = document.getElementById('go-profile-main-btn');
+    const backToDashBtn = document.getElementById('back-to-dash-btn');
+
+    const avatarUploadTrigger = document.getElementById('avatar-upload-trigger');
+    const changeAvatarText = document.getElementById('change-avatar-text');
+    const avatarFileInput = document.getElementById('avatar-file-input');
+
     let serverData = null;
     let countdownInterval = null;
 
-    // Запрос кода у бота через запись в Firebase
+    // Устанавливаем имя пользователя и стартовую аватарку
+    profileUsernameEl.textContent = displayUsername;
+    const savedLocalAvatar = localStorage.getItem(`vortex_avatar_${userId}`);
+    const initialAvatar = savedLocalAvatar || tgUser?.photo_url || defaultAvatar;
+    topAvatarImg.src = initialAvatar;
+    profileAvatarImg.src = initialAvatar;
+
+    // Форматирование даты регистрации ("12 сентября, 10:00" и "месяц назад")
+    function formatRegistrationDate(timestampMs) {
+        const date = new Date(timestampMs);
+        const months = [
+            "января", "февраля", "марта", "апреля", "мая", "июня",
+            "июля", "августа", "сентября", "октября", "ноября", "декабря"
+        ];
+        const day = date.getDate();
+        const month = months[date.getMonth()];
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+
+        const exactStr = `${day} ${month}, ${hours}:${minutes}`;
+
+        const diffSec = Math.max(0, Math.floor((Date.now() - timestampMs) / 1000));
+        const diffMin = Math.floor(diffSec / 60);
+        const diffHours = Math.floor(diffMin / 60);
+        const diffDays = Math.floor(diffHours / 24);
+        const diffMonths = Math.floor(diffDays / 30);
+
+        let relativeStr = "только что";
+        if (diffMonths >= 12) {
+            relativeStr = "больше года назад";
+        } else if (diffMonths === 1) {
+            relativeStr = "месяц назад";
+        } else if (diffMonths > 1 && diffMonths < 5) {
+            relativeStr = `${diffMonths} месяца назад`;
+        } else if (diffMonths >= 5) {
+            relativeStr = `${diffMonths} месяцев назад`;
+        } else if (diffDays === 1) {
+            relativeStr = "вчера";
+        } else if (diffDays > 1) {
+            relativeStr = `${diffDays} дн. назад`;
+        } else if (diffHours >= 1) {
+            relativeStr = `${diffHours} ч. назад`;
+        } else if (diffMin >= 1) {
+            relativeStr = `${diffMin} мин. назад`;
+        }
+
+        return { exactStr, relativeStr };
+    }
+
+    // Запрос 6-значного кода
     async function requestCode() {
         checkboxIcon.classList.add('loading');
         step1Status.textContent = "Генерация секретного кода...";
@@ -320,13 +729,17 @@
         step2Status.textContent = "";
         codeInput.value = "";
 
+        const existingReg = serverData?.registered_at || Date.now();
+
         try {
-            await set(ref(db, `verifications/${userId}`), {
+            await update(ref(db, `verifications/${userId}`), {
                 status: "requested",
-                requested_at: Date.now()
+                requested_at: Date.now(),
+                username: displayUsername,
+                registered_at: existingReg
             });
         } catch (err) {
-            step1Status.textContent = "Ошибка соединения с БД!";
+            step1Status.textContent = "Ошибка соединения с сервером!";
             step1Status.className = "status-msg error";
             checkboxIcon.classList.remove('loading');
         }
@@ -335,25 +748,36 @@
     captchaBtn.addEventListener('click', requestCode);
     resendBtn.addEventListener('click', requestCode);
 
-    // Слушаем изменения в Firebase для текущего пользователя
+    // Подписка на данные пользователя в Firebase
     onValue(ref(db, `verifications/${userId}`), (snapshot) => {
         const data = snapshot.val();
         if (!data) return;
         serverData = data;
 
+        // Обновляем аватарку, если она сохранена в БД
+        if (data.avatar_url) {
+            topAvatarImg.src = data.avatar_url;
+            profileAvatarImg.src = data.avatar_url;
+        }
+
+        // Обновляем дату регистрации
+        const regTimestamp = data.registered_at || Date.now();
+        const { exactStr, relativeStr } = formatRegistrationDate(regTimestamp);
+        regDateExactEl.textContent = exactStr;
+        regDateRelativeEl.textContent = relativeStr;
+
         if (data.status === "sent") {
-            // Переключаем на экран ввода кода
             step1.classList.remove('active');
             step2.classList.add('active');
             startTimer(data.expires_at);
         } else if (data.status === "verified") {
             clearInterval(countdownInterval);
-            step2.classList.remove('active');
-            step3.classList.add('active');
+            authWrapper.style.display = "none";
+            appWrapper.classList.add('active');
         }
     });
 
-    // Таймер на 30 секунд
+    // Таймер 30 секунд
     function startTimer(expiresAt) {
         clearInterval(countdownInterval);
         resendBtn.style.display = "none";
@@ -378,7 +802,7 @@
         }, 250);
     }
 
-    // Проверка введенного кода
+    // Проверка 6-значного кода
     verifyBtn.addEventListener('click', async () => {
         const enteredCode = codeInput.value.trim();
         if (enteredCode.length !== 6) {
@@ -390,22 +814,83 @@
         if (!serverData || serverData.status !== "sent") return;
 
         if (Date.now() > serverData.expires_at) {
-            step2Status.textContent = "⏳ Код уже устарел! Запросите новый.";
+            step2Status.textContent = "⏳ Код устарел! Запросите новый.";
             step2Status.className = "status-msg error";
             return;
         }
 
         if (enteredCode === String(serverData.code)) {
-            step2Status.textContent = "Успешно!";
+            step2Status.textContent = "Вход выполнен!";
             step2Status.className = "status-msg success";
             await update(ref(db, `verifications/${userId}`), {
                 status: "verified"
             });
         } else {
-            step2Status.textContent = "❌ Неверный код! Проверьте сообщение от бота.";
+            step2Status.textContent = "❌ Неверный код!";
             step2Status.className = "status-msg error";
             if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('error');
         }
+    });
+
+    // Навигация между Главной и Профилем
+    function openProfile() {
+        dashboardView.classList.remove('active');
+        profileView.classList.add('active');
+    }
+
+    function openDashboard() {
+        profileView.classList.remove('active');
+        dashboardView.classList.add('active');
+    }
+
+    openProfileBtn.addEventListener('click', openProfile);
+    goProfileMainBtn.addEventListener('click', openProfile);
+    backToDashBtn.addEventListener('click', openDashboard);
+
+    // Смена аватарки (сжатие через Canvas и сохранение в Firebase + localStorage)
+    avatarUploadTrigger.addEventListener('click', () => avatarFileInput.click());
+    changeAvatarText.addEventListener('click', () => avatarFileInput.click());
+
+    avatarFileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const img = new Image();
+            img.onload = async () => {
+                const canvas = document.createElement('canvas');
+                const maxSize = 220;
+                canvas.width = maxSize;
+                canvas.height = maxSize;
+                const ctx = canvas.getContext('2d');
+
+                // Центрированная квадратная обрезка
+                const minSide = Math.min(img.width, img.height);
+                const sx = (img.width - minSide) / 2;
+                const sy = (img.height - minSide) / 2;
+
+                ctx.drawImage(img, sx, sy, minSide, minSide, 0, 0, maxSize, maxSize);
+                const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.82);
+
+                // Мгновенно обновляем в интерфейсе
+                topAvatarImg.src = compressedDataUrl;
+                profileAvatarImg.src = compressedDataUrl;
+                localStorage.setItem(`vortex_avatar_${userId}`, compressedDataUrl);
+
+                // Сохраняем в Firebase (и передаем сигнал боту для SQLite)
+                try {
+                    await update(ref(db, `verifications/${userId}`), {
+                        avatar_url: compressedDataUrl,
+                        avatar_updated: true
+                    });
+                } catch (err) {
+                    console.error("Ошибка сохранения аватарки:", err);
+                }
+            };
+            img.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
     });
 </script>
 
