@@ -337,6 +337,73 @@
   .modal-actions{display:flex;gap:8px;margin-top:14px}.modal-actions button{flex:1}
   @media(max-width:520px){body{padding:14px}.side-help{left:0;padding:10px 8px;font-size:12px}.quick{gap:6px}}
 
+
+  /* VortexPay desktop marketplace layout */
+  html,body{width:100%;min-height:100%;margin:0}
+  body{padding:0!important;background:var(--bg);transition:none}
+  body.auth{padding:18px!important}
+  .app{width:100%;max-width:none;margin:0;min-height:100vh}
+  .vp-navbar{min-height:65px;padding:0 26px!important;display:flex;gap:28px;align-items:center;border-bottom:1px solid var(--line);background:var(--card)}
+  .vp-brand{flex:0 0 auto;border:0;background:transparent;color:var(--text);font-size:20px;letter-spacing:-.6px;padding:0;cursor:pointer}
+  .vp-brand .brand-logo{width:27px;height:27px;border-radius:2px;box-shadow:none}
+  .vp-nav-search{display:flex;align-items:center;width:min(340px,24vw);border-bottom:1px solid transparent}
+  .vp-nav-search input{width:100%;border:0;outline:0;background:transparent;color:var(--text);font:inherit;padding:10px 0}
+  .vp-nav-search button{border:0;background:transparent;color:var(--hint);font-size:23px;cursor:pointer}
+  .vp-nav-links,.vp-nav-account{display:flex;align-items:center;gap:20px;white-space:nowrap}
+  .vp-nav-links button,.vp-nav-account>button:not(.avatar-btn){border:0;background:transparent;color:var(--hint);font:inherit;font-size:15px;cursor:pointer;padding:10px 0}
+  .vp-nav-links button:hover,.vp-nav-account>button:hover{color:var(--text)}
+  .vp-nav-spacer{flex:1}
+  .vp-balance-badge{display:inline-block;background:#8a8a8a;color:white;border-radius:12px;padding:2px 7px;font-size:11px;font-weight:700;margin-left:3px}
+  .vp-navbar .avatar-btn{width:42px;height:42px;flex:0 0 42px;border:0}
+  .vp-mobile-nav{display:none}
+  .screen{max-width:none;width:100%;padding:28px 4.5%;animation:none}
+  #scr-home{max-width:1440px;margin:0 auto}
+  #scr-cabinet{max-width:1440px;margin:0 auto}
+  .greet{font-size:26px;margin:6px 0 20px}
+  .card,.market-empty,.market-search,.balance-card,.wide-action,.modal-card{border-radius:3px!important;box-shadow:none!important}
+  .card{border:1px solid var(--line);padding:20px}
+  .market-search{max-width:780px;margin:0 0 20px}
+  .market-empty{max-width:780px;border-radius:3px!important}
+  .tabs{border-radius:2px!important;background:transparent;border-bottom:1px solid var(--line);padding:0;gap:22px}
+  .tab{border-radius:0!important;padding:13px 2px;border-bottom:2px solid transparent}
+  .tab.active{background:transparent;color:var(--text);border-bottom-color:var(--accent)}
+  .subnav{margin:18px 0}
+  .subnav button,.btn,.field,.set-row,.seg button{border-radius:3px!important}
+  .vp-market-view{width:100%;max-width:1440px;margin:0 auto;padding:28px 4.5%;min-height:70vh}
+  .vp-page-title{font-size:25px;font-weight:750;margin-bottom:18px}
+  .vp-page-tools{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 18px}
+  .vp-primary,.vp-secondary,.vp-danger{border:1px solid var(--line);border-radius:3px;background:var(--accent);color:var(--accent-text);padding:11px 16px;font:inherit;font-weight:650;cursor:pointer}
+  .vp-secondary{background:var(--card);color:var(--text)}
+  .vp-danger{background:#b8323c;color:white}
+  .vp-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .vp-field{display:flex;flex-direction:column;gap:6px;margin-bottom:13px;font-size:13px;font-weight:650}
+  .vp-field input,.vp-field textarea,.vp-field select{width:100%;padding:11px;border:1px solid var(--line);border-radius:2px;background:var(--bg);color:var(--text);font:inherit;font-weight:400;min-width:0}
+  .vp-field textarea{min-height:95px;resize:vertical}
+  .vp-product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:16px}
+  .vp-product{border:1px solid var(--line);background:var(--card);min-width:0;display:flex;flex-direction:column}
+  .vp-product-image{width:100%;height:180px;object-fit:cover;background:var(--bg);display:block}
+  .vp-product-image.empty{display:flex;align-items:center;justify-content:center;color:var(--hint);font-size:36px}
+  .vp-product-body{padding:13px;display:flex;flex-direction:column;gap:8px;flex:1}
+  .vp-product-title{font-size:16px;font-weight:700;line-height:1.35}
+  .vp-product-desc{font-size:13px;line-height:1.45;color:var(--hint);white-space:pre-wrap;overflow-wrap:anywhere}
+  .vp-price{font-size:20px;font-weight:800}.vp-old-price{text-decoration:line-through;color:var(--hint);font-size:13px;margin-left:7px;font-weight:400}
+  .vp-discount{display:inline-block;background:#d93845;color:#fff;font-size:11px;padding:3px 6px;margin-left:5px}
+  .vp-product-actions{display:flex;gap:7px;margin-top:auto;padding-top:5px}.vp-product-actions button{flex:1}
+  .vp-empty{padding:50px 20px;text-align:center;border:1px dashed var(--line);color:var(--hint)}
+  .vp-empty strong{display:block;color:var(--text);font-size:17px;margin:8px}
+  .vp-order{border:1px solid var(--line);padding:16px;margin-bottom:12px;background:var(--card)}
+  .vp-order-head{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-weight:700}
+  .vp-order-state{font-size:12px;padding:4px 8px;background:var(--bg);border:1px solid var(--line)}
+  .vp-chat{border:1px solid var(--line);padding:14px;margin-top:12px}
+  .vp-chat-log{max-height:260px;overflow:auto;padding:8px 0}
+  .vp-chat-msg{padding:8px 10px;margin:5px 0;background:var(--bg);max-width:85%;font-size:13px;white-space:pre-wrap;overflow-wrap:anywhere}
+  .vp-chat-msg.mine{margin-left:auto;background:color-mix(in srgb,var(--accent) 14%,var(--card))}
+  .vp-chat-send{display:flex;gap:8px}.vp-chat-send input{flex:1;min-width:0;padding:10px;border:1px solid var(--line);background:var(--bg);color:var(--text)}
+  .vp-warning{padding:12px;border-left:3px solid #d99b25;background:var(--bg);font-size:13px;line-height:1.5;margin:12px 0}
+  .vp-market-view .card{margin-bottom:16px}
+  @media(max-width:1000px){.vp-navbar{gap:14px;padding:0 14px!important}.vp-nav-links{display:none}.vp-nav-account{gap:12px}.vp-nav-account>button:not(.avatar-btn){font-size:13px}.vp-nav-search{width:min(260px,30vw)}}
+  @media(max-width:680px){.vp-navbar{min-height:58px;padding:0 12px!important;gap:10px}.vp-brand{font-size:16px}.vp-brand .brand-logo{display:none}.vp-nav-search{flex:1;width:auto}.vp-nav-account>button:not(.avatar-btn){display:none}.vp-navbar .avatar-btn{width:35px;height:35px;flex-basis:35px}.vp-mobile-nav{display:flex;gap:0;justify-content:space-around;border-bottom:1px solid var(--line);overflow:auto}.vp-mobile-nav button{border:0;background:transparent;color:var(--hint);padding:12px 8px;white-space:nowrap;font:inherit;font-size:12px}.screen,.vp-market-view{padding:18px 12px}.vp-form-grid{grid-template-columns:1fr}.vp-product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.vp-product-image{height:130px}.vp-product-body{padding:9px}.vp-product-title{font-size:14px}.vp-price{font-size:17px}.vp-product-actions{flex-direction:column}.vp-empty{padding:32px 12px}}
+
 </style>
 </head>
 <body class="auth">
@@ -401,16 +468,33 @@
 
 <!-- ========== ПРИЛОЖЕНИЕ ========== -->
 <div class="app hidden" id="appWrap">
-  <header class="topbar">
-    <div class="brand"><span class="brand-logo">V</span>VortexPay</div>
-    <button class="av avatar-btn" id="hdrAv" type="button" aria-label="Профиль"></button>
+  <header class="topbar vp-navbar">
+    <button class="brand vp-brand" id="navHome" type="button"><span class="brand-logo">V</span><span>VORTEXPAY</span></button>
+    <div class="vp-nav-search"><input id="topSearch" type="search" placeholder="Поиск товаров" aria-label="Поиск товаров"><button id="topSearchBtn" type="button" aria-label="Искать">⌕</button></div>
+    <nav class="vp-nav-links">
+      <button data-market-view="help" type="button">Помощь <span class="nav-caret">⌄</span></button>
+      <button data-market-view="market" type="button">Каталог</button>
+    </nav>
+    <div class="vp-nav-spacer"></div>
+    <nav class="vp-nav-account">
+      <button data-market-view="purchases" type="button">Покупки</button>
+      <button data-market-view="sales" type="button">Продажи</button>
+      <button data-market-view="messages" type="button">Сообщения</button>
+      <button data-market-view="finance" type="button">Финансы <span class="vp-balance-badge">0 ₽</span></button>
+      <button class="av avatar-btn" id="hdrAv" type="button" aria-label="Профиль"></button>
+    </nav>
   </header>
+  <div class="vp-mobile-nav">
+    <button data-market-view="market" type="button">Каталог</button><button data-market-view="purchases" type="button">Покупки</button><button data-market-view="sales" type="button">Продажи</button><button data-market-view="messages" type="button">Сообщения</button><button data-market-view="finance" type="button">Финансы</button>
+  </div>
+  <main id="marketView" class="vp-market-view hidden"></main>
 
   <!-- Главный экран -->
   <section class="screen active" id="scr-home">
     <div class="greet">VortexPay</div>
     <div class="market-search"><span>⌕</span><input id="marketSearch" type="search" placeholder="Поиск товаров и продавцов" aria-label="Поиск"></div>
-    <div class="market-empty" id="marketSearchEmpty"><div class="empty-icon">⌕</div><b>Пока ничего нет</b><p>Когда появятся предложения, вы сможете найти их здесь.</p></div>
+    <div class="market-empty" id="marketSearchEmpty"><div class="empty-icon">⌕</div><b>Пока ничего нет</b><p>Когда продавцы добавят товары, здесь появятся предложения.</p></div>
+    <div id="homeProductGrid" class="vp-product-grid"></div>
 
     <div class="quick">
       <button class="qbtn" data-goto="shop" type="button">
@@ -480,6 +564,12 @@
 
     <!-- Магазин -->
     <div class="tab-panel" id="tab-shop">
+      <div class="card">
+        <div class="section-title">Мои товары</div>
+        <p class="muted">Создавайте карточки на русском и английском, добавляйте изображения и скидки. Сейчас товары сохраняются в этом браузере.</p>
+        <button class="btn" id="createProductOpen" type="button">＋ Добавить товар</button>
+        <div id="myProductsList" style="margin-top:16px"></div>
+      </div>
       <div class="card">
         <div class="shop-head">
           <div class="shop-ico"><tg-emoji emoji-id="4983746717313664194">⭐️</tg-emoji></div>
@@ -857,6 +947,7 @@
       if (!result) throw new Error("Сервер не ответил. Попробуйте ещё раз.");
 
       if (result.ok) {
+        try { localStorage.setItem("vortexpay_session_uid", uid); localStorage.setItem("vortexpay_session_at", String(Date.now())); } catch {}
         clearInterval(timerId);
         haptic("success");
         show("step-done");
@@ -906,7 +997,7 @@
       push: !(settings && settings.push === false),   // по умолчанию включены
     };
     renderAvatars();
-    $("homeName").textContent = profile.first_name;
+    const homeName = $("homeName"); if(homeName) homeName.textContent = profile.first_name;
     renderProfile();
     renderPush();
   }
@@ -1302,14 +1393,176 @@
   $("helpOpen").addEventListener("click",showRules);
   $("helpFloat").classList.remove("hidden");
   $("helpFloat").addEventListener("click",()=>{openCabinet("profile");showRules();});
-  $("marketSearch").addEventListener("input",()=>{$("marketSearchEmpty").classList.remove("hidden");});
+
   $("langRu").onclick=()=>{vpLang="ru";$("langRu").classList.add("active");$("langEn").classList.remove("active");toast("Язык: русский");};
   $("langEn").onclick=()=>{vpLang="en";$("langEn").classList.add("active");$("langRu").classList.remove("active");toast("English language selected. Full translation is being prepared.");};
   $("logoutBtn").onclick=()=>showExtra("Выйти из аккаунта",`<p>Вы действительно хотите завершить текущий сеанс?</p><button class="btn" id="confirmLogout">Выйти</button>`);
-  document.addEventListener("click",e=>{if(e.target && e.target.id==="confirmLogout"){try{localStorage.removeItem("vortexpay_uid");}catch{};if(tg&&tg.close)tg.close();else location.reload();}});
+  document.addEventListener("click",e=>{if(e.target && e.target.id==="confirmLogout"){try{localStorage.removeItem("vortexpay_session_uid");localStorage.removeItem("vortexpay_session_at");}catch{};if(tg&&tg.close)tg.close();else location.reload();}});
   $("deleteAccountBtn").onclick=()=>showExtra("Удаление аккаунта",`<p><b>Внимание!</b> Удаление аккаунта необратимо. Восстановить профиль и связанные данные будет невозможно. Сейчас удаление доступно только как визуальный макет и не удаляет данные с сервера.</p><label class="quiz-option"><input type="checkbox" id="deleteConfirm"><span>Я понимаю, что восстановление невозможно</span></label><button class="btn danger-btn" id="confirmDelete" disabled>Удалить аккаунт</button>`);
   document.addEventListener("change",e=>{if(e.target&&e.target.id==="deleteConfirm")$("confirmDelete").disabled=!e.target.checked;});
   document.addEventListener("click",e=>{if(e.target&&e.target.id==="confirmDelete")showExtra("Удаление недоступно",`<p>Это демонстрационный интерфейс. Чтобы действительно удалить данные аккаунта, потребуется отдельная серверная функция.</p>`);});
+
+
+  // ===== Full marketplace prototype: products, bilingual cards, orders and chats =====
+  const VP_PRODUCTS_KEY = () => "vp_products_global";
+  const VP_ORDERS_KEY = () => "vp_orders_global";
+  const VP_BALANCE_KEY = () => "vp_balance_" + (uid || "local");
+  let vpDraftImages = [];
+  let vpCurrentView = "market";
+  let vpActiveOrder = null;
+  const marketView = $("marketView");
+
+  function vpRead(key, fallback){try{return JSON.parse(localStorage.getItem(key)) ?? fallback}catch{return fallback}}
+  function vpWrite(key,val){try{localStorage.setItem(key,JSON.stringify(val));return true}catch{return false}}
+  function vpProducts(){return vpRead(VP_PRODUCTS_KEY(),[]).sort((a,b)=>(b.bumpAt||b.created||0)-(a.bumpAt||a.created||0))}
+  function vpOrders(){return vpRead(VP_ORDERS_KEY(),[])}
+  function vpMoney(){return Number(vpRead(VP_BALANCE_KEY(),0))||0}
+  function vpId(){return Math.random().toString(36).slice(2,8).toUpperCase()}
+  function vpSafe(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+  function vpCurrentName(){return (profile&&profile.first_name)||"Пользователь"}
+  function vpProductTitle(p){return p.titleRu || p.titleEn || "Товар"}
+  function vpProductPrice(p){const price=Math.max(0,Number(p.price)||0),disc=Math.min(90,Math.max(0,Number(p.discount)||0));return Math.round(price*(100-disc))/100}
+  function vpFormatPrice(n){return Number(n).toLocaleString("ru-RU",{minimumFractionDigits:2,maximumFractionDigits:2})+" ₽"}
+  function vpUpdateBalanceBadge(){document.querySelectorAll(".vp-balance-badge").forEach(el=>el.textContent=vpFormatPrice(vpMoney()))}
+  function vpEmpty(title,desc){return `<div class="vp-empty"><div style="font-size:30px">⌕</div><strong>${vpSafe(title)}</strong>${vpSafe(desc)}</div>`}
+  function vpProductCard(p,owner=false){
+    const price=vpProductPrice(p),old=Number(p.price)||0;
+    const image=p.images&&p.images[0]?`<img class="vp-product-image" src="${p.images[0]}" alt="">`:`<div class="vp-product-image empty">▧</div>`;
+    return `<article class="vp-product">${image}<div class="vp-product-body"><div class="vp-product-title">${vpSafe(p.titleRu)}${p.titleEn?`<div style="font-size:12px;color:var(--hint);font-weight:400">${vpSafe(p.titleEn)}</div>`:""}</div><div class="vp-product-desc">${vpSafe(p.descRu||"")}${p.descEn?`<div style="margin-top:5px">${vpSafe(p.descEn)}</div>`:""}</div><div><span class="vp-price">${vpFormatPrice(price)}</span>${p.discount?`<span class="vp-old-price">${vpFormatPrice(old)}</span><span class="vp-discount">−${Number(p.discount)}%</span>`:""}</div><div style="font-size:11px;color:var(--hint)">Категория: ${vpSafe(p.category||"Другое")} · ${vpSafe(p.sellerName||"Продавец")}</div><div class="vp-product-actions">${owner?`<button class="vp-secondary" data-edit-product="${p.id}">Изменить</button><button class="vp-danger" data-delete-product="${p.id}">Удалить</button>`:`<button class="vp-primary" data-buy-product="${p.id}">Купить</button>`}</div></div></article>`;
+  }
+  function vpRenderProducts(){
+    const all=vpProducts(),query=($("marketSearch")?.value||$("topSearch")?.value||"").trim().toLowerCase();
+    const filtered=all.filter(p=>!query||[p.titleRu,p.titleEn,p.descRu,p.descEn,p.category,p.sellerName].join(" ").toLowerCase().includes(query));
+    const grid=$("homeProductGrid"),empty=$("marketSearchEmpty");
+    if(grid)grid.innerHTML=filtered.map(p=>vpProductCard(p)).join("");
+    if(empty)empty.classList.toggle("hidden",filtered.length>0);
+    const mine=$("myProductsList");
+    if(mine)mine.innerHTML=all.filter(p=>p.owner===uid).map(p=>vpProductCard(p,true)).join("")||vpEmpty("У вас пока нет товаров","Добавьте первый товар — карточка появится в каталоге.");
+    if(grid&&filtered.length===0&&query&&empty){empty.querySelector("b").textContent="Ничего не найдено";empty.querySelector("p").textContent="Попробуйте изменить поисковый запрос."}
+    vpUpdateBalanceBadge();
+  }
+  function vpSetView(view){
+    vpCurrentView=view;document.querySelectorAll(".screen").forEach(el=>el.classList.add("hidden"));
+    marketView.classList.remove("hidden");
+    const products=vpProducts(),orders=vpOrders();
+    if(view==="market"){
+      marketView.innerHTML=`<div class="vp-page-title">Каталог VortexPay</div><div class="vp-page-tools"><input id="viewSearch" class="field" style="max-width:460px;margin:0" placeholder="Поиск товаров" value="${vpSafe($("topSearch").value)}"><button class="vp-secondary" id="openSell">＋ Добавить товар</button></div><div id="viewProductGrid" class="vp-product-grid"></div>`;
+      const render=()=>{const q=$("viewSearch").value.toLowerCase().trim(),arr=vpProducts().filter(p=>!q||[p.titleRu,p.titleEn,p.descRu,p.descEn,p.category,p.sellerName].join(" ").toLowerCase().includes(q));$("viewProductGrid").innerHTML=arr.map(p=>vpProductCard(p)).join("")||vpEmpty(q?"Ничего не найдено":"Каталог пока пуст","Здесь появятся товары, когда продавцы опубликуют первые предложения.");};
+      $("viewSearch").addEventListener("input",render);$("openSell").onclick=()=>vpSetView("sales");render();
+    } else if(view==="sales"){
+      marketView.innerHTML=`<div class="vp-page-title">Продажи</div><div class="vp-page-tools"><button class="vp-primary" id="createProductBtn">＋ Добавить товар</button><span style="color:var(--hint);align-self:center;font-size:13px">Поднятие лотов: каждые 6 часов (в прототипе отображается локально)</span></div><div class="card" id="productFormWrap" style="display:none"></div><div id="salesProductGrid" class="vp-product-grid"></div><h2 style="font-size:20px;margin:28px 0 14px">Заказы покупателей</h2><div id="sellerOrders"></div>`;
+      $("createProductBtn").onclick=()=>vpRenderProductForm();
+      $("salesProductGrid").innerHTML=products.filter(p=>p.owner===uid).map(p=>vpProductCard(p,true)).join("")||vpEmpty("Товаров пока нет","Нажмите «Добавить товар», чтобы создать карточку.");
+      $("sellerOrders").innerHTML=orders.filter(o=>o.sellerId===uid).map(o=>vpOrderCard(o,true)).join("")||vpEmpty("Заказов пока нет","Здесь появятся заказы на ваши товары.");
+    } else if(view==="purchases"){
+      marketView.innerHTML=`<div class="vp-page-title">Покупки</div><div>${orders.filter(o=>o.buyerId===uid).map(o=>vpOrderCard(o,false)).join("")||vpEmpty("Покупок пока нет","После оформления заказа он появится в этом разделе.")}</div>`;
+    } else if(view==="messages"){
+      marketView.innerHTML=`<div class="vp-page-title">Сообщения</div><div>${orders.filter(o=>o.buyerId===uid||o.sellerId===uid).map(o=>`<div class="vp-order"><div class="vp-order-head"><span>Заказ #${vpSafe(o.code)}</span><span class="vp-order-state">${vpSafe(o.statusText)}</span></div><p style="margin:10px 0;color:var(--hint);font-size:13px">${vpSafe(o.title)}</p><button class="vp-secondary" data-chat-order="${o.id}">Открыть чат заказа</button></div>`).join("")||vpEmpty("Сообщений пока нет","Чат появится автоматически после оформления заказа.")}</div>`;
+    } else if(view==="finance"){
+      const balance=vpMoney();
+      marketView.innerHTML=`<div class="vp-page-title">Финансы</div><div class="card" style="max-width:850px"><div style="color:var(--hint)">Общий баланс VortexPay</div><div style="font-size:36px;font-weight:800;margin:8px 0 18px">${vpFormatPrice(balance)}</div><div class="vp-warning">Демо-режим: реальные платежи и блокировка денег не подключены. Не используйте этот макет для настоящих расчётов.</div><div class="vp-page-title" style="font-size:20px;margin-top:25px">История операций</div>${vpRead("vp_history_"+(uid||"local"),[]).map(x=>`<div class="vp-order-head" style="padding:13px 0;border-bottom:1px solid var(--line)"><span>${vpSafe(x.label)}</span><span>${vpSafe(x.amount)}</span></div>`).join("")||vpEmpty("Операций пока нет","Пополнения, траты и выплаты будут отображаться здесь после подключения платежей.")}<p style="font-size:13px;color:var(--hint);margin-top:15px">Вывод USD и EUR — в национальной валюте по применимому курсу после подключения платёжного провайдера.</p></div>`;
+    } else if(view==="help"){
+      marketView.innerHTML=`<div class="vp-page-title">Помощь</div><div class="card"><h2 style="font-size:19px;margin-bottom:12px">Правила VortexPay</h2>${vpRules.map(r=>`<div class="rule-block"><b>${vpSafe(r[0])}</b>${vpSafe(r[1])}</div>`).join("")}<h2 style="font-size:19px;margin:20px 0 10px">Политика конфиденциальности</h2><p class="muted">Данные используются для работы сервиса, безопасности и обработки заказов. Не передавайте пароль, одноразовые коды и чужие персональные данные. Для реального запуска необходимо опубликовать полноценную политику с юридическими реквизитами, сроками хранения и контактами оператора данных.</p></div>`;
+    }
+    marketView.querySelectorAll("[data-buy-product]").forEach(b=>b.onclick=()=>vpBuyProduct(b.dataset.buyProduct));
+    marketView.querySelectorAll("[data-edit-product]").forEach(b=>b.onclick=()=>vpRenderProductForm(b.dataset.editProduct));
+    marketView.querySelectorAll("[data-delete-product]").forEach(b=>b.onclick=()=>vpDeleteProduct(b.dataset.deleteProduct));
+    marketView.querySelectorAll("[data-chat-order]").forEach(b=>b.onclick=()=>vpOpenChat(b.dataset.chatOrder));
+    marketView.querySelectorAll("[data-order-complete]").forEach(b=>b.onclick=()=>vpMarkComplete(b.dataset.orderComplete));
+    marketView.querySelectorAll("[data-order-confirm]").forEach(b=>b.onclick=()=>vpConfirmOrder(b.dataset.orderConfirm));
+    marketView.querySelectorAll("[data-order-chat]").forEach(b=>b.onclick=()=>vpOpenChat(b.dataset.orderChat));
+  }
+  function vpRenderProductForm(editId){
+    const wrap=$("productFormWrap");if(!wrap)return;
+    const p=vpProducts().find(x=>x.id===editId)||{};
+    vpDraftImages=p.images||[];
+    wrap.style.display="block";
+    wrap.innerHTML=`<h2 style="font-size:20px;margin-bottom:16px">${editId?"Изменить товар":"Новый товар"}</h2><div class="vp-form-grid">
+      <label class="vp-field">Название на русском *<input id="vpTitleRu" maxlength="100" required value="${vpSafe(p.titleRu||"")}" placeholder="Например, Robux"></label>
+      <label class="vp-field">Title in English *<input id="vpTitleEn" maxlength="100" required value="${vpSafe(p.titleEn||"")}" placeholder="For example, Robux"></label>
+      <label class="vp-field">Описание на русском *<textarea id="vpDescRu" maxlength="3000" required placeholder="Подробное описание товара">${vpSafe(p.descRu||"")}</textarea></label>
+      <label class="vp-field">Description in English *<textarea id="vpDescEn" maxlength="3000" required placeholder="Describe your product">${vpSafe(p.descEn||"")}</textarea></label>
+      <label class="vp-field">Категория<select id="vpCategory"><option ${p.category==="Roblox"?"selected":""}>Roblox</option><option ${p.category==="Игры"?"selected":""}>Игры</option><option ${p.category==="Подписки"?"selected":""}>Подписки</option><option ${p.category==="Другое"?"selected":""}>Другое</option></select></label>
+      <label class="vp-field">Цена в рублях *<input id="vpPrice" type="number" min="1" max="100000000" step="0.01" required value="${p.price??""}" placeholder="Например, 150"></label>
+      <label class="vp-field">Скидка, %<input id="vpDiscount" type="number" min="0" max="90" step="1" value="${p.discount||0}"></label>
+      <label class="vp-field">Изображения товара<input id="vpImages" type="file" accept="image/*" multiple><small style="color:var(--hint);font-weight:400">До 5 изображений, сохраняются в этом браузере.</small></label>
+    </div><div id="vpImagePreview" style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0"></div><div class="vp-warning">Для Roblox после покупки покупатель укажет свой никнейм. Не просите пароль или код доступа к его аккаунту.</div><div class="vp-page-tools"><button class="vp-primary" id="vpSaveProduct">${editId?"Сохранить изменения":"Опубликовать товар"}</button><button class="vp-secondary" id="vpCancelProduct">Отмена</button></div><div id="vpFormStatus" class="status"></div>`;
+    const preview=()=>{$("vpImagePreview").innerHTML=vpDraftImages.map(src=>`<img src="${src}" style="width:76px;height:76px;object-fit:cover;border:1px solid var(--line)">`).join("");};preview();
+    $("vpImages").onchange=async e=>{
+      const files=[...e.target.files].slice(0,5-vpDraftImages.length);
+      for(const file of files){if(!file.type.startsWith("image/"))continue;if(file.size>3*1024*1024){toast("Изображение должно быть меньше 3 МБ");continue}
+        try{vpDraftImages.push(await vpImageData(file,1000));}catch{toast("Не удалось загрузить изображение")}}
+      preview();e.target.value="";
+    };
+    $("vpCancelProduct").onclick=()=>{wrap.style.display="none";};
+    $("vpSaveProduct").onclick=()=>{
+      const titleRu=$("vpTitleRu").value.trim(),titleEn=$("vpTitleEn").value.trim(),descRu=$("vpDescRu").value.trim(),descEn=$("vpDescEn").value.trim(),price=Number($("vpPrice").value),discount=Number($("vpDiscount").value)||0;
+      if(!titleRu||!titleEn||!descRu||!descEn||!Number.isFinite(price)||price<1){$("vpFormStatus").textContent="Заполните русские и английские название/описание и укажите цену от 1 ₽.";return}
+      if(discount<0||discount>90){$("vpFormStatus").textContent="Скидка должна быть от 0 до 90%.";return}
+      const all=vpProducts(),existing=all.findIndex(x=>x.id===editId);
+      const item={id:editId||("P"+vpId()),owner:uid,sellerName:vpCurrentName(),titleRu,titleEn,descRu,descEn,category:$("vpCategory").value,price,discount,images:vpDraftImages,created:p.created||Date.now(),bumpAt:p.bumpAt||Date.now()};
+      if(existing>=0)all[existing]=item;else all.unshift(item);
+      if(!vpWrite(VP_PRODUCTS_KEY(),all)){$("vpFormStatus").textContent="Недостаточно места для хранения. Уменьшите размер изображений.";return}
+      wrap.style.display="none";vpRenderProducts();vpSetView("sales");toast("Карточка товара сохранена");
+    };
+  }
+  function vpImageData(file,maxSide){return new Promise((resolve,reject)=>{const url=URL.createObjectURL(file),img=new Image();img.onload=()=>{const ratio=Math.min(1,maxSide/Math.max(img.width,img.height)),c=document.createElement("canvas");c.width=Math.round(img.width*ratio);c.height=Math.round(img.height*ratio);c.getContext("2d").drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(url);resolve(c.toDataURL("image/jpeg",.78))};img.onerror=()=>{URL.revokeObjectURL(url);reject(Error("bad image"))};img.src=url})}
+  function vpDeleteProduct(id){if(!confirm("Удалить товар?"))return;vpWrite(VP_PRODUCTS_KEY(),vpProducts().filter(p=>p.id!==id));vpSetView("sales");}
+  function vpBuyProduct(id){
+    const p=vpProducts().find(x=>x.id===id);if(!p)return;
+    if(p.owner===uid){toast("Нельзя купить собственный товар");return}
+    const isRoblox=(p.category||"").toLowerCase()==="roblox";
+    const nickname=isRoblox?prompt("Введите Roblox-никнейм для заказа:"):"";
+    if(isRoblox&&(!nickname||!nickname.trim()))return;
+    const orders=vpOrders(),order={id:"O"+vpId(),code:vpId()+vpId().slice(0,2),productId:p.id,title:vpProductTitle(p),price:vpProductPrice(p),buyerId:uid,buyerName:vpCurrentName(),sellerId:p.owner,sellerName:p.sellerName,robloxNickname:nickname.trim(),status:"pending",statusText:"Ожидает выполнения",created:Date.now(),messages:[{by:"system",text:"Заказ создан. В реальной версии оплата должна быть подтверждена платёжным провайдером до заморозки средств."}]};
+    orders.unshift(order);vpWrite(VP_ORDERS_KEY(),orders);
+    const history=vpRead("vp_history_"+(uid||"local"),[]);history.unshift({label:"Создание заказа #"+order.code,amount:vpFormatPrice(order.price),ts:Date.now()});vpWrite("vp_history_"+(uid||"local"),history);
+    alert("Заказ #"+order.code+" создан в демо-режиме. Реальные деньги не списаны и не заморожены.");
+    vpOpenChat(order.id);
+  }
+  function vpOrderCard(o,seller){
+    return `<div class="vp-order"><div class="vp-order-head"><span>Заказ #${vpSafe(o.code)} · ${vpSafe(o.title)}</span><span class="vp-order-state">${vpSafe(o.statusText)}</span></div><p style="margin:10px 0;font-size:13px;color:var(--hint)">Сумма: <b style="color:var(--text)">${vpFormatPrice(o.price)}</b> · ${seller?"Покупатель: "+vpSafe(o.buyerName):"Продавец: "+vpSafe(o.sellerName||"Продавец")}${o.robloxNickname?" · Roblox: "+vpSafe(o.robloxNickname):""}</p><div class="vp-page-tools" style="margin:12px 0 0"><button class="vp-secondary" data-order-chat="${o.id}">Чат заказа</button>${seller&&o.status==="pending"?`<button class="vp-primary" data-order-complete="${o.id}">Отметить выполненным</button>`:""}${!seller&&o.status==="completed"?`<button class="vp-primary" data-order-confirm="${o.id}">Подтвердить получение</button>`:""}</div></div>`;
+  }
+  function vpOpenChat(orderId){
+    const orders=vpOrders(),o=orders.find(x=>x.id===orderId);if(!o)return;
+    vpActiveOrder=orderId;
+    const body=()=>`<div class="vp-page-title">Чат заказа #${vpSafe(o.code)}</div><div class="vp-order-head"><span>${vpSafe(o.title)}</span><span class="vp-order-state">${vpSafe(o.statusText)}</span></div>${o.robloxNickname?`<p style="margin:8px 0;color:var(--hint);font-size:13px">Roblox-никнейм покупателя: <b>${vpSafe(o.robloxNickname)}</b></p>`:""}<div class="vp-warning">Демо-режим: переписка хранится локально в этом браузере и не передаётся второму пользователю.</div><div class="vp-chat"><div class="vp-chat-log" id="vpChatLog">${(o.messages||[]).map(m=>`<div class="vp-chat-msg ${m.by===uid?"mine":""}"><b>${m.by==="system"?"VortexPay":m.by===uid?"Вы":vpSafe(m.name||"Участник")}</b><br>${vpSafe(m.text)}</div>`).join("")}</div><div class="vp-chat-send"><input id="vpChatInput" maxlength="1500" placeholder="Сообщение по заказу…"><button class="vp-primary" id="vpChatSend">Отправить</button></div></div><div class="vp-page-tools" style="margin-top:14px"><button class="vp-secondary" id="vpBackOrders">Назад к заказам</button>${o.sellerId===uid&&o.status==="pending"?`<button class="vp-primary" id="vpChatComplete">Отметить выполненным</button>`:""}${o.buyerId===uid&&o.status==="completed"?`<button class="vp-primary" id="vpChatConfirm">Подтвердить получение</button>`:""}</div>`;
+    marketView.innerHTML=body();
+    $("vpChatSend").onclick=()=>{const input=$("vpChatInput"),text=input.value.trim();if(!text)return;o.messages=o.messages||[];o.messages.push({by:uid,name:vpCurrentName(),text,ts:Date.now()});vpWrite(VP_ORDERS_KEY(),orders);vpOpenChat(orderId)};
+    $("vpChatInput").onkeydown=e=>{if(e.key==="Enter")$("vpChatSend").click()};
+    $("vpBackOrders").onclick=()=>vpSetView(o.sellerId===uid?"sales":"purchases");
+    if($("vpChatComplete"))$("vpChatComplete").onclick=()=>vpMarkComplete(orderId);
+    if($("vpChatConfirm"))$("vpChatConfirm").onclick=()=>vpConfirmOrder(orderId);
+    $("vpChatLog").scrollTop=$("vpChatLog").scrollHeight;
+  }
+  function vpMarkComplete(id){
+    const orders=vpOrders(),o=orders.find(x=>x.id===id);if(!o)return;
+    if(!confirm("Отметить заказ как выполненный? Покупатель сможет подтвердить получение."))return;
+    o.status="completed";o.statusText="Ожидает подтверждения покупателя";o.messages.push({by:"system",text:"Продавец отметил заказ выполненным. Покупатель должен проверить товар и подтвердить получение."});vpWrite(VP_ORDERS_KEY(),orders);vpOpenChat(id);
+  }
+  function vpConfirmOrder(id){
+    const orders=vpOrders(),o=orders.find(x=>x.id===id);if(!o)return;
+    if(!confirm("Подтвердить получение товара? В реальной системе это инициировало бы перевод удерживаемых средств продавцу. В демо деньги не перемещаются."))return;
+    o.status="released";o.statusText="Получение подтверждено (демо)";o.messages.push({by:"system",text:"Покупатель подтвердил получение. Демо-заказ закрыт; реальные средства не перемещались."});vpWrite(VP_ORDERS_KEY(),orders);vpOpenChat(id);
+  }
+  // Search bindings, top navigation and initial rendering.
+  $("marketSearch").addEventListener("input",()=>vpRenderProducts());
+  $("topSearch").addEventListener("input",()=>{const target=$("viewSearch");if(vpCurrentView==="market"&&target){target.value=$("topSearch").value;target.dispatchEvent(new Event("input"));}else vpRenderProducts();});
+  $("topSearch").addEventListener("keydown",e=>{if(e.key==="Enter")vpSetView("market");});
+  $("topSearchBtn").onclick=()=>vpSetView("market");
+  $("navHome").onclick=()=>{marketView.classList.add("hidden");document.querySelectorAll(".screen").forEach(el=>el.classList.remove("hidden"));openScreen("scr-home");vpRenderProducts();};
+  document.querySelectorAll("[data-market-view]").forEach(btn=>btn.addEventListener("click",()=>vpSetView(btn.dataset.marketView)));
+  $("createProductOpen").onclick=()=>{vpSetView("sales");setTimeout(()=>vpRenderProductForm(),0)};
+  // Every six hours a listing is marked as bumped locally; this is not a server ranking guarantee.
+  function vpBumpListings(){const all=vpProducts(),now=Date.now();let changed=false;all.forEach(p=>{if(now-(p.bumpAt||p.created||now)>=6*60*60*1000){p.bumpAt=now;changed=true}});if(changed)vpWrite(VP_PRODUCTS_KEY(),all)}
+  vpBumpListings();setInterval(vpBumpListings,60*1000);vpRenderProducts();
+  // Restore a previously verified session for the same Telegram account.
+  (async()=>{
+    try{
+      const saved=localStorage.getItem("vortexpay_session_uid");
+      if(uid&&saved===uid){await enterApp();openScreen("scr-home");vpRenderProducts();}
+    }catch{}
+  })();
 
 </script>
 </body>
