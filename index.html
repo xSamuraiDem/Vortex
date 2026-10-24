@@ -2,173 +2,379 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>VortexPay</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
+  :root {
+    --bg: var(--tg-theme-bg-color, #ffffff);
+    --text: var(--tg-theme-text-color, #111111);
+    --hint: var(--tg-theme-hint-color, #7a7a7a);
+    --accent: var(--tg-theme-button-color, #2ea661);
+    --accent-text: var(--tg-theme-button-text-color, #ffffff);
+    --card: var(--tg-theme-secondary-bg-color, #f2f2f5);
+    --danger: #e5484d;
+    --ok: #2ea661;
+  }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
+
   body {
-    font-family: -apple-system, Segoe UI, Roboto, sans-serif;
-    background: var(--tg-theme-bg-color, #111827);
-    color: var(--tg-theme-text-color, #f9fafb);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 20px;
+    -webkit-font-smoothing: antialiased;
   }
+
+  .wrap { width: 100%; max-width: 380px; text-align: center; }
+
+  .logo {
+    width: 64px; height: 64px;
+    margin: 0 auto 14px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, var(--accent), #1f8a4c);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent-text);
+    font-size: 26px; font-weight: 800;
+    box-shadow: 0 8px 22px rgba(46, 166, 97, 0.35);
+  }
+
+  h1 { font-size: 24px; font-weight: 800; margin-bottom: 6px; }
+  .sub { color: var(--hint); font-size: 14px; line-height: 1.5; margin-bottom: 24px; }
+
   .card {
-    width: 100%;
-    max-width: 380px;
-    background: var(--tg-theme-secondary-bg-color, #1f2937);
-    border-radius: 16px;
-    padding: 24px;
-    text-align: center;
+    background: var(--card);
+    border-radius: 18px;
+    padding: 22px 18px;
+    margin-bottom: 14px;
   }
-  h1 { font-size: 22px; margin-bottom: 8px; }
-  .sub { font-size: 14px; opacity: 0.8; margin-bottom: 20px; }
-  blockquote {
-    border-left: 4px solid #22c55e;
-    background: rgba(34, 197, 94, 0.1);
-    padding: 10px 14px;
-    border-radius: 8px;
+
+  .step { display: none; animation: fade 0.3s ease; }
+  .step.active { display: block; }
+  @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  /* Robot check */
+  .robot {
+    display: flex; align-items: center; gap: 14px;
+    cursor: pointer; user-select: none;
+    padding: 14px; border-radius: 14px;
+    background: var(--bg);
+    border: 1.5px solid transparent;
+    transition: border-color 0.2s;
     text-align: left;
-    font-size: 14px;
-    margin-bottom: 20px;
   }
-  label.check {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-align: left;
-    font-size: 15px;
-    margin-bottom: 20px;
-    cursor: pointer;
+  .robot:active { transform: scale(0.99); }
+  .robot input { display: none; }
+  .box {
+    width: 28px; height: 28px; flex-shrink: 0;
+    border: 2px solid var(--hint); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
   }
-  input[type="checkbox"] { width: 20px; height: 20px; }
-  input[type="text"] {
-    width: 100%;
-    padding: 14px;
-    font-size: 24px;
-    letter-spacing: 8px;
-    text-align: center;
-    border: 2px solid #374151;
+  .robot.checked .box { background: var(--ok); border-color: var(--ok); }
+  .robot.checked .box::after {
+    content: ""; width: 7px; height: 13px;
+    border: solid #fff; border-width: 0 3px 3px 0;
+    transform: rotate(45deg) translate(-1px, -1px);
+  }
+  .robot-label { font-weight: 600; font-size: 15px; }
+  .robot-note { font-size: 12px; color: var(--hint); margin-top: 2px; }
+  .spinner {
+    width: 22px; height: 22px; margin-left: auto;
+    border: 3px solid var(--hint); border-top-color: transparent;
+    border-radius: 50%; display: none;
+    animation: spin 0.7s linear infinite;
+  }
+  .robot.loading .spinner { display: block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Code step */
+  .code-title { font-weight: 700; font-size: 16px; margin-bottom: 4px; }
+  .code-hint { font-size: 13px; color: var(--hint); margin-bottom: 18px; line-height: 1.5; }
+
+  .otp { display: flex; gap: 8px; justify-content: center; margin-bottom: 18px; }
+  .otp input {
+    width: 44px; height: 54px;
+    border: 2px solid transparent;
     border-radius: 12px;
-    background: #111827;
-    color: #f9fafb;
-    margin-bottom: 12px;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 24px; font-weight: 700; text-align: center;
+    outline: none;
+    transition: border-color 0.2s, transform 0.15s;
+    caret-color: var(--accent);
   }
-  button {
+  .otp input:focus { border-color: var(--accent); transform: translateY(-2px); }
+  .otp input.filled { border-color: var(--accent); }
+  .otp.shake { animation: shake 0.4s; }
+  .otp input.error { border-color: var(--danger); color: var(--danger); }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+
+  .timer-row {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 13px; color: var(--hint); margin-bottom: 8px;
+  }
+  .timer-value { font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; }
+  .bar { height: 6px; background: var(--bg); border-radius: 6px; overflow: hidden; margin-bottom: 18px; }
+  .bar-fill {
+    height: 100%; width: 100%;
+    background: var(--accent);
+    transition: width 1s linear, background 0.3s;
+  }
+  .bar-fill.warn { background: var(--danger); }
+
+  .btn {
     width: 100%;
-    padding: 14px;
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    border-radius: 12px;
-    background: #22c55e;
-    color: #fff;
+    padding: 15px;
+    border: none; border-radius: 14px;
+    font-size: 16px; font-weight: 700;
     cursor: pointer;
+    background: var(--accent); color: var(--accent-text);
+    transition: opacity 0.2s, transform 0.1s;
   }
-  button:disabled { background: #4b5563; cursor: not-allowed; }
-  .timer { font-size: 14px; margin-top: 12px; opacity: 0.9; }
-  .timer.expired { color: #ef4444; font-weight: bold; }
-  .msg { margin-top: 14px; font-size: 14px; min-height: 20px; }
-  .msg.ok { color: #22c55e; font-weight: bold; }
-  .msg.err { color: #ef4444; font-weight: bold; }
+  .btn:active { transform: scale(0.98); }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .btn.secondary {
+    background: transparent; color: var(--accent);
+    margin-top: 10px; font-size: 14px;
+  }
+
+  .status {
+    min-height: 20px; font-size: 13px; margin-top: 14px; font-weight: 600;
+  }
+  .status.error { color: var(--danger); }
+  .status.ok { color: var(--ok); }
+
+  .expired {
+    display: none;
+    color: var(--danger); font-weight: 700; font-size: 14px;
+    margin-bottom: 14px;
+  }
+  .expired.show { display: block; }
+
+  .success-icon {
+    width: 70px; height: 70px; margin: 6px auto 16px;
+    border-radius: 50%; background: var(--ok);
+    display: flex; align-items: center; justify-content: center;
+    animation: pop 0.4s ease;
+  }
+  .success-icon::after {
+    content: ""; width: 20px; height: 36px;
+    border: solid #fff; border-width: 0 5px 5px 0;
+    transform: rotate(45deg) translate(-3px, -3px);
+  }
+  @keyframes pop { 0% { transform: scale(0.4); } 70% { transform: scale(1.08); } 100% { transform: scale(1); } }
+
+  .footer { font-size: 11px; color: var(--hint); margin-top: 18px; }
 </style>
 </head>
 <body>
-<div class="card">
-  <h1><b>VortexPay</b></h1>
-  <p class="sub">Подтвердите вход</p>
 
-  <blockquote>
-    <b>Шаг 1.</b> Подтвердите, что вы не робот.<br>
-    <b>Шаг 2.</b> Введите <b>6-значный код</b> из чата с ботом.<br>
-    Код действует <b>30 секунд</b>.
-  </blockquote>
+<div class="wrap">
+  <div class="logo">V</div>
+  <h1>VortexPay</h1>
+  <p class="sub">Быстрый и безопасный вход в сервис</p>
 
-  <label class="check">
-    <input type="checkbox" id="human">
-    <span>Я не робот</span>
-  </label>
+  <!-- Шаг 1: проверка на робота -->
+  <div class="card step active" id="step-robot">
+    <label class="robot" id="robotBox">
+      <input type="checkbox" id="robotCheck">
+      <span class="box"></span>
+      <span>
+        <span class="robot-label">Я не робот</span>
+        <div class="robot-note">Подтвердите, что вы человек</div>
+      </span>
+      <span class="spinner"></span>
+    </label>
+  </div>
 
-  <input type="text" id="code" maxlength="6" inputmode="numeric" placeholder="000000" disabled>
-  <button id="submit" disabled>Подтвердить</button>
-  <div class="timer" id="timer"></div>
-  <div class="msg" id="msg"></div>
+  <!-- Шаг 2: ввод кода -->
+  <div class="card step" id="step-code">
+    <div class="code-title">Введите код из бота</div>
+    <div class="code-hint">Нажмите <b>Получить код</b> в боте и введите 6 цифр, пока код не устарел.</div>
+
+    <div class="timer-row">
+      <span>Код действует</span>
+      <span class="timer-value" id="timerText">30 сек</span>
+    </div>
+    <div class="bar"><div class="bar-fill" id="barFill"></div></div>
+
+    <div class="otp" id="otp">
+      <input type="text" inputmode="numeric" maxlength="1" autocomplete="one-time-code">
+      <input type="text" inputmode="numeric" maxlength="1">
+      <input type="text" inputmode="numeric" maxlength="1">
+      <input type="text" inputmode="numeric" maxlength="1">
+      <input type="text" inputmode="numeric" maxlength="1">
+      <input type="text" inputmode="numeric" maxlength="1">
+    </div>
+
+    <div class="expired" id="expired">Код устарел. Запросите новый в боте.</div>
+
+    <button class="btn" id="submitBtn" disabled>Войти</button>
+    <button class="btn secondary" id="resetBtn">Ввести заново</button>
+    <div class="status" id="status"></div>
+  </div>
+
+  <!-- Шаг 3: успех -->
+  <div class="card step" id="step-done">
+    <div class="success-icon"></div>
+    <div class="code-title">Вход выполнен</div>
+    <div class="code-hint">Добро пожаловать в VortexPay.</div>
+    <button class="btn" id="closeBtn">Продолжить</button>
+  </div>
+
+  <div class="footer">Защищено проверкой Telegram</div>
 </div>
 
 <script>
+  // Адрес сервера бота, где работает маршрут /verify (HTTPS обязателен)
   const API_URL = "https://your-domain.com/verify";
   const CODE_TTL = 30;
 
   const tg = window.Telegram && window.Telegram.WebApp;
   if (tg) { tg.ready(); tg.expand(); }
 
-  const human = document.getElementById("human");
-  const codeInput = document.getElementById("code");
-  const submitBtn = document.getElementById("submit");
-  const timerEl = document.getElementById("timer");
-  const msgEl = document.getElementById("msg");
-
-  let deadline = null;
+  const $ = (id) => document.getElementById(id);
+  const inputs = Array.from(document.querySelectorAll("#otp input"));
   let timerId = null;
+  let timeLeft = CODE_TTL;
 
-  function setMsg(text, type) {
-    msgEl.textContent = text;
-    msgEl.className = "msg " + (type || "");
+  function showStep(id) {
+    document.querySelectorAll(".step").forEach(s => s.classList.remove("active"));
+    $(id).classList.add("active");
   }
 
+  function setStatus(text, type = "") {
+    const el = $("status");
+    el.textContent = text;
+    el.className = "status " + type;
+  }
+
+  // Шаг 1: проверка на робота
+  $("robotCheck").addEventListener("change", (e) => {
+    if (!e.target.checked) return;
+    const box = $("robotBox");
+    box.classList.add("loading");
+    box.style.pointerEvents = "none";
+    setTimeout(() => {
+      box.classList.remove("loading");
+      box.classList.add("checked");
+      setTimeout(() => {
+        showStep("step-code");
+        startTimer();
+        inputs[0].focus();
+      }, 350);
+    }, 900);
+  });
+
+  // Таймер 30 секунд
   function startTimer() {
-    deadline = Date.now() + CODE_TTL * 1000;
     clearInterval(timerId);
+    timeLeft = CODE_TTL;
+    $("expired").classList.remove("show");
+    $("barFill").classList.remove("warn");
+    updateTimer();
     timerId = setInterval(() => {
-      const left = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
-      if (left === 0) {
-        clearInterval(timerId);
-        timerEl.textContent = "Код устарел. Получите новый в боте.";
-        timerEl.className = "timer expired";
-        codeInput.value = "";
-        codeInput.disabled = true;
-        submitBtn.disabled = true;
-      } else {
-        timerEl.textContent = "Осталось: " + left + " сек.";
-        timerEl.className = "timer";
-      }
-    }, 250);
+      timeLeft--;
+      updateTimer();
+      if (timeLeft <= 0) expire();
+    }, 1000);
   }
 
-  human.addEventListener("change", () => {
-    const on = human.checked;
-    codeInput.disabled = !on;
-    submitBtn.disabled = !on;
-    if (on) {
-      setMsg("", "");
-      codeInput.focus();
-      startTimer();
-    } else {
-      clearInterval(timerId);
-      timerEl.textContent = "";
-    }
+  function updateTimer() {
+    $("timerText").textContent = Math.max(timeLeft, 0) + " сек";
+    $("barFill").style.width = (Math.max(timeLeft, 0) / CODE_TTL * 100) + "%";
+    if (timeLeft <= 10) $("barFill").classList.add("warn");
+  }
+
+  function expire() {
+    clearInterval(timerId);
+    timeLeft = 0;
+    updateTimer();
+    $("expired").classList.add("show");
+    inputs.forEach(i => { i.disabled = true; });
+    $("submitBtn").disabled = true;
+  }
+
+  // Ввод кода: переход между ячейками, вставка, Backspace
+  function getCode() {
+    return inputs.map(i => i.value).join("");
+  }
+
+  function refreshSubmit() {
+    const code = getCode();
+    $("submitBtn").disabled = code.length !== 6 || timeLeft <= 0;
+  }
+
+  inputs.forEach((input, idx) => {
+    input.addEventListener("input", (e) => {
+      input.value = input.value.replace(/\D/g, "").slice(0, 1);
+      input.classList.toggle("filled", !!input.value);
+      input.classList.remove("error");
+      if (input.value && idx < inputs.length - 1) inputs[idx + 1].focus();
+      refreshSubmit();
+      if (getCode().length === 6) submitCode();
+    });
+
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Backspace" && !input.value && idx > 0) {
+        inputs[idx - 1].focus();
+        inputs[idx - 1].value = "";
+        inputs[idx - 1].classList.remove("filled");
+        refreshSubmit();
+      }
+      if (e.key === "Enter") submitCode();
+    });
+
+    input.addEventListener("paste", (e) => {
+      e.preventDefault();
+      const digits = (e.clipboardData.getData("text") || "").replace(/\D/g, "").slice(0, 6);
+      digits.split("").forEach((d, i) => {
+        if (inputs[i]) {
+          inputs[i].value = d;
+          inputs[i].classList.add("filled");
+        }
+      });
+      const next = Math.min(digits.length, inputs.length - 1);
+      inputs[next].focus();
+      refreshSubmit();
+      if (digits.length === 6) submitCode();
+    });
   });
 
-  codeInput.addEventListener("input", () => {
-    codeInput.value = codeInput.value.replace(/\D/g, "").slice(0, 6);
-  });
+  function clearCode() {
+    inputs.forEach(i => { i.value = ""; i.classList.remove("filled", "error"); });
+    inputs[0].focus();
+    refreshSubmit();
+  }
 
-  submitBtn.addEventListener("click", async () => {
-    const code = codeInput.value.trim();
-    if (!/^\d{6}$/.test(code)) {
-      setMsg("Введите 6 цифр.", "err");
-      return;
-    }
-    if (!deadline || Date.now() > deadline) {
-      setMsg("Код устарел. Получите новый в боте.", "err");
-      return;
-    }
-    submitBtn.disabled = true;
-    setMsg("Проверка...", "");
+  function shakeError(message) {
+    setStatus(message, "error");
+    inputs.forEach(i => i.classList.add("error"));
+    const otp = document.querySelector(".otp");
+    otp.classList.remove("shake");
+    void otp.offsetWidth;
+    otp.classList.add("shake");
+  }
+
+  // Отправка кода на сервер бота
+  async function submitCode() {
+    if (timeLeft <= 0) return;
+    const code = getCode();
+    if (code.length !== 6) return;
+
+    $("submitBtn").disabled = true;
+    setStatus("Проверка...");
+
     try {
       const res = await fetch(API_URL, {
         method: "POST",
@@ -178,21 +384,35 @@
           code: code
         })
       });
-      const data = await res.json();
-      if (data.ok) {
+      const data = await res.json().catch(() => ({}));
+
+      if (res.ok && data.ok) {
         clearInterval(timerId);
-        setMsg("Вход подтверждён!", "ok");
-        timerEl.textContent = "";
-        codeInput.disabled = true;
-        if (tg) setTimeout(() => tg.close(), 1200);
+        showStep("step-done");
+        if (tg) tg.HapticFeedback && tg.HapticFeedback.notificationOccurred("success");
       } else {
-        setMsg(data.error || "Ошибка проверки", "err");
-        submitBtn.disabled = false;
+        shakeError(data.error || "Неверный код");
+        if (tg) tg.HapticFeedback && tg.HapticFeedback.notificationOccurred("error");
+        refreshSubmit();
       }
-    } catch (e) {
-      setMsg("Нет связи с сервером", "err");
-      submitBtn.disabled = false;
+    } catch (err) {
+      shakeError("Нет связи с сервером");
+      refreshSubmit();
     }
+  }
+
+  $("submitBtn").addEventListener("click", submitCode);
+
+  $("resetBtn").addEventListener("click", () => {
+    clearCode();
+    setStatus("");
+    startTimer();
+    inputs.forEach(i => { i.disabled = false; });
+    inputs[0].focus();
+  });
+
+  $("closeBtn").addEventListener("click", () => {
+    if (tg) tg.close();
   });
 </script>
 </body>
