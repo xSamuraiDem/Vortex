@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>VortexPay</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
 <style>
   :root {
     --bg: var(--tg-theme-bg-color, #ffffff);
@@ -310,6 +311,32 @@
     white-space: nowrap; z-index: 10;
   }
   .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  /* VortexPay marketplace additions */
+  .market-search{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:0 14px;margin:18px 0 14px}
+  .market-search span{font-size:25px;color:var(--hint)}
+  .market-search input{width:100%;padding:14px 0;border:0;outline:0;background:transparent;color:var(--text);font:inherit}
+  .market-empty{min-height:150px;border:1px dashed var(--line);border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:22px;margin-bottom:16px;color:var(--hint)}
+  .market-empty b{color:var(--text);margin:8px 0 4px}.market-empty p{font-size:13px;max-width:260px;line-height:1.45}
+  .empty-icon{font-size:32px;opacity:.6}
+  .wide-action{width:100%;padding:14px;border:1px solid var(--line);border-radius:13px;background:var(--card);color:var(--text);font:inherit;font-weight:700;text-align:left;cursor:pointer;margin:5px 0}
+  .wide-action span{float:right;color:var(--hint)}
+  .balance-card{background:linear-gradient(135deg,#172235,#202f46);color:#fff;border-radius:18px;padding:22px;margin:8px 0 14px}
+  .balance-label{font-size:13px;color:#c2ccdc}.balance-value{font-size:32px;font-weight:850;margin:8px 0 16px}
+  .balance-meta{display:flex;justify-content:space-between;gap:8px;color:#d6deea;font-size:12px}
+  .subnav{display:flex;gap:8px;margin:12px 0;flex-wrap:wrap}.subnav button{border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--text);padding:9px 12px}
+  .rule-block{padding:13px 0;border-bottom:1px solid var(--line);font-size:13px;line-height:1.5}.rule-block b{display:block;margin-bottom:4px}
+  .quiz-option{display:flex;gap:9px;align-items:flex-start;padding:12px;border-radius:12px;background:var(--bg);margin:8px 0;font-size:14px;cursor:pointer}
+  .quiz-option input{margin-top:3px}.danger-btn{background:#d83a4b!important;color:#fff!important}
+  .seller-status{padding:13px;border-radius:12px;background:var(--bg);font-size:13px;line-height:1.5}
+  .pill{display:inline-block;padding:4px 8px;border-radius:8px;background:var(--bg);font-size:12px;color:var(--hint)}
+  .side-help{position:fixed;left:10px;top:45%;z-index:5;border:0;border-radius:0 12px 12px 0;background:var(--accent);color:var(--accent-text);padding:12px 10px;font-weight:700;box-shadow:0 4px 18px #0002}
+  .modal-backdrop{position:fixed;inset:0;background:#0008;z-index:20;display:flex;align-items:center;justify-content:center;padding:18px}
+  .modal-card{background:var(--card);color:var(--text);border-radius:18px;padding:20px;max-width:460px;width:100%;max-height:85vh;overflow:auto}
+  .modal-card h2{font-size:20px;margin-bottom:12px}.modal-card p{font-size:13px;line-height:1.55;color:var(--hint);margin:8px 0 14px}
+  .modal-actions{display:flex;gap:8px;margin-top:14px}.modal-actions button{flex:1}
+  @media(max-width:520px){body{padding:14px}.side-help{left:0;padding:10px 8px;font-size:12px}.quick{gap:6px}}
+
 </style>
 </head>
 <body class="auth">
@@ -381,8 +408,9 @@
 
   <!-- Главный экран -->
   <section class="screen active" id="scr-home">
-    <div class="greet">Привет, <span id="homeName">друг</span>!</div>
-    <div class="muted">Добро пожаловать в VortexPay</div>
+    <div class="greet">VortexPay</div>
+    <div class="market-search"><span>⌕</span><input id="marketSearch" type="search" placeholder="Поиск товаров и продавцов" aria-label="Поиск"></div>
+    <div class="market-empty" id="marketSearchEmpty"><div class="empty-icon">⌕</div><b>Пока ничего нет</b><p>Когда появятся предложения, вы сможете найти их здесь.</p></div>
 
     <div class="quick">
       <button class="qbtn" data-goto="shop" type="button">
@@ -396,20 +424,6 @@
       </button>
     </div>
 
-    <div class="card" style="margin-top:16px">
-      <div class="info-row">
-        <span class="qi" style="width:42px;height:42px;border-radius:14px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:20px"><tg-emoji emoji-id="4983746717313664194">⭐️</tg-emoji></span>
-        <div>
-          <div class="section-title" style="margin-bottom:2px">Курс звёзд</div>
-          <div class="muted">1 <tg-emoji emoji-id="4983746717313664194">⭐️</tg-emoji> = 1,53 ₽</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="section-title">Скоро <span class="tag">в разработке</span></div>
-      <div class="muted">Переводы между пользователями и история операций появятся в следующем обновлении.</div>
-    </div>
   </section>
 
   <!-- Кабинет: вкладки Профиль / Магазин / Настройки -->
@@ -426,6 +440,13 @@
       <button class="tab" data-tab="shop" type="button">Магазин</button>
       <button class="tab" data-tab="settings" type="button">Настройки</button>
     </nav>
+
+    <div class="subnav">
+      <button type="button" id="financeOpen">Финансы</button>
+      <button type="button" id="sellerOpen">Стать продавцом</button>
+      <button type="button" id="helpOpen">Помощь / Правила</button>
+    </div>
+    <div id="extraPanel" class="hidden"></div>
 
     <!-- Профиль -->
     <div class="tab-panel active" id="tab-profile">
@@ -542,11 +563,21 @@
         </button>
       </div>
 
-      <div class="version">VortexPay · версия 2.0</div>
+      <div class="card">
+        <div class="section-title">Язык / Language</div>
+        <div class="seg"><button type="button" id="langRu" class="active">RUS</button><button type="button" id="langEn">EN</button></div>
+      </div>
+      <div class="card">
+        <div class="section-title">Аккаунт</div>
+        <button class="set-row" id="logoutBtn" type="button"><span class="set-ico">🚪</span><span class="set-txt"><b>Выйти из аккаунта</b><small>Завершить текущий сеанс</small></span><span class="set-arrow">›</span></button>
+        <button class="set-row" id="deleteAccountBtn" type="button"><span class="set-ico">⚠️</span><span class="set-txt"><b>Удалить аккаунт</b><small>Удаление без возможности восстановления</small></span><span class="set-arrow">›</span></button>
+      </div>
+      <div class="version">VortexPay</div>
     </div>
   </section>
 </div>
 
+<button class="side-help hidden" id="helpFloat" type="button">Помощь</button>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -1196,6 +1227,90 @@
   if (!uid) {
     setStatus($("requestStatus"), "Откройте приложение кнопкой «Запустить» в боте", "error");
   }
+  // ---- Marketplace UI: finance, search, seller verification and help ----
+  const vpRules = [
+    ["1. Честная торговля","Запрещены обман, мошенничество, подмена товара, фальшивые доказательства и намеренное введение покупателя в заблуждение."],
+    ["2. Только сделки внутри VortexPay","Запрещено предлагать оплату, перевод, выдачу товара или продолжение сделки вне VortexPay. Сделки вне сервиса не защищаются."],
+    ["3. Запрет обхода комиссии","Запрещено уводить покупателей в сторонние чаты, ссылки, сайты или платёжные системы для обхода правил или комиссии."],
+    ["4. Запрещённые товары","Нельзя продавать украденные товары, взломанные аккаунты, персональные данные, вредоносное ПО, запрещённые услуги и товары, нарушающие закон."],
+    ["5. Правдивые предложения","Название, описание, цена, наличие и изображения должны соответствовать товару. Запрещены дубликаты и искусственное занижение цены."],
+    ["6. Исполнение заказа","Продавец обязан выдать оплаченный товар в описанном виде и в заявленный срок. Нельзя просить подтверждать получение до фактической выдачи."],
+    ["7. Общение","Запрещены угрозы, оскорбления, травля, спам, шантаж, публикация чужих личных данных и давление на покупателя."],
+    ["8. Отзывы и рейтинги","Запрещены накрутка, покупка отзывов, угрозы ради изменения оценки и публикация заведомо ложных сведений."],
+    ["9. Безопасность аккаунта","Запрещено передавать аккаунт, токены, коды входа и доступы третьим лицам. Сотрудники VortexPay не запрашивают пароль или одноразовый код."],
+    ["10. Несколько аккаунтов и злоупотребления","Запрещены обход блокировок, мультиаккаунтинг для накрутки, эксплуатация ошибок и манипуляции балансом."],
+    ["11. Споры и возвраты","Каждый спор рассматривается индивидуально. Администрация может запросить доказательства и принять решение о возврате с учётом переписки и обстоятельств."],
+    ["12. Ответственность","В зависимости от нарушения возможны удаление предложения, отмена сделки, возврат средств, временное ограничение или блокировка аккаунта."],
+    ["13. Конфиденциальность","Используйте данные покупателей только для исполнения заказа. Не публикуйте их и не передавайте третьим лицам без законного основания."],
+    ["14. Решение администрации","VortexPay вправе проверять предложения и ограничивать доступ при подозрении на мошенничество или нарушение правил. Решение может зависеть от обстоятельств конкретного спора."]
+  ];
+  const vpQuiz = [
+    {q:"Где должна проходить оплата и выдача товара?",a:["Внутри VortexPay","В личном стороннем чате","Как договорятся"],c:0},
+    {q:"Можно ли увести покупателя на сторонний сайт, чтобы обойти правила?",a:["Да","Нет"],c:1},
+    {q:"Что делать, если товар отличается от описания?",a:["Игнорировать покупателя","Решить вопрос честно через сервис","Попросить подтвердить заказ"],c:1},
+    {q:"Можно ли продавать украденные аккаунты или персональные данные?",a:["Можно, если дёшево","Нет, это запрещено"],c:1},
+    {q:"Когда можно просить подтвердить получение?",a:["До выдачи","После фактического получения товара"],c:1},
+    {q:"Разрешена ли накрутка отзывов?",a:["Да","Нет"],c:1},
+    {q:"Можно ли публиковать личные данные покупателя?",a:["Нет","Да, если возник спор"],c:0},
+    {q:"Как рассматриваются споры?",a:["Всегда автоматически в пользу продавца","Индивидуально с учётом доказательств и обстоятельств"],c:1},
+    {q:"Что нужно делать с кодами входа и паролями?",a:["Передавать знакомым","Хранить в секрете и никому не сообщать"],c:1},
+    {q:"Какие последствия возможны за нарушение правил?",a:["Никаких","Удаление предложения, возврат, ограничения или блокировка"],c:1}
+  ];
+  let vpLang = "ru", vpQuizIndex = 0, vpQuizScore = 0, vpQuizAnswers = [];
+  const extra = $("extraPanel");
+  function escVp(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+  function showExtra(title, body){
+    extra.classList.remove("hidden");
+    extra.innerHTML = `<div class="card"><div class="cab-top"><b>${title}</b><button class="back" id="extraClose">Закрыть ×</button></div>${body}</div>`;
+    $("extraClose").onclick=()=>{extra.classList.add("hidden");extra.innerHTML="";};
+    extra.scrollIntoView({behavior:"smooth",block:"start"});
+  }
+  function showFinance(){
+    showExtra("Финансы", `<div class="balance-card"><div class="balance-label">Общий баланс VortexPay</div><div class="balance-value">0.00 ₽</div><div class="balance-meta"><span>0 $</span><span>0 €</span><span>Доступно: 0.00 ₽</span></div></div>
+      <p class="muted">Операции по выводу USD и EUR проводятся в национальной валюте по курсу, близкому к биржевому.</p>
+      <div class="section-title" style="margin-top:18px">История операций</div><div class="market-empty"><div class="empty-icon">↕</div><b>Операций пока нет</b><p>Пополнения, покупки, продажи и выводы будут отображаться здесь после появления операций.</p></div>
+      <div class="section-title">Мои траты</div><div class="row"><span class="k">Всего потрачено</span><span class="v">0.00 ₽</span></div><div class="row"><span class="k">Покупки</span><span class="v">0.00 ₽</span></div><div class="row"><span class="k">Пополнения</span><span class="v">0.00 ₽</span></div><div class="row"><span class="k">Продажи</span><span class="v">0.00 ₽</span></div>`);
+  }
+  function showRules(){
+    showExtra("Помощь · Правила", `<p class="muted">Правила VortexPay обязательны для покупателей и продавцов.</p>${vpRules.map(r=>`<div class="rule-block"><b>${escVp(r[0])}</b>${escVp(r[1])}</div>`).join("")}
+      <div class="rule-block"><b>Разбор споров</b>Каждый спор между покупателем и продавцом индивидуален. Окончательное решение о степени ответственности может отличаться в зависимости от обстоятельств. Договорённости в чате VortexPay могут быть приняты во внимание.</div>
+      <h3 style="margin:18px 0 8px">Политика конфиденциальности</h3><p class="muted">VortexPay использует данные аккаунта и технические сведения для работы сервиса, безопасности, обработки операций и разрешения споров. Необходимые сведения могут храниться у поставщиков инфраструктуры. Мы не просим сообщать пароль или одноразовые коды. Не публикуйте чужие персональные данные. Запросы по данным и удалению аккаунта направляйте в поддержку. Не вводите в сервис сведения, которые не нужны для сделки.</p>
+      <button class="btn" id="rulesAccept">Я ознакомлен</button>`);
+    $("rulesAccept").onclick=()=>startSellerQuiz();
+  }
+  function startSellerQuiz(){vpQuizIndex=0;vpQuizScore=0;vpQuizAnswers=[];renderQuiz();}
+  function renderQuiz(){
+    const q=vpQuiz[vpQuizIndex];
+    showExtra("Проверка правил продавца", `<div class="muted">Вопрос ${vpQuizIndex+1} из ${vpQuiz.length}</div><div style="height:5px;background:var(--bg);border-radius:5px;margin:10px 0 18px"><div style="height:100%;width:${(vpQuizIndex+1)/vpQuiz.length*100}%;background:var(--accent);border-radius:5px"></div></div><h3>${escVp(q.q)}</h3><div id="quizOptions">${q.a.map((a,i)=>`<label class="quiz-option"><input type="radio" name="vpAnswer" value="${i}"><span>${escVp(a)}</span></label>`).join("")}</div><div class="status" id="quizStatus"></div><button class="btn" id="quizNext">Ответить</button>`);
+    $("quizNext").onclick=()=>{
+      const selected=document.querySelector('input[name="vpAnswer"]:checked');
+      if(!selected){$("quizStatus").textContent="Выберите ответ.";return;}
+      if(Number(selected.value)===q.c)vpQuizScore++;
+      vpQuizAnswers.push(Number(selected.value));
+      vpQuizIndex++;
+      if(vpQuizIndex<vpQuiz.length)renderQuiz();
+      else if(vpQuizScore===vpQuiz.length){
+        try{localStorage.setItem("vortexpay_seller_"+uid,"passed");}catch{}
+        showExtra("Вы стали продавцом", `<div class="seller-status"><b>Проверка пройдена: 10/10</b><br>Статус продавца сохранён на этом устройстве. Публикация товаров пока недоступна — раздел подготовлен визуально.</div><button class="btn" id="sellerDone" style="margin-top:14px">Готово</button>`);
+        $("sellerDone").onclick=()=>{extra.classList.add("hidden");extra.innerHTML="";};
+      } else showExtra("Проверка не пройдена", `<div class="seller-status">Правильных ответов: ${vpQuizScore} из 10. Чтобы получить статус продавца, нужно ответить верно на все вопросы.</div><button class="btn" id="quizRetry" style="margin-top:14px">Пройти ещё раз</button>`);
+      const retry=$("quizRetry");if(retry)retry.onclick=startSellerQuiz;
+    };
+  }
+  $("financeOpen").addEventListener("click",showFinance);
+  $("sellerOpen").addEventListener("click",showRules);
+  $("helpOpen").addEventListener("click",showRules);
+  $("helpFloat").classList.remove("hidden");
+  $("helpFloat").addEventListener("click",()=>{openCabinet("profile");showRules();});
+  $("marketSearch").addEventListener("input",()=>{$("marketSearchEmpty").classList.remove("hidden");});
+  $("langRu").onclick=()=>{vpLang="ru";$("langRu").classList.add("active");$("langEn").classList.remove("active");toast("Язык: русский");};
+  $("langEn").onclick=()=>{vpLang="en";$("langEn").classList.add("active");$("langRu").classList.remove("active");toast("English language selected. Full translation is being prepared.");};
+  $("logoutBtn").onclick=()=>showExtra("Выйти из аккаунта",`<p>Вы действительно хотите завершить текущий сеанс?</p><button class="btn" id="confirmLogout">Выйти</button>`);
+  document.addEventListener("click",e=>{if(e.target && e.target.id==="confirmLogout"){try{localStorage.removeItem("vortexpay_uid");}catch{};if(tg&&tg.close)tg.close();else location.reload();}});
+  $("deleteAccountBtn").onclick=()=>showExtra("Удаление аккаунта",`<p><b>Внимание!</b> Удаление аккаунта необратимо. Восстановить профиль и связанные данные будет невозможно. Сейчас удаление доступно только как визуальный макет и не удаляет данные с сервера.</p><label class="quiz-option"><input type="checkbox" id="deleteConfirm"><span>Я понимаю, что восстановление невозможно</span></label><button class="btn danger-btn" id="confirmDelete" disabled>Удалить аккаунт</button>`);
+  document.addEventListener("change",e=>{if(e.target&&e.target.id==="deleteConfirm")$("confirmDelete").disabled=!e.target.checked;});
+  document.addEventListener("click",e=>{if(e.target&&e.target.id==="confirmDelete")showExtra("Удаление недоступно",`<p>Это демонстрационный интерфейс. Чтобы действительно удалить данные аккаунта, потребуется отдельная серверная функция.</p>`);});
+
 </script>
 </body>
 </html>
