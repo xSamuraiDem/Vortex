@@ -51,6 +51,20 @@ details{border-bottom:1px solid var(--ln);padding:11px 0}summary{cursor:pointer;
 .bar{height:5px;background:var(--soft);margin:6px 0 12px}.bar div{height:100%;background:var(--ac);width:100%;transition:width .25s linear}
 .msgs{min-height:20px;font-size:13px;margin-top:10px;font-weight:600}.msgs.e{color:var(--red)}
 @media(max-width:700px){.nav{padding:8px 12px;gap:4px 14px}.ns{width:100%;order:9}.g2,.cg{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr);gap:9px}.pc img,.pc .ph{height:120px}.pt{font-size:23px}main{padding:16px 10px}}
+.sbig{display:flex;gap:8px;margin-bottom:18px}.sbig input{flex:1;border:1px solid var(--ln);background:var(--card);border-radius:4px;padding:14px;font-size:16px;outline:0}.sbig input:focus{border-color:var(--ac)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}.tile{display:flex;flex-direction:column;align-items:center;gap:4px;padding:18px 10px;border:1px solid var(--ln);background:var(--card);border-radius:4px;cursor:pointer;text-align:center}.tile:hover{border-color:var(--ac)}.tile span{font-size:34px}.tile small{color:var(--hint)}
+.tb{border:1px solid var(--ln);border-radius:4px;background:var(--card);overflow:hidden}.oh,.or{display:grid;grid-template-columns:240px 1fr 90px 130px;gap:12px;align-items:center;padding:11px 14px}.oh{background:var(--soft);color:var(--hint);font-size:12px;font-weight:600;text-transform:uppercase}
+.or{border-top:1px solid var(--ln);cursor:pointer}.or:hover{background:var(--soft)}.oc1{display:flex;gap:10px;align-items:center;min-width:0}.oc1 b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.oc4{text-align:right}.oc3{color:var(--hint)}
+.av2,.av3{border-radius:50%;overflow:hidden;background:var(--ac);color:#fff;font-weight:800;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}.av2{width:38px;height:38px}.av3{width:84px;height:84px;font-size:32px}.av2 img,.av3 img{width:100%;height:100%;object-fit:cover}
+.rt{color:#f0a500;font-weight:700}.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#bbb;margin-right:5px}.dot.on{background:var(--grn)}
+.pf{display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap}.fl{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.fl .in{flex:1;min-width:130px}
+.g2c{display:grid;grid-template-columns:1fr 340px;gap:16px;align-items:start}.gal{display:flex;gap:8px;overflow:auto;margin-bottom:12px}.gal img{height:220px;border-radius:4px}
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:14px}.stats .card{margin:0}.big{font-size:28px;font-weight:800}
+.rbox{max-height:320px;overflow:auto;border:1px solid var(--ln);border-radius:4px;padding:6px 12px;margin:10px 0}
+.stp5{font-size:34px;cursor:pointer;color:var(--ln)}.stp5 span.on{color:#f0a500}
+.bnav{display:none}
+@media(max-width:860px){.oh{display:none}.or{grid-template-columns:1fr auto;grid-template-areas:"a d" "b b" "c c";gap:6px 10px}.oc1{grid-area:a}.oc2{grid-area:b}.oc3{grid-area:c;font-size:12px}.oc4{grid-area:d}.g2c{grid-template-columns:1fr}}
+@media(max-width:700px){.nav>a[data-v],.nav>.sp{display:none}.bnav{display:flex;position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--ln);z-index:35;padding-bottom:env(safe-area-inset-bottom)}.bnav a{flex:1;text-align:center;padding:7px 2px;font-size:19px;color:var(--hint);text-decoration:none;display:flex;flex-direction:column}.bnav a small{font-size:10px}.bnav a.on{color:var(--ac)}main{padding-bottom:84px}.ddm{max-width:92vw}}
 </style></head>
 <body class="auth">
 
@@ -75,10 +89,11 @@ details{border-bottom:1px solid var(--ln);padding:11px 0}summary{cursor:pointer;
  <a data-v="market">Каталог</a><div class="sp"></div>
  <a data-v="purchases">Покупки</a><a data-v="sales">Продажи</a><a data-v="messages">Сообщения<span class="bd" id="mb" hidden>0</span></a><a data-v="finance">Финансы <span class="bd g">0 ₽</span></a>
  <div class="dd"><button class="avb" id="avBtn"></button>
-  <div class="ddm r" id="userMenu"><a data-v="profile">Профиль</a><a data-v="support" id="mSup" hidden>Поддержка (заявки)</a><a data-v="admin" id="mAdm" hidden>Админ-панель</a><a id="logout">Выйти</a></div></div>
+  <div class="ddm r" id="userMenu"><a data-v="user" id="mp">Мой профиль</a><a data-v="profile">Настройки</a><a data-v="finance">Финансы</a><a data-v="support" id="mSup" hidden>Поддержка (заявки)</a><a data-v="admin" id="mAdm" hidden>Админ-панель</a><a id="logout">Выйти</a></div></div>
 </header>
 <main id="main"></main>
 </div>
+<nav class="bnav"><a data-v="market">🏠<small>Каталог</small></a><a data-v="purchases">🛒<small>Покупки</small></a><a data-v="sales">💼<small>Продажи</small></a><a data-v="messages">💬<small>Чаты</small></a><a data-v="profile">👤<small>Профиль</small></a></nav>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -128,65 +143,106 @@ async function uinfo(id){if(!uc[id]||Date.now()-uc[id].t>60000)uc[id]={t:Date.no
 async function enter(){
  const [pr,set,ban,ag]=await Promise.all([fb("profiles/"+uid).catch(()=>null),fb("settings/"+uid).catch(()=>null),fb("bans/"+uid).catch(()=>null),fb("agents/"+uid).catch(()=>null)]);
  if(ban&&(ban.until===0||ban.until>Date.now())){ls.del("vortexpay_session_uid");return showBan(ban)}
- const d=pr||{};me={first_name:d.first_name||(tu&&tu.first_name)||"Пользователь",username:d.username||(tu&&tu.username)||"",nick:d.nick||"",badge:!!d.badge,descMax:d.desc_max||140,desc:d.description||"",created:d.created,av:d.avatar||d.tg_avatar||"",push:!(set&&set.push===false)};
+ const d=pr||{};me={first_name:d.first_name||(tu&&tu.first_name)||"Пользователь",username:d.username||(tu&&tu.username)||"",nick:d.nick||"",badge:!!d.badge,descMax:d.desc_max||140,desc:d.description||"",created:d.created,av:d.avatar||d.tg_avatar||"",push:!(set&&set.push===false),seller:!!d.seller,warns:d.warns||0};
  isAdmin=uid===ADMIN;isAgent=isAdmin||!!ag;
  document.body.classList.remove("auth");$("auth").hidden=true;$("app").hidden=false;
  $("avBtn").innerHTML=me.av?`<img src="${me.av}" alt="">`:esc((me.first_name[0]||"?").toUpperCase());
  $("mAdm").hidden=!isAdmin;$("mSup").hidden=!isAgent;
- go("market");pollUnread();setInterval(pollUnread,8000);
+ const hb=()=>fb("presence/"+uid,"PUT",Date.now()).catch(()=>{});hb();setInterval(hb,30000);$("mp").dataset.a=uid;go("market");pollUnread();setInterval(pollUnread,8000);
  setInterval(async()=>{const b=await fb("bans/"+uid).catch(()=>null);if(b&&(b.until===0||b.until>Date.now())){ls.del("vortexpay_session_uid");showBan(b)}},30000)}
 
 /* ---------- Navigation ---------- */
 const M=h=>{$("main").innerHTML=h};
-function go(v,a){timers.forEach(clearInterval);timers=[];cur=v;document.querySelectorAll(".ddm").forEach(x=>x.classList.remove("open"));
- document.querySelectorAll(".nav a[data-v]").forEach(x=>x.classList.toggle("on",x.dataset.v===v));window.scrollTo(0,0);
+function go(v,a){timers.forEach(clearInterval);timers=[];cur=v;curArg=a;document.querySelectorAll(".ddm").forEach(x=>x.classList.remove("open"));
+ document.querySelectorAll(".nav a[data-v],.bnav a[data-v]").forEach(x=>x.classList.toggle("on",x.dataset.v===v));window.scrollTo(0,0);
  M('<div class="empty">Загрузка…</div>');(V[v]||V.market)(a).catch(e=>M(`<div class="empty"><b>Ошибка</b>${esc(e.message)}</div>`))}
-document.addEventListener("click",e=>{const a=e.target.closest("[data-v]");if(a&&a.closest(".nav")){go(a.dataset.v);return}
+document.addEventListener("click",e=>{const a=e.target.closest("[data-v]");if(a&&a.closest(".nav,.bnav")){go(a.dataset.v,a.dataset.a);return}
  if(e.target.id==="helpBtn"){$("helpMenu").classList.toggle("open");$("userMenu").classList.remove("open");return}
  if(e.target.closest("#avBtn")){$("userMenu").classList.toggle("open");$("helpMenu").classList.remove("open");return}
  if(!e.target.closest(".ddm"))document.querySelectorAll(".ddm").forEach(x=>x.classList.remove("open"))});
 $("logo").onclick=()=>go("market");
-$("q").oninput=()=>{if(cur!=="market")go("market");else V.market()};
+$("q").onkeydown=e=>{if(e.key==="Enter")go("list",{q:$("q").value.trim()})};
 $("logout").onclick=()=>{ls.del("vortexpay_session_uid");tg&&tg.close?tg.close():location.reload()};
 
 /* ---------- Products ---------- */
-const CATS=["Roblox","Игры","Подписки","Аккаунты","Другое"];
+const V={};let curArg;
+const CATS=[["Roblox","🎮"],["Игры","🕹️"],["Подписки","📺"],["Аккаунты","👤"],["Другое","📦"]];
 const pprice=p=>Math.round(p.price*(100-(p.discount||0)))/100;
 const stockTxt=p=>p.stock==null||p.stock===""?"∞":p.stock;
+const avail=p=>p.active!==false&&(p.stock==null||p.stock===""||p.stock>0);
+const stars=n=>{n=Math.round(n)||0;return"★".repeat(n)+"☆".repeat(5-n)};
+const bad=t=>/(https?:\/\/|www\.|t\.me|telegram\.me|@\w{4,}|\+?\d[\d\s().-]{9,}\d)/i.test(t||"");
+const sellerOf=p=>(uc[p.owner]||{}).p||{};
 async function allProducts(){const o=(await fb("products").catch(()=>null))||{};return Object.values(o).sort((a,b)=>(b.bumpAt||0)-(a.bumpAt||0))}
-async function sellers(list){const ids=[...new Set(list.map(p=>p.owner))];await Promise.all(ids.map(uinfo))}
-function pcard(p,own){const im=p.images&&p.images[0]?`<img src="${p.images[0]}" alt="">`:'<div class="ph">▧</div>';const sp=uc[p.owner]||{t:0,p:{}};const s=sp.p;
- return `<article class="pc" style="${p.active===false?"opacity:.55":""}">${im}<div class="pb"><div class="pt2">${esc(p.titleRu)}<div class="mt">${esc(p.titleEn)}</div></div><div class="pd">${esc(p.descRu)}</div>
- <div><span class="pr">${rub(pprice(p))}</span>${p.discount?`<span class="old">${rub(p.price)}</span><span class="dsc">−${p.discount}%</span>`:""}</div>
- <div class="mt">${esc(p.category)} · В наличии: ${stockTxt(p)} · ${esc(nickOf(s)||p.sellerName)}${chk(s)}</div>
- <div class="pa">${own?`<button class="b2" data-e="${p.id}">Изменить</button><button class="b2" data-bump="${p.id}">Поднять</button><button class="b2" data-tg="${p.id}">${p.active===false?"Показать":"Скрыть"}</button><button class="b2" data-dup="${p.id}">Копия</button><button class="bdg" data-del="${p.id}">Удалить</button>`:`<button class="b" data-buy="${p.id}">Купить</button>`}</div></div></article>`}
+async function sellers(l){await Promise.all([...new Set(l.map(p=>p.owner))].map(uinfo))}
+const rate=s=>s.rcnt?`<span class="rt">★ ${(+s.rating).toFixed(1)}</span> <span class="mt">(${s.rcnt})</span>`:'<span class="mt">Нет отзывов</span>';
+const av2=(s,n,c="av2")=>`<span class="${c}">${s.avatar||s.tg_avatar?`<img src="${s.avatar||s.tg_avatar}" alt="">`:esc((n||"?")[0].toUpperCase())}</span>`;
+function row(p){const s=sellerOf(p),n=nickOf(s)||p.sellerName;return `<div class="or" data-o="${p.id}"><div class="oc1" data-u="${p.owner}">${av2(s,n)}<div><b>${esc(n)}${chk(s)}</b><div>${rate(s)}</div></div></div><div class="oc2"><b>${esc(p.titleRu)}</b><div class="pd">${esc((p.descRu||"").slice(0,110))}</div></div><div class="oc3">${stockTxt(p)} шт.</div><div class="oc4"><span class="pr">${rub(pprice(p))}</span>${p.discount?`<span class="dsc">−${p.discount}%</span>`:""}</div></div>`}
+const tbl=l=>l.length?`<div class="tb"><div class="oh"><div>Продавец</div><div>Описание</div><div>Наличие</div><div>Цена</div></div>${l.map(row).join("")}</div>`:'<div class="empty"><b>Предложений не найдено</b>Измените фильтры или поисковый запрос.</div>';
+document.addEventListener("click",e=>{const u=e.target.closest("[data-u]");if(u){go("user",u.dataset.u);return}const c=e.target.closest("[data-cat]");if(c){go("list",{cat:c.dataset.cat});return}const o=e.target.closest(".or[data-o]");if(o)go("offer",o.dataset.o)},true);
+document.addEventListener("click",async e=>{const b=e.target.closest("[data-rr]");if(!b)return;const t=(prompt("Ваш ответ на отзыв:")||"").trim();if(!t)return;if(bad(t))return toast("Контакты и ссылки запрещены");const r=await cmd("review_reply",{order:b.dataset.rr,text:t});toast(r.ok?"Ответ опубликован":r.msg);if(r.ok)go(cur,curArg)});
+async function revList(id){const l=Object.values((await fb("reviews/"+id).catch(()=>null))||{}).sort((a,b)=>b.ts-a.ts);
+ return l.map(r=>`<div class="rl"><b><span class="rt">${stars(r.stars)}</span> <span class="mt">${esc(r.buyerName)} · ${dt(r.ts)} · ${esc(r.title)}</span></b><span>${esc(r.text)||"Без комментария"}</span>${r.reply?`<div class="msg" style="max-width:100%;margin-top:6px"><small>Ответ продавца</small>${esc(r.reply)}</div>`:id===uid?`<div><button class="b2" style="margin-top:6px;padding:4px 10px" data-rr="${r.order}">Ответить</button></div>`:""}</div>`).join("")||'<div class="mt">Отзывов пока нет</div>'}
+
+V.market=async()=>{const all=(await allProducts()).filter(avail);await sellers(all.slice(0,40));
+ M(`<div class="pt">Каталог</div><div class="sbig"><input id="hq" placeholder="Поиск по ${all.length} предложениям" autocomplete="off"><button class="b" id="hs">Найти</button></div>
+ <div class="tiles">${CATS.map(c=>`<a class="tile" data-cat="${c[0]}"><span>${c[1]}</span><b>${c[0]}</b><small>${all.filter(p=>p.category===c[0]).length} предложений</small></a>`).join("")}</div>
+ <div class="h2">Новые предложения</div>${tbl(all.slice(0,12))}${all.length>12?'<div class="row"><button class="b2" data-cat="">Показать все предложения</button></div>':""}`);
+ const s=()=>go("list",{q:$("hq").value.trim()});$("hs").onclick=s;$("hq").onkeydown=e=>{if(e.key==="Enter")s()}};
+
+V.list=async a=>{a=a||{};const all=(await allProducts()).filter(avail);await sellers(all);
+ const st={cat:a.cat||"",q:a.q||""},hay=p=>[p.titleRu,p.titleEn,p.descRu,p.descEn,p.sellerName,nickOf(sellerOf(p))].join(" ").toLowerCase();
+ M(`<div class="pt">${st.cat?esc(st.cat):st.q?"Поиск: "+esc(st.q):"Все предложения"}</div>
+ <div class="chips"><span class="chip ${!st.cat?"on":""}" data-cat="">Все</span>${CATS.map(c=>`<span class="chip ${c[0]===st.cat?"on":""}" data-cat="${c[0]}">${c[1]} ${c[0]}</span>`).join("")}</div>
+ <div class="card fl"><input class="in" id="fq" placeholder="Поиск" value="${esc(st.q)}"><select class="in" id="fs"><option value="new">Сначала новые</option><option value="pa">Сначала дешёвые</option><option value="pd">Сначала дорогие</option><option value="rt">По рейтингу продавца</option></select><input class="in" id="f1" type="number" placeholder="Цена от"><input class="in" id="f2" type="number" placeholder="до"><label><input type="checkbox" id="fc"> Проверенные ☑️</label></div><div id="sm"></div><div id="lr"></div>`);
+ const draw=()=>{const q=$("fq").value.trim().toLowerCase(),mn=$("f1").value,mx=$("f2").value,ck=$("fc").checked;
+  let l=all.filter(p=>(!st.cat||p.category===st.cat)&&(!q||hay(p).includes(q))&&(!mn||pprice(p)>=+mn)&&(!mx||pprice(p)<=+mx)&&(!ck||sellerOf(p).badge));
+  const so={pa:(x,y)=>pprice(x)-pprice(y),pd:(x,y)=>pprice(y)-pprice(x),rt:(x,y)=>(sellerOf(y).rating||0)-(sellerOf(x).rating||0),new:(x,y)=>(y.bumpAt||0)-(x.bumpAt||0)};l.sort(so[$("fs").value]);
+  const ids=[...new Set(all.map(p=>p.owner))].filter(id=>q&&nickOf(uc[id].p).toLowerCase().includes(q));
+  $("sm").innerHTML=ids.length?`<div class="chips">${ids.map(id=>`<span class="chip" data-u="${id}">👤 ${esc(nickOf(uc[id].p))}</span>`).join("")}</div>`:"";$("lr").innerHTML=tbl(l)};
+ ["fq","fs","f1","f2","fc"].forEach(i=>{$(i).oninput=draw;$(i).onchange=draw});draw()};
+
+V.offer=async id=>{const p=await fb("products/"+id);if(!p)return M('<div class="empty"><b>Предложение не найдено</b></div>');const s=await uinfo(p.owner),n=nickOf(s)||p.sellerName;
+ const rest=(await allProducts()).filter(x=>x.owner===p.owner&&x.id!==id&&avail(x));await sellers(rest);
+ M(`<div class="g2c"><div><div class="card">${p.images&&p.images.length?`<div class="gal">${p.images.map(i=>`<img src="${i}" alt="">`).join("")}</div>`:""}<h1 style="font-size:24px">${esc(p.titleRu)}</h1><div class="mt">${esc(p.titleEn)} · ${esc(p.category)}</div>
+ <p class="pd" style="margin:12px 0;font-size:14px">${esc(p.descRu)}</p><p class="pd" style="font-size:14px">${esc(p.descEn)}</p></div><div class="h2">Отзывы о продавце</div><div class="card" id="rv">…</div></div>
+ <div><div class="card"><div class="pr" style="font-size:30px">${rub(pprice(p))}${p.discount?`<span class="old">${rub(p.price)}</span><span class="dsc">−${p.discount}%</span>`:""}</div><div class="mt" style="margin:6px 0 12px">В наличии: ${stockTxt(p)}</div>${avail(p)?'<button class="b" style="width:100%;padding:13px" id="by">Купить</button>':'<div class="st">Недоступно</div>'}
+ <div class="warn">Оплачивайте и общайтесь только в VortexPay. Контакты вне сервиса запрещены.</div></div>
+ <div class="card" data-u="${p.owner}" style="cursor:pointer;display:flex;gap:12px;align-items:center">${av2(s,n)}<div><b>${esc(n)}${chk(s)}</b><div>${rate(s)}</div></div></div></div></div>${rest.length?`<div class="h2">Другие предложения продавца</div>${tbl(rest)}`:""}`);
+ if($("by"))$("by").onclick=()=>buy(id);$("rv").innerHTML=await revList(p.owner)};
+
+V.user=async id=>{id=id||uid;delete uc[id];const [s,pres]=await Promise.all([uinfo(id),fb("presence/"+id).catch(()=>null)]);if(!s.first_name&&!s.created)return M('<div class="empty"><b>Пользователь не найден</b></div>');
+ const n=nickOf(s),on=pres&&Date.now()-pres<9e4,all=(await allProducts()).filter(p=>p.owner===id&&avail(p));await sellers(all);
+ M(`<div class="card pf">${av2(s,n,"av3")}<div style="flex:1;min-width:200px"><div style="font-size:24px;font-weight:800">${esc(n)}${chk(s)}</div><div class="mt"><span class="dot ${on?"on":""}"></span>${on?"Онлайн":pres?"Был(а) "+dt(pres):"Не в сети"}${s.username?" · @"+esc(s.username):""}${s.created?" · На сайте с "+dt(s.created):""}</div>
+ <div style="margin:8px 0">${rate(s)} ${s.seller?'<span class="st ok">Продавец</span>':""}</div><p style="color:var(--hint)">${esc(s.description||"Описание не указано")}</p></div>
+ <div>${id===uid?'<button class="b2" id="ps">Настройки</button>':'<button class="b2" id="cp">Пожаловаться</button>'}</div></div><div class="h2">Предложения (${all.length})</div>${tbl(all)}<div class="h2">Отзывы</div><div class="card" id="rv">…</div>`);
+ if($("ps"))$("ps").onclick=()=>go("profile");if($("cp"))$("cp").onclick=()=>go("ticket",{topic:"Жалоба на пользователя",text:`Жалоба на пользователя ${n} (ID ${id}): `});
+ $("rv").innerHTML=await revList(id)};
+
+/* ---------- Sales ---------- */
+function mcard(p){const im=p.images&&p.images[0]?`<img src="${p.images[0]}" alt="">`:'<div class="ph">▧</div>';
+ return `<article class="pc" style="${p.active===false?"opacity:.55":""}">${im}<div class="pb"><div class="pt2">${esc(p.titleRu)}</div><div><span class="pr">${rub(pprice(p))}</span>${p.discount?`<span class="dsc">−${p.discount}%</span>`:""}</div><div class="mt">${esc(p.category)} · В наличии: ${stockTxt(p)}${p.active===false?" · скрыт":""}</div>
+ <div class="pa"><button class="b2" data-e="${p.id}">Изменить</button><button class="b2" data-bump="${p.id}">Поднять</button><button class="b2" data-tg="${p.id}">${p.active===false?"Показать":"Скрыть"}</button><button class="b2" data-dup="${p.id}">Копия</button><button class="bdg" data-del="${p.id}">Удалить</button></div></div></article>`}
 function bindCards(){const g=(a,f)=>document.querySelectorAll(`[${a}]`).forEach(b=>b.onclick=()=>f(b.getAttribute(a)));
- g("data-buy",buy);g("data-e",id=>openForm(id));g("data-del",async id=>{if(!confirm("Удалить товар?"))return;await fb("products/"+id,"DELETE");go("sales")});
+ g("data-e",id=>openForm(id));g("data-del",async id=>{if(!confirm("Удалить товар?"))return;await fb("products/"+id,"DELETE");go("sales")});
  g("data-tg",async id=>{const p=await fb("products/"+id);await fb("products/"+id,"PATCH",{active:p.active===false});go("sales")});
  g("data-dup",async id=>{const p=await fb("products/"+id),n={...p,id:"P"+rid(),titleRu:p.titleRu+" (копия)",created:Date.now(),bumpAt:Date.now()};await fb("products/"+n.id,"PUT",n);go("sales")});
  g("data-bump",async id=>{const p=await fb("products/"+id),w=6*36e5-(Date.now()-(p.bumpAt||0));if(w>0)return toast(`Поднять можно через ${Math.ceil(w/6e4)} мин.`);await fb("products/"+id,"PATCH",{bumpAt:Date.now()});toast("Товар поднят");go("sales")})}
-let catF="Все";
-const V={};
-V.market=async()=>{const all=(await allProducts()).filter(p=>p.active!==false&&(p.stock==null||p.stock===""||p.stock>0));await sellers(all);
- const q=$("q").value.toLowerCase().trim(),list=all.filter(p=>(catF==="Все"||p.category===catF)&&(!q||[p.titleRu,p.titleEn,p.descRu,p.descEn,p.sellerName].join(" ").toLowerCase().includes(q)));
- M(`<div class="pt">Каталог</div><div class="chips">${["Все",...CATS].map(c=>`<span class="chip ${c===catF?"on":""}" data-c="${c}">${c}</span>`).join("")}</div>
- <div class="grid">${list.map(p=>pcard(p)).join("")}</div>${list.length?"":'<div class="empty"><b>Товаров не найдено</b>Станьте первым — откройте «Продажи» и добавьте товар.</div>'}`);
- document.querySelectorAll("[data-c]").forEach(c=>c.onclick=()=>{catF=c.dataset.c;V.market()});bindCards()};
-V.sales=async()=>{const all=(await allProducts()).filter(p=>p.owner===uid);const os=Object.values(await myOrders()).filter(o=>o.sellerId===uid).sort((a,b)=>b.created-a.created);
- M(`<div class="pt">Продажи</div><div class="row"><button class="b" id="np">＋ Добавить товар</button><span class="mt">Поднять товар в каталоге можно раз в 6 часов</span></div><div id="pf"></div>
- <div class="grid">${all.map(p=>pcard(p,1)).join("")}</div>${all.length?"":'<div class="empty"><b>У вас пока нет товаров</b></div>'}
+V.sales=async()=>{if(!me.seller)return go("seller");const all=(await allProducts()).filter(p=>p.owner===uid);const os=Object.values(await myOrders()).filter(o=>o.sellerId===uid).sort((a,b)=>b.created-a.created);
+ M(`<div class="pt">Продажи</div><div class="row"><button class="b" id="np">＋ Добавить товар</button><button class="b2" id="mp2">Мой публичный профиль</button><span class="mt">Поднять товар можно раз в 6 часов</span></div><div id="pf"></div>
+ <div class="grid">${all.map(mcard).join("")}</div>${all.length?"":'<div class="empty"><b>У вас пока нет товаров</b></div>'}
  <div class="h2">Заказы покупателей</div>${os.map(o=>ocard(o,1)).join("")||'<div class="empty">Заказов пока нет</div>'}`);
- $("np").onclick=()=>openForm();bindCards();bindOrders()};
+ $("np").onclick=()=>openForm();$("mp2").onclick=()=>go("user",uid);bindCards();bindOrders()};
 let draft=[];
 async function openForm(id){const p=id?await fb("products/"+id):{};draft=p.images||[];
  $("pf").innerHTML=`<div class="card"><div class="h2" style="margin-top:0">${id?"Изменить":"Новый"} товар</div><div class="g2">
  <label class="f">Название (RU) *<input id="tr" maxlength="100" value="${esc(p.titleRu||"")}"></label><label class="f">Title (EN) *<input id="te" maxlength="100" value="${esc(p.titleEn||"")}"></label>
  <label class="f">Описание (RU) *<textarea id="dr" maxlength="3000">${esc(p.descRu||"")}</textarea></label><label class="f">Description (EN) *<textarea id="de" maxlength="3000">${esc(p.descEn||"")}</textarea></label>
- <label class="f">Категория<select id="pc">${CATS.map(c=>`<option ${p.category===c?"selected":""}>${c}</option>`).join("")}</select></label>
+ <label class="f">Категория<select id="pc">${CATS.map(c=>`<option ${p.category===c[0]?"selected":""}>${c[0]}</option>`).join("")}</select></label>
  <label class="f">Цена, ₽ *<input id="pp" type="number" min="1" step="0.01" value="${p.price??""}"></label>
  <label class="f">Скидка, % (0–90)<input id="pdc" type="number" min="0" max="90" value="${p.discount||0}"></label>
  <label class="f">Количество (пусто = без лимита)<input id="ps" type="number" min="0" value="${p.stock??""}"></label>
- <label class="f">Автовыдача (текст отправится покупателю в чат сразу после заказа)<textarea id="pa">${esc(p.auto||"")}</textarea></label>
+ <label class="f">Автовыдача (отправится покупателю в чат сразу после заказа)<textarea id="pa">${esc(p.auto||"")}</textarea></label>
  <label class="f">Изображения (до 3)<input id="pi" type="file" accept="image/*" multiple></label></div>
  <div id="prev" class="row"></div><div class="row"><button class="b" id="sv">Сохранить</button><button class="b2" id="cn">Отмена</button></div><div class="msgs e" id="fe"></div></div>`;
  const pv=()=>{$("prev").innerHTML=draft.map((s,i)=>`<img src="${s}" data-x="${i}" title="Убрать" style="width:70px;height:70px;object-fit:cover;cursor:pointer">`).join("");document.querySelectorAll("[data-x]").forEach(i=>i.onclick=()=>{draft.splice(+i.dataset.x,1);pv()})};pv();
@@ -194,9 +250,27 @@ async function openForm(id){const p=id?await fb("products/"+id):{};draft=p.image
  $("cn").onclick=()=>$("pf").innerHTML="";
  $("sv").onclick=async()=>{const v=i=>$(i).value.trim(),price=Number(v("pp")),disc=Math.min(90,Math.max(0,Number(v("pdc"))||0));
   if(!v("tr")||!v("te")||!v("dr")||!v("de")||!(price>=1))return $("fe").textContent="Заполните RU/EN названия и описания, цена от 1 ₽.";
+  if(bad([v("tr"),v("te"),v("dr"),v("de")].join(" ")))return $("fe").textContent="Запрещено указывать ссылки, @username и телефоны (правило 3).";
   const item={id:id||"P"+rid(),owner:uid,sellerName:nickOf(me),titleRu:v("tr"),titleEn:v("te"),descRu:v("dr"),descEn:v("de"),category:v("pc"),price,discount:disc,stock:v("ps")===""?null:Math.max(0,parseInt(v("ps"))),auto:v("pa"),images:draft,active:p.active!==false,created:p.created||Date.now(),bumpAt:p.bumpAt||Date.now()};
   try{await fb("products/"+item.id,"PUT",item);toast("Сохранено");go("sales")}catch(e){$("fe").textContent="Не удалось сохранить: "+e.message}}}
 function img(file,max){return new Promise((ok,no)=>{const u=URL.createObjectURL(file),i=new Image();i.onload=()=>{const r=Math.min(1,max/Math.max(i.width,i.height)),c=document.createElement("canvas");c.width=i.width*r;c.height=i.height*r;c.getContext("2d").drawImage(i,0,0,c.width,c.height);URL.revokeObjectURL(u);ok(c.toDataURL("image/jpeg",.7))};i.onerror=no;i.src=u})}
+
+/* ---------- Seller application ---------- */
+const QUIZ=[["Где должны проходить оплата и выдача товара?","Внутри VortexPay|В личных сообщениях|На стороннем сайте"],["Можно ли давать контакты для общения вне сервиса?","Да, если просит покупатель|Нет, это запрещено"],["Когда продавец выдаёт товар?","В срок и в описанном виде|Когда будет удобно|После доплаты вне сервиса"],["Что делать, если товар закончился?","Скрыть или удалить предложение|Оставить и тянуть время|Попросить предоплату"],["Можно ли просить подтвердить получение до выдачи?","Да|Нет"],["Можно ли продавать взломанные аккаунты?","Нет|Да, если дёшево"],["Что с накруткой отзывов?","Разрешена|Запрещена и ведёт к блокировке"],["Как использовать личные данные покупателя?","Только для выполнения заказа|Публиковать при споре|Передавать знакомым"],["Сколько предупреждений ведёт к автоматической блокировке?","1|3|10"],["Можно ли просить у покупателя пароль или код входа?","Да, для выдачи|Нет, никогда"]];
+V.seller=async()=>{if(me.seller)return go("sales");const cd=+(await fb(`profiles/${uid}/seller_cd`).catch(()=>0))||0,wait=cd>Date.now();
+ M(`<div class="pt">Заявка на продавца</div><div class="card"><p style="margin-bottom:10px">Чтобы продавать, изучите правила и ответьте верно минимум на 9 из 10 вопросов теста.</p>
+ ${wait?`<div class="warn">Повторная попытка будет доступна через ${Math.ceil((cd-Date.now())/6e4)} мин. Перечитайте правила.</div>`:`<div class="rbox" id="rb2">${RULES.map(r=>`<div class="rl"><b>${r[0]}</b><span>${r[1]}</span></div>`).join("")}</div><label class="row"><input type="checkbox" id="rk" disabled> Я прочитал(а) правила (прокрутите до конца) и обязуюсь их соблюдать</label><button class="b" id="rs0" disabled>Начать тест</button>`}</div><div id="qz"></div>`);
+ if(wait)return;const bx=$("rb2"),cs=()=>{if(bx.scrollTop+bx.clientHeight>=bx.scrollHeight-8)$("rk").disabled=false};bx.onscroll=cs;cs();$("rk").onchange=()=>$("rs0").disabled=!$("rk").checked;
+ $("rs0").onclick=()=>{$("rs0").disabled=true;$("qz").innerHTML=`<div class="card">${QUIZ.map((q,i)=>`<div class="rl"><b>${i+1}. ${q[0]}</b>${q[1].split("|").map((o,j)=>`<label class="row" style="margin:4px 0"><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")}</div>`).join("")}<button class="b" id="qs">Отправить ответы</button><div class="msgs e" id="qm"></div></div>`;$("qz").scrollIntoView({behavior:"smooth"});
+  $("qs").onclick=async()=>{const a=QUIZ.map((_,i)=>{const r=document.querySelector(`input[name=q${i}]:checked`);return r?+r.value:-1});if(a.includes(-1))return sm("qm","Ответьте на все вопросы.",1);$("qs").disabled=true;const r=await cmd("seller_quiz",{answers:a});
+   if(r.ok){me.seller=true;toast("Вы стали продавцом!");go("sales")}else{sm("qm",r.msg||"Тест не пройден",1);$("qs").disabled=false}}}};
+
+/* ---------- Review ---------- */
+V.review=async id=>{const o=await fb("orders/"+id);if(!o||o.buyerId!==uid||o.status!=="completed"||o.reviewed)return M('<div class="empty"><b>Отзыв недоступен</b></div>');
+ M(`<div class="pt">Отзыв о заказе #${esc(o.code)}</div><div class="card" style="max-width:600px"><div class="stp5" id="st5">${[1,2,3,4,5].map(i=>`<span data-s="${i}">★</span>`).join("")}</div><label class="f" style="margin-top:12px">Комментарий<textarea id="rt" maxlength="500"></textarea></label><button class="b" id="rg">Отправить</button> <button class="b2" id="rsk">Пропустить</button><div class="msgs e" id="rm"></div></div>`);let v=5;
+ const paint=()=>document.querySelectorAll("#st5 span").forEach(s=>s.classList.toggle("on",+s.dataset.s<=v));paint();document.querySelectorAll("#st5 span").forEach(s=>s.onclick=()=>{v=+s.dataset.s;paint()});
+ $("rsk").onclick=()=>go("purchases");
+ $("rg").onclick=async()=>{const t=$("rt").value.trim();if(bad(t))return sm("rm","Нельзя указывать контакты и ссылки.",1);const r=await cmd("review_add",{order:id,stars:v,text:t});if(r.ok){toast("Спасибо за отзыв!");go("purchases")}else sm("rm",r.msg||"Ошибка",1)}};
 
 /* ---------- Orders & chat ---------- */
 async function myOrders(){const q=k=>fb("orders","GET",undefined,`?orderBy="${k}"&equalTo="${uid}"`).catch(()=>({}));const [a,b]=await Promise.all([q("buyerId"),q("sellerId")]);return{...(a||{}),...(b||{})}}
@@ -205,11 +279,11 @@ function ocard(o,seller){const s=STAT[o.status]||["",""];return `<div class="car
  <p class="mt" style="margin:8px 0">${rub(o.price)} · ${seller?"Покупатель: "+esc(o.buyerName):"Продавец: "+esc(o.sellerName)} · ${dt(o.created)}${o.nick?" · Roblox: "+esc(o.nick):""}</p>
  <div class="row" style="margin:0"><button class="b2" data-chat="${o.id}">Чат${unread[o.id]?` <span class="bd">${unread[o.id]}</span>`:""}</button>
  ${seller&&o.status==="pending"?`<button class="b" data-done="${o.id}">Отметить выполненным</button>`:""}${!seller&&o.status==="done"?`<button class="b" data-ok="${o.id}">Подтвердить получение</button>`:""}
- <button class="b2" data-disp="${o.code}">Открыть спор</button></div></div>`}
+ <button class="b2" data-disp="${o.code}">Открыть спор</button>${!seller&&o.status==="completed"&&!o.reviewed?`<button class="b2" data-rv="${o.id}">★ Оставить отзыв</button>`:""}</div></div>`}
 function bindOrders(){const g=(a,f)=>document.querySelectorAll(`[${a}]`).forEach(b=>b.onclick=()=>f(b.getAttribute(a)));
- g("data-chat",id=>go("chat",id));g("data-disp",c=>go("ticket",{order:c}));
+ g("data-chat",id=>go("chat",id));g("data-rv",id=>go("review",id));g("data-disp",c=>go("ticket",{order:c}));
  g("data-done",async id=>{if(!confirm("Отметить заказ выполненным?"))return;await fb("orders/"+id,"PATCH",{status:"done"});await sys(id,"Продавец отметил заказ выполненным. Проверьте товар и подтвердите получение.");const o=await fb("orders/"+id);note(o.buyerId,`Заказ #${o.code} выполнен. Подтвердите получение.`);go(cur)});
- g("data-ok",async id=>{if(!confirm("Подтвердить получение товара?"))return;await fb("orders/"+id,"PATCH",{status:"completed"});await sys(id,"Покупатель подтвердил получение. Заказ завершён.");go(cur)})}
+ g("data-ok",async id=>{if(!confirm("Подтвердить получение товара?"))return;await fb("orders/"+id,"PATCH",{status:"completed"});await sys(id,"Покупатель подтвердил получение. Заказ завершён.");go("review",id)})}
 const sys=(id,text)=>fb("chats/"+id,"POST",{by:"system",text,ts:Date.now()});
 const note=(to,text)=>fb("notify","POST",{to:String(to),text,ts:Date.now()}).catch(()=>{});
 async function buy(id){const p=await fb("products/"+id);if(!p||p.active===false)return toast("Товар недоступен");if(p.owner===uid)return toast("Нельзя купить свой товар");
@@ -230,7 +304,7 @@ V.chat=async id=>{const o=await fb("orders/"+id);if(!o||(o.buyerId!==uid&&o.sell
  bindOrders();let n=-1;const load=async()=>{const m=Object.values((await fb("chats/"+id))||{}).sort((a,b)=>a.ts-b.ts);ls.set("vp_r_"+id,Date.now());unread[id]=0;if(m.length===n)return;n=m.length;
   $("cl").innerHTML=m.map(x=>`<div class="msg ${x.by===uid?"me":""}"><small>${x.by==="system"?"VortexPay":esc(x.name||"")} · ${dt(x.ts)}</small>${esc(x.text)}</div>`).join("");$("cl").scrollTop=1e9};
  await load();timers.push(setInterval(()=>load().catch(()=>{}),3000));
- const send=async()=>{const t=$("ci").value.trim();if(!t)return;$("ci").value="";await fb("chats/"+id,"POST",{by:uid,name:nickOf(me),text:t,ts:Date.now()});n=-1;load()};
+ const send=async()=>{const t=$("ci").value.trim();if(!t)return;if(bad(t))return toast("Нельзя отправлять ссылки, @username и телефоны (правило 3)");$("ci").value="";await fb("chats/"+id,"POST",{by:uid,name:nickOf(me),text:t,ts:Date.now()});n=-1;load()};
  $("cs2").onclick=send;$("ci").onkeydown=e=>{if(e.key==="Enter")send()}};
 async function pollUnread(){try{const os=Object.values(await myOrders());let t=0;await Promise.all(os.map(async o=>{const m=await fb("chats/"+o.id).catch(()=>null);const lr=+ls.get("vp_r_"+o.id)||0;unread[o.id]=m?Object.values(m).filter(x=>x.by!==uid&&x.by!=="system"&&x.ts>lr).length:0;t+=unread[o.id]}));$("mb").hidden=!t;$("mb").textContent=t}catch{}}
 V.finance=async()=>M(`<div class="pt">Финансы</div><div class="card"><div class="mt">Баланс VortexPay</div><div style="font-size:34px;font-weight:800;margin:6px 0">${rub(0)}</div><div class="warn">Демо-режим: реальные платежи и удержание средств не подключены.</div></div>`);
@@ -245,8 +319,8 @@ V.profile=async()=>{M(`<div class="pt">Профиль</div><div class="card"><di
  $("pp2").onchange=async e=>{await fb(`settings/${uid}/push`,"PUT",e.target.checked);me.push=e.target.checked}};
 
 /* ---------- Help ---------- */
-const RULES=[["1. Честная торговля","Запрещены обман, подмена товара и введение покупателя в заблуждение."],["2. Сделки только внутри VortexPay","Нельзя переводить оплату или выдачу товара за пределы сервиса."],["3. Запрет обхода комиссии","Нельзя уводить покупателей на сторонние сайты, чаты и платёжные системы."],["4. Запрещённые товары","Украденные и взломанные аккаунты, персональные данные, вредоносное ПО и всё, что нарушает закон."],["5. Правдивые предложения","Название, цена, наличие и изображения должны соответствовать товару."],["6. Исполнение заказа","Продавец выдаёт товар в описанном виде и срок. Нельзя просить подтверждение до выдачи."],["7. Общение","Запрещены угрозы, оскорбления, спам, шантаж и публикация чужих данных."],["8. Отзывы","Запрещены накрутка и покупка отзывов."],["9. Безопасность аккаунта","Не передавайте коды входа и доступы третьим лицам. Поддержка не просит пароли и коды."],["10. Мультиаккаунты","Запрещены обход блокировок, мультиаккаунтинг и эксплуатация ошибок."],["11. Споры","Каждый спор рассматривается индивидуально; учитываются переписка и доказательства."],["12. Ответственность","Возможны удаление товара, отмена сделки, возврат, ограничение или блокировка аккаунта."]];
-V.rules=async()=>M(`<div class="pt">Правила</div><div class="card">${RULES.map(r=>`<div class="rl"><b>${r[0]}</b><span>${r[1]}</span></div>`).join("")}</div>`);
+const RULES=[["1. Честная торговля","Запрещены обман, мошенничество, подмена товара и введение покупателя в заблуждение."],["2. Сделки только внутри VortexPay","Оплата, выдача и общение — только внутри сервиса. Сделки вне VortexPay не защищаются и караются блокировкой."],["3. Запрет контактов вне сервиса","Нельзя публиковать ссылки, @username, номера телефонов и просить связаться в другом месте. Такие сообщения блокируются автоматически."],["4. Запрещённые товары","Украденные и взломанные аккаунты, персональные данные, вредоносное ПО, всё, что нарушает закон."],["5. Правдивые предложения","Название, описание, цена, наличие и фото должны соответствовать товару. Запрещены дубликаты и фиктивные скидки."],["6. Сроки и выдача","Продавец обязан выдать товар в описанном виде и в заявленный срок и отвечать в чате заказа в течение 24 часов."],["7. Подтверждение получения","Нельзя просить подтвердить получение до фактической выдачи, а также давить на покупателя."],["8. Наличие","Если товар закончился — скройте или удалите предложение. Принимать заказы на отсутствующий товар запрещено."],["9. Общение","Запрещены оскорбления, угрозы, травля, шантаж, спам и публикация чужих личных данных."],["10. Отзывы","Запрещены накрутка, покупка отзывов, угрозы ради изменения оценки. Отзыв можно оставить только за завершённый заказ."],["11. Безопасность аккаунта","Никому не передавайте коды входа и доступы. Поддержка и продавцы не вправе просить пароль или код."],["12. Мультиаккаунты","Запрещены обход блокировок, второй аккаунт для накрутки и эксплуатация ошибок сервиса."],["13. Споры и возвраты","Каждый спор рассматривается индивидуально по переписке и доказательствам. Решение поддержки обязательно к исполнению."],["14. Ложные обращения","Заведомо ложные жалобы, спам в поддержку и оскорбление сотрудников караются предупреждением."],["15. Конфиденциальность","Данные покупателя используются только для выполнения заказа и не передаются третьим лицам."],["16. Реклама","Любая реклама сторонних сервисов, каналов и магазинов запрещена."],["17. Решения администрации","Администрация вправе удалять предложения, отменять сделки и ограничивать доступ при подозрении на нарушение."]];
+V.rules=async()=>M(`<div class="pt">Правила</div><div class="card">${RULES.map(r=>`<div class="rl"><b>${r[0]}</b><span>${r[1]}</span></div>`).join("")}</div><div class="h2">Система наказаний</div><div class="card"><div class="rl"><b>Предупреждение</b><span>За первое нарушение. Три предупреждения — автоматическая блокировка на 7 дней.</span></div><div class="rl"><b>Удаление предложений и отмена сделок</b><span>За нарушения правил 4, 5, 8.</span></div><div class="rl"><b>Потеря статуса продавца</b><span>За обман покупателей и систематические споры.</span></div><div class="rl"><b>Бессрочная блокировка</b><span>За мошенничество, продажу запрещённых товаров, обход блокировок и обход комиссии.</span></div></div>`);
 const FAQ=[["Покупателям",[["Как купить товар?","Откройте каталог, нажмите «Купить» — создастся заказ и чат с продавцом."],["Когда подтверждать получение?","Только после того, как вы проверили товар."],["Товар не соответствует описанию","Сначала напишите продавцу в чат заказа, затем откройте спор кнопкой «Открыть спор»."]]],["Продавцам",[["Как добавить товар?","Раздел «Продажи» → «Добавить товар». Нужны RU и EN название и описание."],["Что такое автовыдача?","Текст, который автоматически отправится покупателю в чат сразу после заказа."],["Как поднять товар?","Кнопка «Поднять» на карточке товара — раз в 6 часов."]]],["Безопасность",[["Кому нельзя сообщать код входа?","Никому, включая сотрудников поддержки."],["Меня просят оплатить вне сервиса","Откажитесь и отправьте жалобу через «Отправить запрос»."]]]];
 V.center=async()=>{M(`<div class="pt">Центр помощи</div><div class="cg"><div class="card"><h3>База знаний</h3><p>Читайте инструкции и ответы на частые вопросы ниже.</p><button class="b2" onclick="document.getElementById('kb').scrollIntoView({behavior:'smooth'})">Поиск статей</button></div>
  <div class="card"><h3>Заявки</h3><p>Отслеживайте ход выполнения своих заявок и ответы поддержки.</p><button class="b2" data-g="mytickets">Перейти в Заявки</button></div>
@@ -254,60 +328,87 @@ V.center=async()=>{M(`<div class="pt">Центр помощи</div><div class="c
  <div id="kb">${FAQ.map(s=>`<div class="h2">${s[0]}</div><div class="card">${s[1].map(f=>`<details><summary>${f[0]}</summary><p>${f[1]}</p></details>`).join("")}</div>`).join("")}</div>`);document.querySelectorAll("[data-g]").forEach(b=>b.onclick=()=>go(b.dataset.g))};
 const TOPICS=["Проблема с заказом","Вопрос по оплате / финансам","Жалоба на пользователя","Проблема с товаром","Блокировка аккаунта","Другое"];
 V.ticket=async pre=>{pre=pre||{};M(`<div class="pt">Отправить запрос</div><div class="card" style="max-width:720px"><div class="warn">Время ожидания ответа может быть увеличено в связи с высокой загруженностью запросами. Приносим извинения за неудобства.</div>
- <label class="f">Что привело вас сюда?<select id="tp">${TOPICS.map(t=>`<option>${t}</option>`).join("")}</select></label>
+ <label class="f">Что привело вас сюда?<select id="tp">${TOPICS.map(t=>`<option ${t===pre.topic?"selected":""}>${t}</option>`).join("")}</select></label>
  <label class="f">Ваш ник<input id="tn" maxlength="64" value="${esc(nickOf(me))}"></label>
  <label class="f">Номер заказа (если есть)<input id="to" maxlength="32" value="${esc(pre.order||"")}" placeholder="Например, A1B2C3D"></label>
  <label class="f">Вы покупатель или продавец?<select id="tr2"><option value="buyer">Покупатель</option><option value="seller">Продавец</option></select></label>
- <label class="f">Комментарий *<textarea id="tx" maxlength="3000" placeholder="Опишите проблему подробно…"></textarea></label>
+ <label class="f">Комментарий *<textarea id="tx" maxlength="3000" placeholder="Опишите проблему подробно…">${esc(pre.text||"")}</textarea></label>
  <button class="b" id="ts">Отправить</button><div class="msgs" id="tm"></div></div>`);
  $("ts").onclick=async()=>{const text=$("tx").value.trim();if(text.length<10)return sm("tm","Опишите проблему (минимум 10 символов).",1);
   $("ts").disabled=true;sm("tm","Отправляем…");try{const r=await cmd("ticket_new",{topic:$("tp").value,nick:$("tn").value.trim(),order:$("to").value.trim(),role:$("tr2").value,text});
    if(r.ok){toast("Заявка отправлена");go("mytickets")}else{sm("tm",r.msg||"Ошибка",1);$("ts").disabled=false}}catch(e){sm("tm",e.message,1);$("ts").disabled=false}}};
-const TS={open:["Открыта",""],work:["В работе","wk"],closed:["Решена","ok"]};
-const trep=t=>(t.replies||[]).map(r=>`<div class="msg ${r.by==="user"?"me":""}"><small>${r.by==="user"?"Вы":"Поддержка"} · ${dt(r.ts)}</small>${esc(r.text)}</div>`).join("");
-V.mytickets=async()=>{const o=(await fb("user_tickets/"+uid))||{},l=Object.values(o).sort((a,b)=>b.created-a.created);
- M(`<div class="pt">Мои запросы</div>${l.map(t=>`<div class="card"><div class="row" style="justify-content:space-between;margin:0"><b>#${t.id} · ${esc(t.topic)}</b><span class="st ${TS[t.status][1]}">${TS[t.status][0]}</span></div>
- <div class="mt">${dt(t.created)}${t.order?" · Заказ "+esc(t.order):""}</div><div class="msg" style="max-width:100%">${esc(t.text)}</div>${trep(t)}${t.solution?`<div class="warn" style="border-color:var(--grn)"><b>Решение:</b><br>${esc(t.solution)}</div>`:""}</div>`).join("")||'<div class="empty"><b>Запросов пока нет</b></div>'}`)};
+const TS={open:["Открыта",""],work:["В работе","wk"],closed:["Решена","ok"]},PRI={low:"Низкий",norm:"Обычный",high:"Высокий"};
+const QR=["Здравствуйте! Уточните, пожалуйста, номер заказа и опишите ситуацию подробнее.","Мы передали информацию продавцу и ожидаем его ответа. Пожалуйста, ожидайте.","Проверили заказ: возврат оформлен в соответствии с правилами.","Нарушение подтвердилось. К продавцу применены меры согласно правилам.","Нарушений не выявлено. Рекомендуем завершить заказ в штатном порядке."];
+const trep=t=>(t.replies||[]).map(r=>`<div class="msg ${r.by==="user"?"me":""}"><small>${r.by==="user"?"Пользователь":"Поддержка"} · ${dt(r.ts)}</small>${esc(r.text)}</div>`).join("");
+V.mytickets=async()=>{const l=Object.values((await fb("user_tickets/"+uid))||{}).sort((a,b)=>b.created-a.created);
+ M(`<div class="pt">Мои запросы</div><div class="row"><button class="b" id="nt">＋ Новая заявка</button></div>${l.map(t=>`<div class="card"><div class="row" style="justify-content:space-between;margin:0"><b>#${t.id} · ${esc(t.topic)}</b><span class="st ${TS[t.status][1]}">${TS[t.status][0]}</span></div><div class="mt">${dt(t.created)}${t.order?" · Заказ "+esc(t.order):""}</div><div class="msg" style="max-width:100%">${esc(t.text)}</div>${trep(t)}${t.solution?`<div class="warn" style="border-color:var(--grn)"><b>Решение:</b><br>${esc(t.solution)}</div>`:""}
+ ${t.status==="closed"?(t.rating?`<div class="mt">Ваша оценка поддержки: <span class="rt">${stars(t.rating)}</span></div>`:`<div class="row"><span class="mt">Оцените поддержку:</span>${[1,2,3,4,5].map(i=>`<button class="b2" data-rt="${t.id}:${i}" style="padding:3px 10px">${i}★</button>`).join("")}</div>`):""}
+ <div class="row"><input class="in" style="flex:1;min-width:180px" maxlength="1500" id="ur${t.id}" placeholder="${t.status==="closed"?"Не согласны? Напишите — заявка откроется снова":"Дополнить заявку…"}"><button class="b2" data-ur="${t.id}">Отправить</button></div></div>`).join("")||'<div class="empty"><b>Запросов пока нет</b></div>'}`);
+ $("nt").onclick=()=>go("ticket");
+ document.querySelectorAll("[data-rt]").forEach(b=>b.onclick=async()=>{const[i,s]=b.dataset.rt.split(":");const r=await cmd("ticket_rate",{id:+i,stars:+s});toast(r.ok?"Спасибо!":r.msg);go("mytickets")});
+ document.querySelectorAll("[data-ur]").forEach(b=>b.onclick=async()=>{const t=$("ur"+b.dataset.ur).value.trim();if(!t)return;const r=await cmd("ticket_user_reply",{id:+b.dataset.ur,text:t});toast(r.ok?"Отправлено":r.msg);if(r.ok)go("mytickets")})};
 
-/* ---------- Support ---------- */
-let sf="open";
+/* ---------- Support desk ---------- */
+let sf="open",sq="";
 V.support=async tid=>{if(!isAgent)return M('<div class="empty">Нет доступа</div>');
- if(tid){const t=await fb("tickets/"+tid);if(!t)return M('<div class="empty">Не найдено</div>');
-  M(`<a class="b2" style="display:inline-block;margin-bottom:12px" id="bk">← К заявкам</a><div class="card"><div class="row" style="justify-content:space-between;margin:0"><b>#${t.id} · ${esc(t.topic)}</b><span class="st ${TS[t.status][1]}">${TS[t.status][0]}</span></div>
-  <p class="mt" style="margin:8px 0">Пользователь: ${esc(t.name)} (ID ${t.uid}) · Ник: ${esc(t.nick)} · ${t.role==="seller"?"Продавец":"Покупатель"} · Заказ: ${esc(t.order||"—")} · ${dt(t.created)}</p>
-  <div class="msg" style="max-width:100%">${esc(t.text)}</div>${trep(t)}${t.solution?`<div class="warn"><b>Решение:</b> ${esc(t.solution)}</div>`:""}
-  ${t.status!=="closed"?`<textarea class="in" style="width:100%;min-height:80px;margin-top:10px" id="ar" placeholder="Ответ пользователю (придёт в бота)"></textarea><div class="row"><button class="b2" id="at">Взять в работу</button><button class="b" id="as">Ответить</button><button class="b" style="background:var(--grn);border-color:var(--grn)" id="ac">Решено и закрыть</button></div><div class="msgs" id="am"></div>`:""}</div>`);
-  $("bk").onclick=()=>go("support");const run=async(c,txt)=>{sm("am","Выполняем…");const r=await cmd(c,{id:t.id,text:txt});if(r.ok){toast("Готово");go("support",t.id)}else sm("am",r.msg||"Ошибка",1)};
-  if($("at"))$("at").onclick=()=>run("ticket_take","");if($("as"))$("as").onclick=()=>{const x=$("ar").value.trim();x?run("ticket_reply",x):sm("am","Введите ответ",1)};
-  if($("ac"))$("ac").onclick=()=>{const x=$("ar").value.trim();x?run("ticket_close",x):sm("am","Напишите решение",1)};return}
- const l=Object.values((await fb("tickets"))||{}).sort((a,b)=>b.created-a.created),f=l.filter(t=>t.status===sf);
- M(`<div class="pt">Заявки поддержки</div><div class="tabs">${["open","work","closed"].map(s=>`<a class="${s===sf?"on":""}" data-s="${s}">${TS[s][0]} (${l.filter(t=>t.status===s).length})</a>`).join("")}</div>
- ${f.map(t=>`<div class="card row" style="justify-content:space-between"><div><b>#${t.id} · ${esc(t.topic)}</b><div class="mt">${esc(t.name)} · ${dt(t.created)}</div></div><button class="b2" data-o="${t.id}">Открыть</button></div>`).join("")||'<div class="empty">Пусто</div>'}`);
- document.querySelectorAll("[data-s]").forEach(a=>a.onclick=()=>{sf=a.dataset.s;V.support()});document.querySelectorAll("[data-o]").forEach(b=>b.onclick=()=>go("support",b.dataset.o))};
+ if(tid){const t=await fb("tickets/"+tid);if(!t)return M('<div class="empty">Заявка не найдена</div>');
+  M(`<a class="b2" style="display:inline-block;margin-bottom:12px" id="bk">← К заявкам</a><div class="card"><div class="row" style="justify-content:space-between;margin:0"><b>#${t.id} · ${esc(t.topic)}</b><span><span class="st">${PRI[t.prio||"norm"]}</span> <span class="st ${TS[t.status][1]}">${TS[t.status][0]}</span></span></div>
+  <p class="mt" style="margin:8px 0">Пользователь: <a data-u="${t.uid}" style="color:var(--ac)">${esc(t.name)}</a> (ID ${t.uid}) · Ник: ${esc(t.nick)} · ${t.role==="seller"?"Продавец":"Покупатель"} · Заказ: ${esc(t.order||"—")} · ${dt(t.created)}${t.agent?" · Сотрудник ID "+t.agent:""}${t.rating?" · Оценка: "+stars(t.rating):""}</p>
+  <div class="msg" style="max-width:100%">${esc(t.text)}</div>${trep(t)}${t.solution?`<div class="warn" style="border-color:var(--grn)"><b>Решение:</b> ${esc(t.solution)}</div>`:""}
+  ${(t.notes||[]).map(n=>`<div class="msg" style="max-width:100%;background:#d99b2522"><small>🔒 Заметка · ID ${n.by} · ${dt(n.ts)}</small>${esc(n.text)}</div>`).join("")}</div>
+  <div class="card">${t.status!=="closed"?`<select class="in" id="qr" style="width:100%;margin-bottom:8px"><option value="">Быстрый ответ…</option>${QR.map((q,i)=>`<option value="${i}">${esc(q.slice(0,70))}…</option>`).join("")}</select><textarea class="in" style="width:100%;min-height:90px" id="ar" placeholder="Ответ пользователю (придёт в бота)"></textarea>
+  <div class="row"><button class="b2" id="at">Взять в работу</button><button class="b" id="as">Ответить</button><button class="b" style="background:var(--grn);border-color:var(--grn)" id="ac">Решено и закрыть</button></div>`:'<div class="row"><button class="b2" id="ao">Переоткрыть</button></div>'}
+  <div class="row"><select class="in" id="pr">${Object.entries(PRI).map(([k,v])=>`<option value="${k}" ${k===(t.prio||"norm")?"selected":""}>${v} приоритет</option>`).join("")}</select><button class="b2" id="ps2">Сменить</button></div>
+  <div class="row"><input class="in" style="flex:1;min-width:180px" id="nt2" placeholder="Внутренняя заметка (видна только сотрудникам)"><button class="b2" id="na">Добавить</button></div><div class="msgs e" id="am"></div></div>`);
+  $("bk").onclick=()=>go("support");const run=async(c,a)=>{sm("am","Выполняем…");const r=await cmd(c,{id:t.id,...a});if(r.ok){toast("Готово");go("support",t.id)}else sm("am",r.msg||"Ошибка",1)};
+  if($("qr"))$("qr").onchange=e=>{if(e.target.value!=="")$("ar").value=QR[+e.target.value]};
+  if($("at"))$("at").onclick=()=>run("ticket_take",{});if($("ao"))$("ao").onclick=()=>run("ticket_reopen",{});
+  if($("as"))$("as").onclick=()=>{const x=$("ar").value.trim();x?run("ticket_reply",{text:x}):sm("am","Введите ответ",1)};
+  if($("ac"))$("ac").onclick=()=>{const x=$("ar").value.trim();x?run("ticket_close",{text:x}):sm("am","Напишите решение",1)};
+  $("ps2").onclick=()=>run("ticket_prio",{prio:$("pr").value});$("na").onclick=()=>{const x=$("nt2").value.trim();x?run("ticket_note",{text:x}):sm("am","Введите заметку",1)};return}
+ const l=Object.values((await fb("tickets"))||{}).sort((a,b)=>b.created-a.created),n=s=>l.filter(t=>t.status===s).length,rt=l.filter(t=>t.rating);
+ const pw={high:0,norm:1,low:2};
+ M(`<div class="pt">Заявки поддержки</div><div class="stats"><div class="card"><div class="mt">Открытых</div><div class="big">${n("open")}</div></div><div class="card"><div class="mt">В работе</div><div class="big">${n("work")}</div></div><div class="card"><div class="mt">Решено</div><div class="big">${n("closed")}</div></div><div class="card"><div class="mt">Оценка поддержки</div><div class="big">${rt.length?(rt.reduce((a,t)=>a+t.rating,0)/rt.length).toFixed(1)+" ★":"—"}</div></div></div>
+ <div class="tabs">${["open","work","closed"].map(s=>`<a class="${s===sf?"on":""}" data-sf="${s}">${TS[s][0]} (${n(s)})</a>`).join("")}</div><input class="in" style="width:100%;margin-bottom:12px" id="sq" placeholder="Поиск по номеру, нику, ID, тексту" value="${esc(sq)}"><div id="sl"></div>`);
+ const draw=()=>{sq=$("sq").value.trim().toLowerCase();const f=l.filter(t=>t.status===sf&&(!sq||[t.id,t.name,t.nick,t.uid,t.text,t.order].join(" ").toLowerCase().includes(sq))).sort((a,b)=>pw[a.prio||"norm"]-pw[b.prio||"norm"]||a.created-b.created);
+  $("sl").innerHTML=f.map(t=>`<div class="card row" style="justify-content:space-between;margin-bottom:8px"><div style="min-width:0"><b>#${t.id} · ${esc(t.topic)}</b> <span class="st">${PRI[t.prio||"norm"]}</span><div class="mt">${esc(t.name)} · ${dt(t.created)} · ${esc(t.text.slice(0,70))}</div></div><button class="b2" data-tk="${t.id}">Открыть</button></div>`).join("")||'<div class="empty">Пусто</div>';
+  document.querySelectorAll("[data-tk]").forEach(b=>b.onclick=()=>go("support",b.dataset.tk))};
+ $("sq").oninput=draw;draw();document.querySelectorAll("[data-sf]").forEach(a=>a.onclick=()=>{sf=a.dataset.sf;V.support()})};
 
 /* ---------- Admin ---------- */
-let at="user";
+let at="ov";
 V.admin=async()=>{if(!isAdmin)return M('<div class="empty">Нет доступа</div>');
- const tabs=`<div class="tabs">${[["user","Пользователь"],["bans","Бан-лист"],["agents","Поддержка"]].map(t=>`<a data-t="${t[0]}" class="${at===t[0]?"on":""}">${t[1]}</a>`).join("")}</div>`;
+ const T=[["ov","Обзор"],["user","Пользователи"],["bans","Бан-лист"],["agents","Поддержка"],["mod","Модерация"],["log","Журнал"]];
+ const head=`<div class="pt">Админ-панель</div><div class="tabs">${T.map(t=>`<a data-t="${t[0]}" class="${at===t[0]?"on":""}">${t[1]}</a>`).join("")}</div>`;
  const bind=()=>document.querySelectorAll("[data-t]").forEach(a=>a.onclick=()=>{at=a.dataset.t;V.admin()});
- const act=async(c,a)=>{const r=await cmd(c,a);toast(r.ok?"Готово":r.msg||"Ошибка");if(r.ok){delete uc[a.uid];}return r.ok};
- if(at==="user"){M(`<div class="pt">Админ-панель</div>${tabs}<div class="card"><div class="row"><input class="in" id="au" placeholder="Telegram ID пользователя"><button class="b" id="af">Найти</button></div><div id="ar2"></div></div>`);bind();
+ const act=async(c,a)=>{const r=await cmd(c,a);toast(r.ok?"Готово":r.msg||"Ошибка");if(r.ok)delete uc[a.uid];return r.ok};
+ if(at==="ov"){const cnt=async p=>Object.keys((await fb(p,"GET",undefined,"?shallow=true").catch(()=>null))||{}).length;
+  const [u,p,o,t,b,a]=await Promise.all(["profiles","products","orders","tickets","bans","agents"].map(cnt));const op=Object.values((await fb("tickets").catch(()=>null))||{}).filter(x=>x.status==="open").length;
+  M(`${head}<div class="stats">${[["Пользователей",u],["Товаров",p],["Заказов",o],["Заявок всего",t],["Открытых заявок",op],["Банов в списке",b],["Сотрудников",a]].map(s=>`<div class="card"><div class="mt">${s[0]}</div><div class="big">${s[1]}</div></div>`).join("")}</div>`);bind()}
+ else if(at==="user"){M(`${head}<div class="card"><div class="row"><input class="in" id="au" placeholder="Telegram ID пользователя"><button class="b" id="af">Найти</button></div><div id="ar2"></div></div>`);bind();
   $("af").onclick=async()=>{const id=$("au").value.trim();if(!/^\d+$/.test(id))return toast("Введите числовой ID");delete uc[id];const p=await uinfo(id);if(!p.first_name&&!p.created)return $("ar2").innerHTML='<div class="empty">Пользователь не найден (он должен запустить бота)</div>';
-   $("ar2").innerHTML=`<div class="h2" style="margin-top:6px">${esc(nickOf(p))}${chk(p)} <span class="mt">ID ${id} · @${esc(p.username||"")}</span></div>
-   <div class="row"><button class="b" id="xb">${p.badge?"Снять галочку ☑️":"Выдать галочку ☑️"}</button></div>
+   $("ar2").innerHTML=`<div class="h2" style="margin-top:6px">${esc(nickOf(p))}${chk(p)} <span class="mt">ID ${id} · @${esc(p.username||"")}</span></div><div class="mt">Продавец: ${p.seller?"да":"нет"} · Предупреждения: ${p.warns||0}/3 · Рейтинг: ${p.rcnt?(+p.rating).toFixed(1)+" ("+p.rcnt+")":"—"} · Лимит описания: ${p.desc_max||140}</div>
+   <div class="row"><button class="b" id="xb">${p.badge?"Снять галочку ☑️":"Выдать галочку ☑️"}</button><button class="b2" id="xs">${p.seller?"Забрать статус продавца":"Выдать статус продавца"}</button><button class="b2" id="xv">Открыть профиль</button></div>
    <div class="row"><input class="in" id="xn" maxlength="32" placeholder="Новый ник (пусто = сбросить)" value="${esc(p.nick||"")}"><button class="b2" id="xnb">Сменить ник</button></div>
    <div class="row"><input class="in" id="xl" type="number" min="1" max="2000" value="${p.desc_max||140}"><button class="b2" id="xlb">Лимит описания (симв.)</button></div>
-   <div class="h2">Блокировка</div><div class="row"><input class="in" id="xr" placeholder="Причина"><input class="in" id="xd" type="number" min="0" placeholder="Дней (0 = навсегда)" style="width:190px"><button class="bdg" id="xbn">Заблокировать</button></div>`;
-   $("xb").onclick=async()=>{if(await act("adm_badge",{uid:id,value:!p.badge}))$("af").click()};
-   $("xnb").onclick=async()=>{if(await act("adm_nick",{uid:id,nick:$("xn").value.trim()}))$("af").click()};
-   $("xlb").onclick=async()=>{if(await act("adm_limit",{uid:id,limit:+$("xl").value}))$("af").click()};
-   $("xbn").onclick=async()=>{if(!$("xr").value.trim())return toast("Укажите причину");if(!confirm("Заблокировать?"))return;await act("adm_ban",{uid:id,reason:$("xr").value.trim(),days:+$("xd").value||0})}}}
- else if(at==="bans"){const b=(await fb("bans"))||{};M(`<div class="pt">Админ-панель</div>${tabs}<div class="card">${Object.entries(b).map(([id,x])=>`<div class="rl row" style="justify-content:space-between"><div><b>ID ${id}</b><span>${esc(x.reason)} · ${x.until?"до "+dt(x.until):"навсегда"}</span></div><button class="b2" data-ub="${id}">Разбанить</button></div>`).join("")||'<div class="empty">Бан-лист пуст</div>'}</div>`);bind();
+   <div class="h2">Предупреждения (3 = бан на 7 дней)</div><div class="row"><input class="in" id="xw" placeholder="Причина"><button class="b2" id="xwb">Выдать предупреждение</button><button class="b2" id="xwc">Сбросить</button></div>
+   <div class="h2">Блокировка</div><div class="row"><input class="in" id="xr" placeholder="Причина"><input class="in" id="xd" type="number" min="0" placeholder="Дней (0 = навсегда)" style="width:190px"><button class="bdg" id="xbn">Заблокировать</button><button class="b2" id="xub">Разбанить</button></div>`;
+   const rf=()=>$("af").click();$("xv").onclick=()=>go("user",id);
+   $("xb").onclick=async()=>{if(await act("adm_badge",{uid:id,value:!p.badge}))rf()};$("xs").onclick=async()=>{if(await act("adm_seller",{uid:id,value:!p.seller}))rf()};
+   $("xnb").onclick=async()=>{if(await act("adm_nick",{uid:id,nick:$("xn").value.trim()}))rf()};$("xlb").onclick=async()=>{if(await act("adm_limit",{uid:id,limit:+$("xl").value}))rf()};
+   $("xwb").onclick=async()=>{if(await act("adm_warn",{uid:id,reason:$("xw").value.trim()}))rf()};$("xwc").onclick=async()=>{if(await act("adm_clearwarn",{uid:id}))rf()};
+   $("xbn").onclick=async()=>{if(!$("xr").value.trim())return toast("Укажите причину");if(!confirm("Заблокировать?"))return;await act("adm_ban",{uid:id,reason:$("xr").value.trim(),days:+$("xd").value||0})};
+   $("xub").onclick=async()=>{await act("adm_unban",{uid:id})}}}
+ else if(at==="bans"){const b=(await fb("bans"))||{};M(`${head}<div class="card">${Object.entries(b).map(([id,x])=>`<div class="rl row" style="justify-content:space-between"><div><b>ID ${id}</b><span>${esc(x.reason)} · ${x.until?"до "+dt(x.until):"навсегда"}</span></div><button class="b2" data-ub="${id}">Разбанить</button></div>`).join("")||'<div class="empty">Бан-лист пуст</div>'}</div>`);bind();
   document.querySelectorAll("[data-ub]").forEach(x=>x.onclick=async()=>{if(await act("adm_unban",{uid:x.dataset.ub}))V.admin()})}
- else{const a=(await fb("agents"))||{};M(`<div class="pt">Админ-панель</div>${tabs}<div class="card"><div class="row"><input class="in" id="ag" placeholder="Telegram ID сотрудника"><button class="b" id="aga">Назначить поддержкой</button></div>
-  ${Object.keys(a).map(id=>`<div class="rl row" style="justify-content:space-between"><b>ID ${id}</b><button class="bdg" data-rm="${id}">Снять</button></div>`).join("")||'<div class="empty">Сотрудников нет</div>'}</div>`);bind();
-  $("aga").onclick=async()=>{const id=$("ag").value.trim();if(/^\d+$/.test(id)&&await act("adm_agent_add",{uid:id}))V.admin()};
-  document.querySelectorAll("[data-rm]").forEach(x=>x.onclick=async()=>{if(await act("adm_agent_del",{uid:x.dataset.rm}))V.admin()})}};
+ else if(at==="agents"){const a=(await fb("agents"))||{};M(`${head}<div class="card"><div class="row"><input class="in" id="ag" placeholder="Telegram ID сотрудника"><button class="b" id="aga">Назначить поддержкой</button></div>${Object.keys(a).map(id=>`<div class="rl row" style="justify-content:space-between"><b>ID ${id}</b><button class="bdg" data-rm="${id}">Снять</button></div>`).join("")||'<div class="empty">Сотрудников нет</div>'}</div>`);bind();
+  $("aga").onclick=async()=>{const id=$("ag").value.trim();if(/^\d+$/.test(id)&&await act("adm_agent_add",{uid:id}))V.admin()};document.querySelectorAll("[data-rm]").forEach(x=>x.onclick=async()=>{if(await act("adm_agent_del",{uid:x.dataset.rm}))V.admin()})}
+ else if(at==="mod"){const l=await allProducts();await sellers(l);M(`${head}<div class="card"><b>Все товары (${l.length})</b>${l.map(p=>`<div class="rl row" style="justify-content:space-between"><div><b>${esc(p.titleRu)}</b><span>${rub(pprice(p))} · ${esc(nickOf(sellerOf(p))||p.sellerName)} (ID ${p.owner}) · ${p.id}</span></div><button class="bdg" data-dp="${p.id}:${p.owner}">Удалить</button></div>`).join("")||'<div class="empty">Нет товаров</div>'}</div>
+  <div class="card"><b>Отзывы продавца</b><div class="row"><input class="in" id="mu" placeholder="ID продавца"><button class="b2" id="mf">Показать</button></div><div id="mr"></div></div>`);bind();
+  document.querySelectorAll("[data-dp]").forEach(b=>b.onclick=async()=>{if(!confirm("Удалить товар?"))return;const[id,o]=b.dataset.dp.split(":");if(await act("adm_del_product",{uid:o,id}))V.admin()});
+  $("mf").onclick=async()=>{const id=$("mu").value.trim(),o=(await fb("reviews/"+id).catch(()=>null))||{};$("mr").innerHTML=Object.values(o).map(r=>`<div class="rl row" style="justify-content:space-between"><div><b>${stars(r.stars)} ${esc(r.buyerName)}</b><span>${esc(r.text)}</span></div><button class="bdg" data-dr="${r.order}">Удалить</button></div>`).join("")||'<div class="mt">Нет отзывов</div>';
+   document.querySelectorAll("[data-dr]").forEach(b=>b.onclick=async()=>{if(await act("adm_del_review",{uid:id,order:b.dataset.dr}))$("mf").click()})}}
+ else{const o=(await fb("logs","GET",undefined,'?orderBy="$key"&limitToLast=100').catch(()=>null))||{};M(`${head}<div class="card">${Object.values(o).sort((a,b)=>b.ts-a.ts).map(x=>`<div class="rl"><b>${esc(x.cmd)}</b><span>${dt(x.ts)} · админ ${x.by} · ${esc(JSON.stringify(x.args))}</span></div>`).join("")||'<div class="empty">Журнал пуст</div>'}</div>`);bind()}};
 
 /* ---------- Start ---------- */
 if(!uid)sm("rs","Откройте приложение кнопкой «Запустить» в боте",1);
