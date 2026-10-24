@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>VortexPay — Проверка безопасности</title>
+    <!-- Скрипт Telegram WebApp -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #151c2c;
+            --accent: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.4);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --danger: #ef4444;
+            --success: #10b981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            width: 100%;
+            max-width: 380px;
+            border-radius: 20px;
+            padding: 28px 24px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px var(--accent-glow);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            background: linear-gradient(90deg, #60a5fa, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        blockquote {
+            background: rgba(255, 255, 255, 0.04);
+            border-left: 4px solid var(--accent);
+            padding: 12px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #cbd5e1;
+            text-align: left;
+            margin-bottom: 22px;
+            line-height: 1.45;
+        }
+
+        .captcha-box {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: 0.25s ease;
+            margin-bottom: 16px;
+        }
+
+        .captcha-box:hover {
+            border-color: var(--accent);
+            background: rgba(59, 130, 246, 0.08);
+        }
+
+        .captcha-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .checkbox {
+            width: 26px;
+            height: 26px;
+            border: 2px solid var(--text-muted);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .checkbox.loading {
+            border-color: var(--accent);
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .code-input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.35);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 14px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            text-align: center;
+            letter-spacing: 8px;
+            outline: none;
+            margin-bottom: 14px;
+            transition: 0.2s;
+        }
+
+        .code-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 12px var(--accent-glow);
+        }
+
+        .timer {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-muted);
+        }
+
+        .timer span {
+            color: var(--accent);
+            font-weight: 800;
+        }
+
+        .timer.expired span {
+            color: var(--danger);
+        }
+
+        .btn {
+            width: 100%;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: #fff;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn:disabled {
+            background: #334155;
+            box-shadow: none;
+            color: #64748b;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: none;
+            margin-top: 10px;
+        }
+
+        .status-msg {
+            margin-top: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            min-height: 18px;
+        }
+
+        .error { color: var(--danger); }
+        .success { color: var(--success); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="logo">⚡ VortexPay</div>
+    <div class="subtitle">Система защиты от автоматических ботов</div>
+
+    <!-- ШАГ 1: Капча "Я не робот" -->
+    <div id="step-1" class="step active">
+        <blockquote>
+            <b>Проверка безопасности:</b><br>
+            Подтвердите, что вы реальный человек. После нажатия бот отправит вам в личные сообщения <b>6-значный код</b>.
+        </blockquote>
+
+        <div class="captcha-box" id="captcha-btn">
+            <div class="captcha-left">
+                <div class="checkbox" id="checkbox-icon"></div>
+                <span style="font-weight: 600; font-size: 15px;">Я не робот</span>
+            </div>
+            <span style="font-size: 20px;">🛡️</span>
+        </div>
+        <div id="step1-status" class="status-msg"></div>
+    </div>
+
+    <!-- ШАГ 2: Ввод 6-значного кода -->
+    <div id="step-2" class="step">
+        <blockquote>
+            📩 <b>Код отправлен в чат с ботом!</b><br>
+            Сверните или посмотрите уведомление от <b>VortexPay</b> и введите полученный 6-значный код ниже:
+        </blockquote>
+
+        <input type="text" id="code-input" class="code-input" maxlength="6" placeholder="••••••" inputmode="numeric">
+
+        <div class="timer" id="timer-box">
+            Осталось времени: <span id="time-left">30</span> сек.
+        </div>
+
+        <button class="btn" id="verify-btn">Подтвердить код</button>
+        <button class="btn btn-secondary" id="resend-btn" style="display: none;">Отправить новый код</button>
+        <div id="step2-status" class="status-msg"></div>
+    </div>
+
+    <!-- ШАГ 3: Успешный вход -->
+    <div id="step-3" class="step">
+        <div style="font-size: 52px; margin-bottom: 10px;">✅</div>
+        <h3 style="margin-bottom: 10px;">Верификация пройдена!</h3>
+        <blockquote>
+            Ваш аккаунт успешно подтвержден в системе <b>VortexPay</b>. Теперь вам доступен весь функционал кошелька.
+        </blockquote>
+        <button class="btn" onclick="window.Telegram.WebApp.close()">Перейти в бота</button>
+    </div>
+</div>
+
+<!-- Подключение Firebase SDK -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
+    import { getDatabase, ref, set, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+    // Ваша конфигурация Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyBZ8Qm4BeX6U1vCMNb-_FgNBp0OQUkC-9k",
+        authDomain: "tetete-d31c8.firebaseapp.com",
+        databaseURL: "https://tetete-d31c8-default-rtdb.firebaseio.com",
+        projectId: "tetete-d31c8",
+        storageBucket: "tetete-d31c8.firebasestorage.app",
+        messagingSenderId: "130781376435",
+        appId: "1:130781376435:web:8588052eb0f36ce99fe5c6",
+        measurementId: "G-B9J1GPPJZF"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getDatabase(app);
+
+    // Инициализация Telegram WebApp
+    const tg = window.Telegram.WebApp;
+    tg.expand();
+
+    // Получаем ID пользователя из Telegram (или тестовый ID, если открыто в браузере)
+    const userId = tg.initDataUnsafe?.user?.id || new URLSearchParams(window.location.search).get('uid') || "123456789";
+
+    const step1 = document.getElementById('step-1');
+    const step2 = document.getElementById('step-2');
+    const step3 = document.getElementById('step-3');
+
+    const captchaBtn = document.getElementById('captcha-btn');
+    const checkboxIcon = document.getElementById('checkbox-icon');
+    const step1Status = document.getElementById('step1-status');
+
+    const codeInput = document.getElementById('code-input');
+    const verifyBtn = document.getElementById('verify-btn');
+    const resendBtn = document.getElementById('resend-btn');
+    const timeLeftSpan = document.getElementById('time-left');
+    const timerBox = document.getElementById('timer-box');
+    const step2Status = document.getElementById('step2-status');
+
+    let serverData = null;
+    let countdownInterval = null;
+
+    // Запрос кода у бота через запись в Firebase
+    async function requestCode() {
+        checkboxIcon.classList.add('loading');
+        step1Status.textContent = "Генерация секретного кода...";
+        step1Status.className = "status-msg";
+        step2Status.textContent = "";
+        codeInput.value = "";
+
+        try {
+            await set(ref(db, `verifications/${userId}`), {
+                status: "requested",
+                requested_at: Date.now()
+            });
+        } catch (err) {
+            step1Status.textContent = "Ошибка соединения с БД!";
+            step1Status.className = "status-msg error";
+            checkboxIcon.classList.remove('loading');
+        }
+    }
+
+    captchaBtn.addEventListener('click', requestCode);
+    resendBtn.addEventListener('click', requestCode);
+
+    // Слушаем изменения в Firebase для текущего пользователя
+    onValue(ref(db, `verifications/${userId}`), (snapshot) => {
+        const data = snapshot.val();
+        if (!data) return;
+        serverData = data;
+
+        if (data.status === "sent") {
+            // Переключаем на экран ввода кода
+            step1.classList.remove('active');
+            step2.classList.add('active');
+            startTimer(data.expires_at);
+        } else if (data.status === "verified") {
+            clearInterval(countdownInterval);
+            step2.classList.remove('active');
+            step3.classList.add('active');
+        }
+    });
+
+    // Таймер на 30 секунд
+    function startTimer(expiresAt) {
+        clearInterval(countdownInterval);
+        resendBtn.style.display = "none";
+        verifyBtn.disabled = false;
+        codeInput.disabled = false;
+        timerBox.classList.remove('expired');
+
+        countdownInterval = setInterval(() => {
+            const now = Date.now();
+            const remaining = Math.max(0, Math.ceil((expiresAt - now) / 1000));
+            timeLeftSpan.textContent = remaining;
+
+            if (remaining <= 0) {
+                clearInterval(countdownInterval);
+                timerBox.classList.add('expired');
+                step2Status.textContent = "⏳ Срок действия кода истек!";
+                step2Status.className = "status-msg error";
+                verifyBtn.disabled = true;
+                codeInput.disabled = true;
+                resendBtn.style.display = "block";
+            }
+        }, 250);
+    }
+
+    // Проверка введенного кода
+    verifyBtn.addEventListener('click', async () => {
+        const enteredCode = codeInput.value.trim();
+        if (enteredCode.length !== 6) {
+            step2Status.textContent = "Введите 6 цифр кода!";
+            step2Status.className = "status-msg error";
+            return;
+        }
+
+        if (!serverData || serverData.status !== "sent") return;
+
+        if (Date.now() > serverData.expires_at) {
+            step2Status.textContent = "⏳ Код уже устарел! Запросите новый.";
+            step2Status.className = "status-msg error";
+            return;
+        }
+
+        if (enteredCode === String(serverData.code)) {
+            step2Status.textContent = "Успешно!";
+            step2Status.className = "status-msg success";
+            await update(ref(db, `verifications/${userId}`), {
+                status: "verified"
+            });
+        } else {
+            step2Status.textContent = "❌ Неверный код! Проверьте сообщение от бота.";
+            step2Status.className = "status-msg error";
+            if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('error');
+        }
+    });
+</script>
+
+</body>
+</html>
