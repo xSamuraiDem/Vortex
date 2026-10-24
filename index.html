@@ -15,15 +15,28 @@
     --card: var(--tg-theme-secondary-bg-color, #f2f2f5);
     --danger: #e5484d;
     --ok: #2ea661;
+    --line: rgba(127, 127, 127, 0.15);
   }
+  /* Ручные темы (переключаются в настройках) */
+  [data-theme="light"] {
+    --bg: #f3f4f7; --text: #111118; --hint: #7a7a86;
+    --accent: #2ea661; --accent-text: #ffffff; --card: #ffffff;
+  }
+  [data-theme="dark"] {
+    --bg: #0e1015; --text: #f2f3f5; --hint: #8b909c;
+    --accent: #3ddc84; --accent-text: #0b0d10; --card: #181b22;
+  }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background: var(--bg); color: var(--text);
     min-height: 100vh; padding: 20px; -webkit-font-smoothing: antialiased;
+    transition: background 0.3s, color 0.3s;
   }
   body.auth { display: flex; align-items: center; justify-content: center; }
   .hidden { display: none !important; }
+  button { font-family: inherit; }
 
   /* ---------- Авторизация ---------- */
   .wrap { width: 100%; max-width: 380px; margin: 0 auto; text-align: center; }
@@ -36,7 +49,7 @@
   }
   h1 { font-size: 24px; font-weight: 800; margin-bottom: 6px; }
   .sub { color: var(--hint); font-size: 14px; line-height: 1.5; margin-bottom: 24px; }
-  .card { background: var(--card); border-radius: 18px; padding: 22px 18px; margin-bottom: 14px; }
+  .card { background: var(--card); border-radius: 18px; padding: 18px; margin-bottom: 14px; }
   .step { display: none; animation: fade 0.3s ease; }
   .step.active { display: block; }
   @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
@@ -95,14 +108,15 @@
 
   .btn {
     width: 100%; padding: 15px; border: none; border-radius: 14px;
-    font-size: 16px; font-weight: 700; cursor: pointer;
+    font-size: 16px; font-weight: 700; cursor: pointer; display: block; text-align: center;
     background: var(--accent); color: var(--accent-text); transition: opacity 0.2s, transform 0.1s;
   }
   .btn:active { transform: scale(0.98); }
   .btn:disabled { opacity: 0.45; cursor: not-allowed; }
   .btn.ghost { background: transparent; color: var(--accent); margin-top: 10px; font-size: 14px; }
+  .btn.soft { background: var(--bg); color: var(--accent); padding: 12px; font-size: 14px; }
 
-  .status { min-height: 20px; font-size: 13px; margin-top: 14px; font-weight: 600; }
+  .status { min-height: 20px; font-size: 13px; margin-top: 12px; font-weight: 600; text-align: center; }
   .status.error { color: var(--danger); }
   .status.ok { color: var(--ok); }
 
@@ -119,9 +133,15 @@
   .footer { font-size: 11px; color: var(--hint); margin-top: 18px; }
 
   /* ---------- Приложение ---------- */
-  .app { max-width: 420px; margin: 0 auto; }
-  .topbar { display: flex; align-items: center; justify-content: space-between; padding: 4px 0 18px; }
-  .brand { font-weight: 800; font-size: 20px; }
+  .app { max-width: 460px; margin: 0 auto; }
+  .topbar { display: flex; align-items: center; justify-content: space-between; padding: 4px 0 16px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 20px; }
+  .brand-logo {
+    width: 34px; height: 34px; border-radius: 11px;
+    background: linear-gradient(135deg, var(--accent), #1f8a4c);
+    color: var(--accent-text); display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 16px;
+  }
 
   .av {
     border-radius: 50%; overflow: hidden; position: relative;
@@ -130,56 +150,66 @@
     display: flex; align-items: center; justify-content: center;
   }
   .av img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
-
-  .avatar-wrap { position: relative; }
   .avatar-btn {
     width: 44px; height: 44px; border: none; padding: 0; cursor: pointer; font-size: 18px;
     box-shadow: 0 0 0 2px var(--accent); background: none;
+    transition: transform 0.15s;
   }
-  .tip {
-    position: absolute; right: 0; top: calc(100% + 8px);
-    background: var(--text); color: var(--bg); font-size: 12px; font-weight: 600;
-    padding: 6px 10px; border-radius: 8px; white-space: nowrap;
-    opacity: 0; transform: translateY(-4px); pointer-events: none; transition: 0.2s;
-  }
-  .avatar-wrap:hover .tip,
-  .avatar-btn:focus-visible + .tip { opacity: 1; transform: none; }
+  .avatar-btn:active { transform: scale(0.94); }
 
   .screen { display: none; animation: fade 0.3s ease; }
   .screen.active { display: block; }
 
   .greet { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
   .muted { font-size: 13px; color: var(--hint); line-height: 1.5; }
-
-  .balance {
-    background: linear-gradient(135deg, var(--accent), #1f8a4c); color: #fff;
-    border-radius: 18px; padding: 20px; margin: 16px 0 14px;
-    box-shadow: 0 8px 22px rgba(46, 166, 97, 0.3);
-  }
-  .b-label { font-size: 13px; opacity: 0.85; }
-  .b-sum { font-size: 30px; font-weight: 800; margin-top: 4px; }
-
-  .app .card { text-align: left; margin-bottom: 14px; }
   .section-title { font-weight: 700; font-size: 15px; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
-  .actions { display: flex; gap: 8px; margin-bottom: 10px; }
-  .act {
-    flex: 1; padding: 12px 6px; border: none; border-radius: 12px; background: var(--bg);
-    color: var(--hint); font-size: 13px; font-weight: 600; cursor: not-allowed;
+  .tag {
+    font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 8px;
+    background: var(--bg); color: var(--hint);
   }
 
+  .quick { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 16px; }
+  .qbtn {
+    border: none; background: var(--card); color: var(--text); border-radius: 16px;
+    padding: 16px 6px; font-size: 13px; font-weight: 600; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; gap: 8px; transition: transform 0.1s;
+  }
+  .qbtn:active { transform: scale(0.96); }
+  .qi {
+    width: 42px; height: 42px; border-radius: 14px; background: var(--bg);
+    display: flex; align-items: center; justify-content: center; font-size: 20px;
+  }
+
+  .info-row { display: flex; align-items: center; gap: 12px; }
+  .info-row .muted { margin-top: 2px; }
+
+  /* Кабинет (профиль / магазин / настройки) */
+  .cab-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
   .back {
     background: none; border: none; color: var(--accent); font-size: 15px; font-weight: 600;
-    cursor: pointer; padding: 6px 0; margin-bottom: 8px;
+    cursor: pointer; padding: 6px 0;
   }
-  .p-head { text-align: center; margin-bottom: 18px; }
-  .p-av-wrap { position: relative; width: 112px; height: 112px; margin: 0 auto 12px; }
-  .p-av { width: 112px; height: 112px; font-size: 44px; cursor: pointer; }
-  .p-edit {
-    position: absolute; inset: 0; border-radius: 50%; background: rgba(0, 0, 0, 0.45);
-    color: #fff; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center;
-    opacity: 0; transition: 0.2s; pointer-events: none;
+  .icon-btn {
+    width: 40px; height: 40px; border-radius: 12px; border: none; background: var(--card);
+    cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center;
   }
-  .p-av-wrap:hover .p-edit { opacity: 1; }
+  .icon-btn.spinning .ico { display: inline-block; animation: spin 0.7s linear infinite; }
+
+  .tabs {
+    display: flex; gap: 4px; background: var(--card); padding: 4px; border-radius: 14px; margin-bottom: 14px;
+  }
+  .tab {
+    flex: 1; border: none; background: transparent; color: var(--hint);
+    padding: 10px 4px; border-radius: 11px; font-size: 13px; font-weight: 700; cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .tab.active { background: var(--accent); color: var(--accent-text); }
+  .tab-panel { display: none; animation: fade 0.25s ease; }
+  .tab-panel.active { display: block; }
+
+  .p-head { text-align: center; margin: 6px 0 16px; }
+  .p-av-wrap { width: 112px; height: 112px; margin: 0 auto 12px; }
+  .p-av { width: 112px; height: 112px; font-size: 44px; }
   .p-name { font-size: 22px; font-weight: 800; word-break: break-word; }
   .p-user { font-size: 14px; color: var(--hint); margin-top: 2px; }
   .p-status { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; margin-top: 8px; color: var(--hint); }
@@ -187,25 +217,99 @@
   .dot.on { background: var(--ok); box-shadow: 0 0 0 3px rgba(46, 166, 97, 0.2); }
 
   .row { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 10px 0; font-size: 14px; }
-  .row + .row { border-top: 1px solid rgba(127, 127, 127, 0.15); }
+  .row + .row { border-top: 1px solid var(--line); }
   .row .k { color: var(--hint); }
   .row .v { font-weight: 600; text-align: right; }
   .row .v small { display: block; font-weight: 400; color: var(--hint); font-size: 12px; margin-top: 2px; }
 
-  textarea {
-    width: 100%; min-height: 90px; border: 2px solid transparent; border-radius: 12px;
+  textarea, .field {
+    width: 100%; border: 2px solid transparent; border-radius: 12px;
     background: var(--bg); color: var(--text); font: inherit; font-size: 14px;
-    padding: 12px; resize: none; outline: none;
+    padding: 12px; outline: none;
   }
-  textarea:focus { border-color: var(--accent); }
+  textarea { min-height: 90px; resize: none; }
+  textarea:focus, .field:focus { border-color: var(--accent); }
   .counter { text-align: right; font-size: 12px; color: var(--hint); margin: 6px 0 10px; }
   .counter.limit { color: var(--danger); }
 
-  .tag {
-    font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 8px;
-    background: var(--bg); color: var(--hint);
+  /* Магазин */
+  .shop-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .shop-ico {
+    width: 46px; height: 46px; border-radius: 15px; background: var(--bg);
+    display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0;
   }
-  .app .btn { margin-top: 0; }
+  .rate { font-size: 13px; color: var(--hint); }
+  .pkgs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .pkg {
+    border: 2px solid transparent; background: var(--bg); color: var(--text);
+    border-radius: 16px; padding: 16px 10px; text-align: center; cursor: pointer;
+    transition: transform 0.1s, border-color 0.2s;
+  }
+  .pkg:hover { border-color: var(--accent); }
+  .pkg:active { transform: scale(0.97); }
+  .pkg:disabled { opacity: 0.5; cursor: not-allowed; }
+  .pkg-amt { font-size: 20px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 4px; }
+  .pkg-rub { font-size: 12px; color: var(--hint); margin-top: 4px; }
+  .custom-box { margin-top: 12px; }
+  .custom-row { display: flex; gap: 8px; margin-top: 8px; }
+  .custom-row .field { flex: 1; font-size: 16px; font-weight: 700; }
+  .custom-row .btn { width: auto; padding: 0 18px; font-size: 14px; }
+  .custom-row .btn:disabled { opacity: 0.45; }
+  .hint-small { font-size: 12px; color: var(--hint); margin-top: 8px; min-height: 16px; }
+  .hint-small.error { color: var(--danger); }
+
+  /* Настройки */
+  .set-head { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+  .set-av { width: 58px; height: 58px; font-size: 22px; flex-shrink: 0; }
+  .set-title { font-weight: 700; font-size: 15px; }
+  .set-row {
+    display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 14px;
+    background: var(--bg); cursor: pointer; width: 100%; border: none; color: var(--text);
+    text-align: left; font-size: 14px; margin-top: 8px;
+  }
+  .set-row:first-child { margin-top: 0; }
+  .set-ico {
+    width: 38px; height: 38px; border-radius: 12px; background: var(--card);
+    display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;
+  }
+  .set-txt { flex: 1; display: flex; flex-direction: column; }
+  .set-txt b { font-weight: 700; font-size: 14px; }
+  .set-txt small { color: var(--hint); font-size: 12px; margin-top: 2px; }
+  .set-arrow { color: var(--hint); font-size: 18px; }
+
+  .switch { position: relative; width: 50px; height: 30px; flex-shrink: 0; }
+  .switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+  .slider {
+    position: absolute; inset: 0; background: var(--hint); opacity: 0.35;
+    border-radius: 30px; transition: 0.25s; cursor: pointer;
+  }
+  .slider::before {
+    content: ""; position: absolute; width: 24px; height: 24px; left: 3px; top: 3px;
+    background: #fff; border-radius: 50%; transition: 0.25s; box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  }
+  .switch input:checked + .slider { background: var(--accent); opacity: 1; }
+  .switch input:checked + .slider::before { transform: translateX(20px); }
+
+  .seg {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px;
+    background: var(--bg); border-radius: 12px; padding: 4px; margin-top: 10px;
+  }
+  .seg button {
+    border: none; background: transparent; color: var(--hint); padding: 9px 4px;
+    border-radius: 9px; font-size: 13px; font-weight: 600; cursor: pointer; transition: 0.2s;
+  }
+  .seg button.active { background: var(--accent); color: var(--accent-text); }
+
+  .version { text-align: center; font-size: 12px; color: var(--hint); margin-top: 6px; }
+
+  /* Тост */
+  .toast {
+    position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px);
+    background: var(--text); color: var(--bg); padding: 10px 16px; border-radius: 12px;
+    font-size: 13px; font-weight: 600; opacity: 0; transition: 0.25s; pointer-events: none;
+    white-space: nowrap; z-index: 10;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
 </style>
 </head>
 <body class="auth">
@@ -271,11 +375,8 @@
 <!-- ========== ПРИЛОЖЕНИЕ ========== -->
 <div class="app hidden" id="appWrap">
   <header class="topbar">
-    <div class="brand">VortexPay</div>
-    <div class="avatar-wrap">
-      <button class="av avatar-btn" id="hdrAv" type="button" aria-label="Профиль"></button>
-      <span class="tip">Профиль</span>
-    </div>
+    <div class="brand"><span class="brand-logo">V</span>VortexPay</div>
+    <button class="av avatar-btn" id="hdrAv" type="button" aria-label="Профиль"></button>
   </header>
 
   <!-- Главный экран -->
@@ -283,66 +384,191 @@
     <div class="greet">Привет, <span id="homeName">друг</span>!</div>
     <div class="muted">Добро пожаловать в VortexPay</div>
 
-    <div class="balance">
-      <div class="b-label">Баланс</div>
-      <div class="b-sum">0,00 ₽</div>
+    <div class="quick">
+      <button class="qbtn" data-goto="shop" type="button">
+        <span class="qi"><tg-emoji emoji-id="4983746717313664194">⭐️</tg-emoji></span>Пополнить
+      </button>
+      <button class="qbtn" data-goto="profile" type="button">
+        <span class="qi">👤</span>Профиль
+      </button>
+      <button class="qbtn" data-goto="settings" type="button">
+        <span class="qi">⚙️</span>Настройки
+      </button>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <div class="info-row">
+        <span class="qi" style="width:42px;height:42px;border-radius:14px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:20px"><tg-emoji emoji-id="4983746717313664194">⭐️</tg-emoji></span>
+        <div>
+          <div class="section-title" style="margin-bottom:2px">Курс звёзд</div>
+          <div class="muted">1 <tg-emoji emoji-id="4983746717313664194">⭐️</tg-emoji> = 1,53 ₽</div>
+        </div>
+      </div>
     </div>
 
     <div class="card">
-      <div class="section-title">Быстрые действия</div>
-      <div class="actions">
-        <button class="act" disabled>Пополнить</button>
-        <button class="act" disabled>Перевод</button>
-        <button class="act" disabled>История</button>
-      </div>
-      <div class="muted">Платежи появятся в следующем обновлении.</div>
+      <div class="section-title">Скоро <span class="tag">в разработке</span></div>
+      <div class="muted">Переводы между пользователями и история операций появятся в следующем обновлении.</div>
     </div>
   </section>
 
-  <!-- Профиль -->
-  <section class="screen" id="scr-profile">
-    <button class="back" id="backBtn" type="button">← Назад</button>
+  <!-- Кабинет: вкладки Профиль / Магазин / Настройки -->
+  <section class="screen" id="scr-cabinet">
+    <div class="cab-top">
+      <button class="back" id="backBtn" type="button">← Назад</button>
+      <button class="icon-btn" id="refreshBtn" type="button" aria-label="Обновить">
+        <tg-emoji emoji-id="5258420634785947640"><span class="ico">🔄</span></tg-emoji>
+      </button>
+    </div>
 
-    <div class="p-head">
-      <div class="p-av-wrap">
-        <label class="av p-av" id="pAv" for="avatarInput" title="Сменить аватарку"></label>
-        <div class="p-edit">Сменить</div>
+    <nav class="tabs">
+      <button class="tab active" data-tab="profile" type="button">Профиль</button>
+      <button class="tab" data-tab="shop" type="button">Магазин</button>
+      <button class="tab" data-tab="settings" type="button">Настройки</button>
+    </nav>
+
+    <!-- Профиль -->
+    <div class="tab-panel active" id="tab-profile">
+      <div class="p-head">
+        <div class="p-av-wrap"><div class="av p-av" id="pAv"></div></div>
+        <div class="p-name" id="pName">—</div>
+        <div class="p-user" id="pUser"></div>
+        <div class="p-status"><span class="dot" id="pDot"></span><span id="pStatus">—</span></div>
       </div>
-      <input type="file" id="avatarInput" accept="image/*" class="hidden">
-      <div class="p-name" id="pName">—</div>
-      <div class="p-user" id="pUser"></div>
-      <div class="p-status"><span class="dot" id="pDot"></span><span id="pStatus">—</span></div>
-    </div>
 
-    <div class="card">
-      <div class="row">
-        <span class="k">Дата регистрации</span>
-        <span class="v" id="pReg">—</span>
+      <div class="card">
+        <div class="row">
+          <span class="k">Дата регистрации</span>
+          <span class="v" id="pReg">—</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">Описание</div>
+        <textarea id="pDesc" maxlength="140" placeholder="Расскажите о себе (до 140 символов)"></textarea>
+        <div class="counter" id="pCount">0 / 140</div>
+        <button class="btn" id="saveDesc" type="button">Сохранить</button>
+        <div class="status" id="profileStatus"></div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">Отзывы <span class="tag">в разработке</span></div>
+        <div class="muted">Скоро здесь появятся отзывы пользователей о сервисе.</div>
       </div>
     </div>
 
-    <div class="card">
-      <div class="section-title">Описание</div>
-      <textarea id="pDesc" maxlength="140" placeholder="Расскажите о себе (до 140 символов)"></textarea>
-      <div class="counter" id="pCount">0 / 140</div>
-      <button class="btn" id="saveDesc" type="button">Сохранить</button>
-      <div class="status" id="profileStatus"></div>
+    <!-- Магазин -->
+    <div class="tab-panel" id="tab-shop">
+      <div class="card">
+        <div class="shop-head">
+          <div class="shop-ico"><tg-emoji emoji-id="4983746717313664194">⭐️</tg-emoji></div>
+          <div>
+            <div class="section-title" style="margin-bottom:2px">Пополнение звёздами</div>
+            <div class="rate">1 <tg-emoji emoji-id="4983746717313664194">⭐️</tg-emoji> = 1,53 ₽</div>
+          </div>
+        </div>
+
+        <div class="pkgs" id="pkgs"></div>
+
+        <div class="custom-box hidden" id="customBox">
+          <div class="section-title" style="margin-top:6px">Своя сумма</div>
+          <div class="custom-row">
+            <input class="field" id="customInput" type="number" min="1" max="10000" inputmode="numeric" placeholder="1 – 10 000">
+            <button class="btn" id="customBuy" type="button" disabled>Пополнить</button>
+          </div>
+          <div class="hint-small" id="customHint">Введите количество от 1 до 10 000</div>
+        </div>
+
+        <div class="status" id="shopStatus"></div>
+      </div>
     </div>
 
-    <div class="card">
-      <div class="section-title">Отзывы <span class="tag">в разработке</span></div>
-      <div class="muted">Скоро здесь появятся отзывы пользователей о сервисе.</div>
+    <!-- Настройки -->
+    <div class="tab-panel" id="tab-settings">
+      <div class="card">
+        <div class="section-title">Аватарка</div>
+        <div class="set-head">
+          <div class="av set-av" id="sAv"></div>
+          <div>
+            <div class="set-title">Фото профиля</div>
+            <div class="muted">Отображается на сайте и в приложении</div>
+          </div>
+        </div>
+        <label class="btn soft" for="avatarInput">Сменить аватарку</label>
+        <input type="file" id="avatarInput" accept="image/*" class="hidden">
+        <div class="status" id="avStatus"></div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">Уведомления</div>
+        <label class="set-row">
+          <span class="set-ico" id="pushIcon"></span>
+          <span class="set-txt">
+            <b>Пуш-уведомления</b>
+            <small id="pushState">Включены</small>
+          </span>
+          <span class="switch">
+            <input type="checkbox" id="pushToggle">
+            <span class="slider"></span>
+          </span>
+        </label>
+      </div>
+
+      <div class="card">
+        <div class="section-title">Тема оформления</div>
+        <div class="seg">
+          <button type="button" data-theme-btn="system">Системная</button>
+          <button type="button" data-theme-btn="light">Светлая</button>
+          <button type="button" data-theme-btn="dark">Тёмная</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">Сервис</div>
+        <button class="set-row" data-goto="shop" type="button">
+          <span class="set-ico"><tg-emoji emoji-id="4983746717313664194">⭐️</tg-emoji></span>
+          <span class="set-txt"><b>Магазин</b><small>Пополнение звёздами</small></span>
+          <span class="set-arrow">›</span>
+        </button>
+        <button class="set-row" data-goto="profile" type="button">
+          <span class="set-ico">👤</span>
+          <span class="set-txt"><b>Профиль</b><small>Имя, описание, статус</small></span>
+          <span class="set-arrow">›</span>
+        </button>
+        <button class="set-row" id="closeAppBtn" type="button">
+          <span class="set-ico">🚪</span>
+          <span class="set-txt"><b>Закрыть приложение</b><small>Войти снова можно в любой момент</small></span>
+          <span class="set-arrow">›</span>
+        </button>
+      </div>
+
+      <div class="version">VortexPay · версия 2.0</div>
     </div>
   </section>
 </div>
+
+<div class="toast" id="toast"></div>
 
 <script>
   const FIREBASE_DB = "https://tetete-d31c8-default-rtdb.firebaseio.com";
   const CODE_TTL = 30;
   const DESC_MAX = 140;
-  const ONLINE_LIMIT = 60 * 1000;    // считаем онлайн, если heartbeat свежее 60 сек
+  const ONLINE_LIMIT = 60 * 1000;
   const HEARTBEAT_EVERY = 30 * 1000;
   const AVATAR_PX = 160;
+
+  const RATE = 1.53;
+  const MIN_STARS = 1;
+  const MAX_STARS = 10000;
+  const PRESETS = [50, 100, 250, 500, 1000];
+
+  // Премиум-эмодзи (в веб-приложении отображаются как обычные эмодзи)
+  const STAR = '<tg-emoji emoji-id="4983746717313664194">⭐️</tg-emoji>';
+  const PLUS = '<tg-emoji emoji-id="5258108352008823107">➕</tg-emoji>';
+  const BELL = '<tg-emoji emoji-id="6039486778597970865">🔔</tg-emoji>';
+  const MUTE = '<tg-emoji emoji-id="6039569594157371705">🔕</tg-emoji>';
+
+  const THEME_KEY = "vp_theme";
 
   const tg = window.Telegram && window.Telegram.WebApp;
   if (tg) { tg.ready(); tg.expand(); }
@@ -356,6 +582,7 @@
   let heartbeatId = null;
   let presenceId = null;
   let profile = null;
+  let buying = false;
 
   // ---------- Утилиты ----------
   function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
@@ -368,6 +595,18 @@
   function show(stepId) {
     document.querySelectorAll(".step").forEach(s => s.classList.remove("active"));
     $(stepId).classList.add("active");
+  }
+
+  function toast(text) {
+    const t = $("toast");
+    t.textContent = text;
+    t.classList.add("show");
+    clearTimeout(toast._t);
+    toast._t = setTimeout(() => t.classList.remove("show"), 2200);
+  }
+
+  function haptic(type) {
+    if (tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred(type);
   }
 
   async function fb(path, method = "GET", body) {
@@ -388,13 +627,11 @@
     return many;
   }
 
-  // "месяц назад", "3 дня назад", "5 минут назад"
   function timeAgo(ts) {
     const sec = Math.max(0, (Date.now() - ts) / 1000);
     if (sec < 60) return "только что";
     const fmt = (n, one, few, many) =>
       (n === 1 ? one : `${n} ${plural(n, one, few, many)}`) + " назад";
-
     const min = Math.floor(sec / 60);
     if (min < 60) return fmt(min, "минуту", "минуты", "минут");
     const hr = Math.floor(min / 60);
@@ -410,6 +647,12 @@
     return new Date(ts).toLocaleString("ru-RU", {
       day: "numeric", month: "long", hour: "2-digit", minute: "2-digit"
     });
+  }
+
+  function fmtRub(stars) {
+    return (stars * RATE).toLocaleString("ru-RU", {
+      minimumFractionDigits: 2, maximumFractionDigits: 2
+    }) + " ₽";
   }
 
   function paintAvatar(el, src, letter) {
@@ -480,9 +723,8 @@
         if (data && data.expires) break;
         await sleep(1000);
       }
-      if (!data || !data.expires) {
-        throw new Error("Бот не ответил. Проверьте, что он запущен.");
-      }
+      if (!data || !data.expires) throw new Error("Бот не ответил. Проверьте, что он запущен.");
+
       expiresAt = data.expires;
       setStatus(status, "", "");
       startTimer();
@@ -585,11 +827,11 @@
 
       if (result.ok) {
         clearInterval(timerId);
-        if (tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred("success");
+        haptic("success");
         show("step-done");
         setTimeout(enterApp, 900);
       } else {
-        if (tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred("error");
+        haptic("error");
         shakeCode();
         setStatus(status, result.error || "Неверный код", "error");
         btn.disabled = false;
@@ -618,28 +860,36 @@
   }
 
   async function loadProfile() {
-    const data = (await fb(`profiles/${uid}`)) || {};
+    const [data, settings] = await Promise.all([
+      fb(`profiles/${uid}`).catch(() => null),
+      fb(`settings/${uid}`).catch(() => null),
+    ]);
+    const d = data || {};
     profile = {
-      first_name: data.first_name || (tgUser && tgUser.first_name) || "Пользователь",
-      username: data.username || (tgUser && tgUser.username) || "",
-      created: data.created || null,
-      avatar: data.avatar || "",        // свой аватар с сайта
-      tgAvatar: data.tg_avatar || "",   // аватар из Telegram
-      description: data.description || ""
+      first_name: d.first_name || (tgUser && tgUser.first_name) || "Пользователь",
+      username: d.username || (tgUser && tgUser.username) || "",
+      created: d.created || null,
+      avatar: d.avatar || "",
+      tgAvatar: d.tg_avatar || "",
+      description: d.description || "",
+      push: !(settings && settings.push === false),   // по умолчанию включены
     };
-    renderAll();
+    renderAvatars();
+    $("homeName").textContent = profile.first_name;
+    renderProfile();
+    renderPush();
   }
 
   function avatarLetter() {
     return (profile.first_name || "?").trim().charAt(0).toUpperCase() || "?";
   }
 
-  function renderAll() {
+  function renderAvatars() {
     const src = profile.avatar || profile.tgAvatar;
-    paintAvatar($("hdrAv"), src, avatarLetter());
-    paintAvatar($("pAv"), src, avatarLetter());
-    $("homeName").textContent = profile.first_name;
-    renderProfile();
+    const letter = avatarLetter();
+    paintAvatar($("hdrAv"), src, letter);
+    paintAvatar($("pAv"), src, letter);
+    paintAvatar($("sAv"), src, letter);
   }
 
   function renderProfile() {
@@ -661,6 +911,12 @@
     updateCounter();
   }
 
+  function renderPush() {
+    $("pushToggle").checked = profile.push;
+    $("pushIcon").innerHTML = profile.push ? BELL : MUTE;
+    $("pushState").textContent = profile.push ? "Включены" : "Выключены";
+  }
+
   // ---------- Онлайн-статус ----------
   function startHeartbeat() {
     const beat = () => fb(`presence/${uid}`, "PUT", Date.now()).catch(() => {});
@@ -670,7 +926,8 @@
 
     clearInterval(presenceId);
     presenceId = setInterval(() => {
-      if (!$("scr-profile").classList.contains("active")) return;
+      if (!$("scr-cabinet").classList.contains("active")) return;
+      if (!$("tab-profile").classList.contains("active")) return;
       refreshPresence();
     }, 15000);
   }
@@ -692,21 +949,53 @@
   function openScreen(id) {
     document.querySelectorAll(".screen").forEach(s => s.classList.toggle("active", s.id === id));
     window.scrollTo(0, 0);
-    const isProfile = id === "scr-profile";
     if (tg && tg.BackButton) {
-      isProfile ? tg.BackButton.show() : tg.BackButton.hide();
+      id === "scr-home" ? tg.BackButton.hide() : tg.BackButton.show();
     }
-    if (isProfile) {
+  }
+
+  function switchTab(tab) {
+    document.querySelectorAll(".tab").forEach(t => t.classList.toggle("active", t.dataset.tab === tab));
+    document.querySelectorAll(".tab-panel").forEach(p => p.classList.toggle("active", p.id === "tab-" + tab));
+    if (tab === "profile") {
       renderProfile();
       refreshPresence();
     }
   }
 
-  $("hdrAv").addEventListener("click", () => openScreen("scr-profile"));
-  $("backBtn").addEventListener("click", () => openScreen("scr-home"));
-  if (tg && tg.BackButton) {
-    tg.BackButton.onClick(() => openScreen("scr-home"));
+  function openCabinet(tab = "profile") {
+    openScreen("scr-cabinet");
+    switchTab(tab);
   }
+
+  $("hdrAv").addEventListener("click", () => openCabinet("profile"));
+  $("backBtn").addEventListener("click", () => openScreen("scr-home"));
+  document.querySelectorAll(".tab").forEach(t =>
+    t.addEventListener("click", () => switchTab(t.dataset.tab))
+  );
+  document.querySelectorAll("[data-goto]").forEach(el =>
+    el.addEventListener("click", () => openCabinet(el.dataset.goto))
+  );
+  if (tg && tg.BackButton) {
+    tg.BackButton.onClick(() => {
+      if ($("scr-cabinet").classList.contains("active")) openScreen("scr-home");
+    });
+  }
+
+  // ---------- Обновление ----------
+  $("refreshBtn").addEventListener("click", async () => {
+    const btn = $("refreshBtn");
+    btn.classList.add("spinning");
+    try {
+      await loadProfile();
+      await refreshPresence();
+      toast("Данные обновлены");
+    } catch {
+      toast("Не удалось обновить");
+    } finally {
+      btn.classList.remove("spinning");
+    }
+  });
 
   // ---------- Описание ----------
   function updateCounter() {
@@ -730,19 +1019,19 @@
       $("pDesc").value = text;
       updateCounter();
       setStatus(status, "Описание сохранено", "ok");
-    } catch (err) {
+    } catch {
       setStatus(status, "Не удалось сохранить. Попробуйте ещё раз.", "error");
     } finally {
       btn.disabled = false;
     }
   });
 
-  // ---------- Аватарка ----------
+  // ---------- Настройки: аватарка ----------
   $("avatarInput").addEventListener("change", async (e) => {
     const file = e.target.files[0];
     e.target.value = "";
     if (!file) return;
-    const status = $("profileStatus");
+    const status = $("avStatus");
     if (!file.type.startsWith("image/")) {
       setStatus(status, "Выберите изображение", "error");
       return;
@@ -752,14 +1041,158 @@
       const dataUrl = await resizeImage(file, AVATAR_PX);
       await fb(`profiles/${uid}/avatar`, "PUT", dataUrl);
       profile.avatar = dataUrl;
-      renderAll();
+      renderAvatars();
       setStatus(status, "Аватарка обновлена", "ok");
     } catch (err) {
       setStatus(status, err.message || "Не удалось загрузить аватарку", "error");
     }
   });
 
+  // ---------- Настройки: пуш-уведомления ----------
+  $("pushToggle").addEventListener("change", async (e) => {
+    const on = e.target.checked;
+    try {
+      await fb(`settings/${uid}/push`, "PUT", on);
+      profile.push = on;
+      renderPush();
+      toast(on ? "Уведомления включены" : "Уведомления выключены");
+    } catch {
+      e.target.checked = !on;
+      toast("Не удалось сохранить");
+    }
+  });
+
+  // ---------- Настройки: тема ----------
+  function applyTheme(theme) {
+    if (theme === "light" || theme === "dark") {
+      document.documentElement.dataset.theme = theme;
+    } else {
+      delete document.documentElement.dataset.theme;
+      theme = "system";
+    }
+    try { localStorage.setItem(THEME_KEY, theme); } catch {}
+    document.querySelectorAll("[data-theme-btn]").forEach(b =>
+      b.classList.toggle("active", b.dataset.themeBtn === theme)
+    );
+  }
+
+  document.querySelectorAll("[data-theme-btn]").forEach(b =>
+    b.addEventListener("click", () => applyTheme(b.dataset.themeBtn))
+  );
+
+  $("closeAppBtn").addEventListener("click", () => {
+    if (tg && tg.close) tg.close();
+    else location.reload();
+  });
+
+  // ---------- Магазин: пополнение звёздами ----------
+  function buildPkgs() {
+    const wrap = $("pkgs");
+    wrap.innerHTML = "";
+    PRESETS.forEach(n => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "pkg";
+      b.innerHTML = `<div class="pkg-amt">${STAR}${n}</div><div class="pkg-rub">${fmtRub(n)}</div>`;
+      b.addEventListener("click", () => buyStars(n));
+      wrap.appendChild(b);
+    });
+    const other = document.createElement("button");
+    other.type = "button";
+    other.className = "pkg";
+    other.innerHTML = `<div class="pkg-amt">${PLUS} Другое</div><div class="pkg-rub">от 1 до 10 000</div>`;
+    other.addEventListener("click", () => {
+      const box = $("customBox");
+      box.classList.toggle("hidden");
+      if (!box.classList.contains("hidden")) $("customInput").focus();
+    });
+    wrap.appendChild(other);
+  }
+
+  function getCustomStars() {
+    const n = parseInt($("customInput").value, 10);
+    return Number.isInteger(n) && n >= MIN_STARS && n <= MAX_STARS ? n : null;
+  }
+
+  function updateCustom() {
+    const n = getCustomStars();
+    const hint = $("customHint");
+    $("customBuy").disabled = n === null || buying;
+    if (n !== null) {
+      hint.textContent = `≈ ${fmtRub(n)}`;
+      hint.classList.remove("error");
+    } else {
+      hint.textContent = `Введите количество от ${MIN_STARS} до ${MAX_STARS.toLocaleString("ru-RU")}`;
+      hint.classList.toggle("error", $("customInput").value !== "");
+    }
+  }
+
+  $("customInput").addEventListener("input", updateCustom);
+  $("customBuy").addEventListener("click", () => {
+    const n = getCustomStars();
+    if (n !== null) buyStars(n);
+  });
+
+  function setShopBusy(busy) {
+    buying = busy;
+    document.querySelectorAll("#pkgs .pkg").forEach(b => b.disabled = busy);
+    updateCustom();
+  }
+
+  async function buyStars(stars) {
+    const status = $("shopStatus");
+    if (buying) return;
+    if (!uid) {
+      setStatus(status, "Откройте приложение кнопкой «Запустить» в боте", "error");
+      return;
+    }
+    if (!tg || !tg.openInvoice) {
+      setStatus(status, "Оплата доступна только в Telegram", "error");
+      return;
+    }
+
+    setShopBusy(true);
+    setStatus(status, "Создаём счёт...", "");
+    try {
+      const ts = Date.now();
+      await fb(`invoice_links/${uid}`, "DELETE");
+      await fb(`invoices/${uid}`, "PUT", { stars, ts });
+
+      const deadline = Date.now() + 15000;
+      let link = null;
+      while (Date.now() < deadline) {
+        const d = await fb(`invoice_links/${uid}`);
+        if (d && d.ts === ts) { link = d; break; }
+        await sleep(1000);
+      }
+      if (!link) throw new Error("Бот не ответил. Попробуйте ещё раз.");
+      await fb(`invoice_links/${uid}`, "DELETE");
+      if (link.error) throw new Error(link.error);
+
+      setStatus(status, "", "");
+      tg.openInvoice(link.url, (st) => {
+        if (st === "paid") {
+          haptic("success");
+          setStatus(status, `Спасибо! Зачислено ${stars} звёзд`, "ok");
+        } else if (st === "cancelled") {
+          setStatus(status, "Оплата отменена", "");
+        } else if (st === "failed") {
+          haptic("error");
+          setStatus(status, "Оплата не прошла. Попробуйте ещё раз.", "error");
+        }
+      });
+    } catch (err) {
+      setStatus(status, err.message || "Не удалось создать счёт", "error");
+    } finally {
+      setShopBusy(false);
+    }
+  }
+
   // ---------- Старт ----------
+  applyTheme(localStorage.getItem(THEME_KEY) || "system");
+  buildPkgs();
+  updateCustom();
+
   if (!uid) {
     setStatus($("requestStatus"), "Откройте приложение кнопкой «Запустить» в боте", "error");
   }
