@@ -2,226 +2,235 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VortexPay</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
-  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-  body{font-family:-apple-system,Inter,Segoe UI,Roboto,sans-serif;background:#07060f;color:#fff;min-height:100vh;
-       display:flex;align-items:center;justify-content:center;padding:20px;overflow:hidden}
-  .bg{position:fixed;inset:-50%;background:conic-gradient(from 0deg,#6d28d9,#2563eb,#06b6d4,#a21caf,#6d28d9);
-      filter:blur(90px);opacity:.35;animation:spin 18s linear infinite;z-index:-1}
-  @keyframes spin{to{transform:rotate(360deg)}}
-  .card{width:100%;max-width:380px;background:rgba(20,18,35,.75);backdrop-filter:blur(20px);
-        border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:28px 22px;text-align:center}
-  .logo{font-size:44px;animation:spin 6s linear infinite;display:inline-block}
-  h1{font-size:24px;font-weight:800;margin:8px 0 4px;background:linear-gradient(90deg,#a78bfa,#60a5fa,#22d3ee);
-     -webkit-background-clip:text;color:transparent}
-  .sub{color:#a1a1c2;font-size:14px;margin-bottom:20px}
-  blockquote{border-left:3px solid #8b5cf6;background:rgba(139,92,246,.1);padding:10px 14px;border-radius:0 12px 12px 0;
-             text-align:left;font-size:14px;color:#d4d4f5;margin:14px 0}
-  b{font-weight:800}
-  .screen{display:none}.screen.active{display:block;animation:fade .35s ease}
-  @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1}}
-  .robot{display:flex;align-items:center;gap:14px;background:#11101f;border:1px solid #2a2845;border-radius:14px;
-         padding:16px;cursor:pointer;user-select:none}
-  .box{width:28px;height:28px;border:2px solid #6b6b8f;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-  .box.load{border-color:transparent;border-top-color:#8b5cf6;border-radius:50%;animation:spin .7s linear infinite}
-  .box.ok{background:#22c55e;border-color:#22c55e}.box.ok::after{content:"✓";font-weight:900}
-  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
-  .grid button{font-size:30px;padding:14px 0;background:#11101f;border:1px solid #2a2845;border-radius:14px;cursor:pointer}
-  .grid button:active{transform:scale(.95)}
-  .otp{display:flex;gap:8px;justify-content:center;margin:18px 0}
-  .otp input{width:46px;height:56px;text-align:center;font-size:24px;font-weight:800;color:#fff;background:#11101f;
-             border:2px solid #2a2845;border-radius:12px;outline:none}
-  .otp input:focus{border-color:#8b5cf6}
-  .shake{animation:shake .4s}@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
-  .btn{width:100%;padding:15px;border:0;border-radius:14px;font-size:16px;font-weight:800;color:#fff;cursor:pointer;
-       background:linear-gradient(90deg,#7c3aed,#2563eb);margin-top:6px}
-  .btn:disabled{opacity:.45}
-  .timer{font-size:14px;color:#a1a1c2}.timer b{color:#fff}
-  .err{color:#f87171;font-size:14px;min-height:20px;font-weight:700}
-  .big{font-size:64px;margin:10px 0}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--tg-theme-bg-color, #111);
+    color: var(--tg-theme-text-color, #fff);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .card {
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+  }
+  h1 { font-size: 26px; font-weight: 800; margin-bottom: 8px; }
+  p { font-size: 15px; line-height: 1.5; opacity: 0.85; margin-bottom: 18px; }
+  blockquote {
+    border-left: 3px solid #5b8cff;
+    padding: 10px 14px;
+    margin: 14px 0;
+    text-align: left;
+    background: rgba(91, 140, 255, 0.08);
+    border-radius: 6px;
+  }
+  .btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    background: var(--tg-theme-button-color, #3b82f6);
+    color: var(--tg-theme-button-text-color, #fff);
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .check {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.06);
+    cursor: pointer;
+    text-align: left;
+    font-weight: 600;
+  }
+  .check input { width: 22px; height: 22px; }
+  .codes {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin: 18px 0;
+  }
+  .codes input {
+    width: 44px;
+    height: 56px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.06);
+    color: inherit;
+  }
+  .codes input:focus { outline: none; border-color: #5b8cff; }
+  .timer { font-size: 22px; font-weight: 800; color: #5b8cff; }
+  .timer.expired { color: #ef4444; }
+  .status { min-height: 22px; font-weight: 600; margin-top: 12px; }
+  .ok { color: #22c55e; }
+  .err { color: #ef4444; }
+  .hidden { display: none; }
 </style>
 </head>
 <body>
-<div class="bg"></div>
+
 <div class="card">
-  <div class="logo">🌀</div>
-  <h1>VortexPay</h1>
 
-  <!-- 1. Проверка на робота -->
-  <div class="screen active" id="s-robot">
-    <p class="sub"><b>Шаг 1 из 2</b> · Проверка безопасности</p>
-    <div class="robot" id="robot"><div class="box" id="box"></div><b>Я не робот</b></div>
-    <div id="challenge" style="display:none">
-      <blockquote>Выбери значок <b id="target"></b></blockquote>
-      <div class="grid" id="grid"></div>
+  <div id="step-robot">
+    <h1>Проверка</h1>
+    <p>Подтвердите, что вы не робот.</p>
+    <label class="check">
+      <input type="checkbox" id="notRobot">
+      <span>Я не робот</span>
+    </label>
+    <button class="btn" id="toCode" disabled>Продолжить</button>
+  </div>
+
+  <div id="step-code" class="hidden">
+    <h1>Введите код</h1>
+    <p>Код из <b>VortexPay</b> бота. Он действует <b>30 секунд</b>, после этого устареет.</p>
+    <div class="timer" id="timer">30</div>
+    <div class="codes" id="codes">
+      <input maxlength="1" inputmode="numeric" pattern="[0-9]">
+      <input maxlength="1" inputmode="numeric" pattern="[0-9]">
+      <input maxlength="1" inputmode="numeric" pattern="[0-9]">
+      <input maxlength="1" inputmode="numeric" pattern="[0-9]">
+      <input maxlength="1" inputmode="numeric" pattern="[0-9]">
+      <input maxlength="1" inputmode="numeric" pattern="[0-9]">
     </div>
-    <p class="err" id="robot-err" style="margin-top:12px"></p>
+    <button class="btn" id="submit">Подтвердить</button>
+    <div class="status" id="status"></div>
   </div>
 
-  <!-- 2. Ввод кода -->
-  <div class="screen" id="s-code">
-    <p class="sub"><b>Шаг 2 из 2</b> · Код подтверждения</p>
-    <blockquote id="code-info">⏳ <b>Отправляем код в бота…</b></blockquote>
-    <div class="otp" id="otp"></div>
-    <p class="err" id="code-err"></p>
-    <p class="timer" id="timer"></p>
-    <button class="btn" id="confirm" disabled>Подтвердить</button>
-    <button class="btn" id="resend" style="display:none;background:#2a2845">Отправить код снова</button>
-  </div>
-
-  <!-- 3. Результат -->
-  <div class="screen" id="s-done">
-    <div class="big" id="done-icon">✅</div>
-    <h2 id="done-title"><b>Верификация пройдена</b></h2>
-    <blockquote id="done-text">Добро пожаловать в <b>VortexPay</b>!</blockquote>
-    <button class="btn" onclick="Telegram.WebApp.close()">Закрыть</button>
-  </div>
 </div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAnalytics, isSupported } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
-import { getDatabase, ref, set, update, onValue, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+<script>
+  const API_URL = "https://your-domain.com/verify";   // HTTPS адрес вашего API
+  const CODE_TTL = 30;
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBZ8Qm4BeX6U1vCMNb-_FgNBp0OQUkC-9k",
-  authDomain: "tetete-d31c8.firebaseapp.com",
-  databaseURL: "https://tetete-d31c8-default-rtdb.firebaseio.com",
-  projectId: "tetete-d31c8",
-  storageBucket: "tetete-d31c8.firebasestorage.app",
-  messagingSenderId: "130781376435",
-  appId: "1:130781376435:web:8588052eb0f36ce99fe5c6",
-  measurementId: "G-B9J1GPPJZF"
-};
-const app = initializeApp(firebaseConfig);
-isSupported().then(ok => ok && getAnalytics(app));
-const db = getDatabase(app);
+  const tg = window.Telegram && window.Telegram.WebApp;
+  if (tg) { tg.ready(); tg.expand(); }
 
-const tg = Telegram.WebApp; tg.ready(); tg.expand();
-tg.setHeaderColor?.("#07060f"); tg.setBackgroundColor?.("#07060f");
-const haptic = t => tg.HapticFeedback?.notificationOccurred(t);
-const $ = id => document.getElementById(id);
-const show = id => { document.querySelectorAll(".screen").forEach(s => s.classList.remove("active")); $(id).classList.add("active"); };
+  const notRobot = document.getElementById("notRobot");
+  const toCode = document.getElementById("toCode");
+  const stepRobot = document.getElementById("step-robot");
+  const stepCode = document.getElementById("step-code");
+  const timerEl = document.getElementById("timer");
+  const submitBtn = document.getElementById("submit");
+  const statusEl = document.getElementById("status");
+  const inputs = Array.from(document.querySelectorAll("#codes input"));
 
-const uid = tg.initDataUnsafe?.user?.id;
-if (!uid) { $("robot-err").innerHTML = "<b>Открой MiniApp через бота VortexPay</b>"; }
-const node = uid ? ref(db, `verify/${uid}`) : null;
+  let timeLeft = CODE_TTL;
+  let timerId = null;
 
-/* ---------- Проверка на робота ---------- */
-const ICONS = ["🌀","💎","🚀","🔒","⚡","🪙"];
-$("robot").onclick = () => {
-  if (!uid || $("box").className !== "box") return;
-  $("box").className = "box load";
-  setTimeout(() => {
-    $("box").className = "box ok";
-    const target = ICONS[Math.floor(Math.random() * ICONS.length)];
-    $("target").textContent = target;
-    $("grid").innerHTML = "";
-    [...ICONS].sort(() => Math.random() - .5).forEach(ic => {
-      const b = document.createElement("button"); b.textContent = ic;
-      b.onclick = () => {
-        if (ic === target) { haptic("success"); show("s-code"); requestCode(); }
-        else { haptic("error"); $("robot-err").innerHTML = "<b>Неверно, попробуй ещё раз</b>";
-               $("box").className = "box"; $("challenge").style.display = "none"; }
-      };
-      $("grid").appendChild(b);
+  notRobot.addEventListener("change", () => {
+    toCode.disabled = !notRobot.checked;
+  });
+
+  toCode.addEventListener("click", () => {
+    stepRobot.classList.add("hidden");
+    stepCode.classList.remove("hidden");
+    inputs[0].focus();
+    startTimer();
+  });
+
+  function startTimer() {
+    timeLeft = CODE_TTL;
+    timerEl.textContent = timeLeft;
+    timerEl.classList.remove("expired");
+    submitBtn.disabled = false;
+    clearInterval(timerId);
+    timerId = setInterval(() => {
+      timeLeft--;
+      timerEl.textContent = timeLeft;
+      if (timeLeft <= 0) {
+        clearInterval(timerId);
+        expireCode();
+      }
+    }, 1000);
+  }
+
+  function expireCode() {
+    timerEl.textContent = "0";
+    timerEl.classList.add("expired");
+    submitBtn.disabled = true;
+    statusEl.className = "status err";
+    statusEl.textContent = "Код устарел. Нажмите «Получить код» в боте.";
+  }
+
+  inputs.forEach((input, i) => {
+    input.addEventListener("input", () => {
+      input.value = input.value.replace(/\D/g, "");
+      if (input.value && i < inputs.length - 1) inputs[i + 1].focus();
     });
-    $("challenge").style.display = "block"; $("robot-err").textContent = "";
-  }, 1200);
-};
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Backspace" && !input.value && i > 0) inputs[i - 1].focus();
+    });
+    input.addEventListener("paste", (e) => {
+      e.preventDefault();
+      const digits = (e.clipboardData.getData("text") || "").replace(/\D/g, "");
+      digits.slice(0, inputs.length).split("").forEach((d, j) => {
+        inputs[j].value = d;
+      });
+      inputs[Math.min(digits.length, inputs.length) - 1]?.focus();
+    });
+  });
 
-/* ---------- OTP поля ---------- */
-const inputs = [];
-for (let i = 0; i < 6; i++) {
-  const inp = document.createElement("input");
-  inp.inputMode = "numeric"; inp.maxLength = 1; inp.autocomplete = "one-time-code";
-  inp.oninput = () => {
-    inp.value = inp.value.replace(/\D/g, "");
-    if (inp.value && i < 5) inputs[i + 1].focus();
-    checkFilled();
-  };
-  inp.onkeydown = e => { if (e.key === "Backspace" && !inp.value && i > 0) inputs[i - 1].focus(); };
-  inp.onpaste = e => {
-    e.preventDefault();
-    const d = (e.clipboardData.getData("text").match(/\d/g) || []).slice(0, 6);
-    d.forEach((v, k) => inputs[k].value = v); inputs[Math.min(d.length, 5)].focus(); checkFilled();
-  };
-  inputs.push(inp); $("otp").appendChild(inp);
-}
-const getCode = () => inputs.map(i => i.value).join("");
-const clearOtp = () => { inputs.forEach(i => i.value = ""); checkFilled(); };
-function checkFilled() {
-  const full = getCode().length === 6;
-  $("confirm").disabled = !full || phase !== "sent";
-  if (full && phase === "sent") submit();
-}
-
-/* ---------- Логика кода ---------- */
-let phase = "idle", timerId = null, lastErrT = 0;
-
-function requestCode() {
-  phase = "waiting"; clearOtp();
-  $("code-info").innerHTML = "⏳ <b>Отправляем код в бота…</b>";
-  $("code-err").textContent = ""; $("timer").textContent = "";
-  $("resend").style.display = "none";
-  set(node, { status: "requested", ts: serverTimestamp() });
-}
-
-function startTimer(sec) {
-  clearInterval(timerId);
-  let left = sec;
-  const tick = () => {
-    $("timer").innerHTML = `Код действует ещё <b>${left} сек</b>`;
-    if (left-- <= 0) clearInterval(timerId);
-  };
-  tick(); timerId = setInterval(tick, 1000);
-}
-
-function submit() {
-  phase = "checking"; $("confirm").disabled = true;
-  update(node, { attempt: getCode() });
-}
-$("confirm").onclick = submit;
-$("resend").onclick = requestCode;
-
-if (node) onValue(node, snap => {
-  const v = snap.val(); if (!v) return;
-  if (v.status === "sent") {
-    if (phase === "waiting") {
-      phase = "sent";
-      $("code-info").innerHTML = "📩 <b>Код отправлен в бота!</b><br>Введи <b>6 цифр</b> из сообщения.";
-      startTimer(v.ttl || 30); inputs[0].focus();
+  submitBtn.addEventListener("click", async () => {
+    const code = inputs.map(i => i.value).join("");
+    if (code.length !== 6) {
+      statusEl.className = "status err";
+      statusEl.textContent = "Введите все 6 цифр.";
+      return;
     }
-    if (v.error && v.error.t !== lastErrT) {
-      lastErrT = v.error.t; phase = "sent"; haptic("error");
-      $("code-err").innerHTML = `<b>Неверный код.</b> Осталось попыток: ${v.error.left}`;
-      $("otp").classList.add("shake"); setTimeout(() => $("otp").classList.remove("shake"), 400);
-      clearOtp(); inputs[0].focus();
+    if (timeLeft <= 0) {
+      expireCode();
+      return;
     }
-  }
-  if (v.status === "expired" && phase !== "idle") {
-    phase = "expired"; clearInterval(timerId); haptic("warning");
-    $("code-info").innerHTML = "⌛ <b>Код устарел.</b> Запроси новый.";
-    $("timer").textContent = ""; $("code-err").textContent = "";
-    $("resend").style.display = "block"; $("confirm").disabled = true;
-  }
-  if (v.status === "ok") {
-    clearInterval(timerId); haptic("success"); show("s-done");
-  }
-  if (v.status === "blocked") {
-    clearInterval(timerId); haptic("error");
-    $("done-icon").textContent = "⛔";
-    $("done-title").innerHTML = "<b>Слишком много попыток</b>";
-    $("done-text").innerHTML = "Код аннулирован. Открой MiniApp заново через бота.";
-    show("s-done");
-  }
-  if (v.status === "no_user") {
-    $("code-info").innerHTML = "⚠️ <b>Сначала нажми /start в боте</b>";
-  }
-});
+
+    submitBtn.disabled = true;
+    statusEl.className = "status";
+    statusEl.textContent = "Проверка...";
+
+    try {
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          init_data: tg ? tg.initData : "",
+          code: code
+        })
+      });
+      const data = await res.json();
+
+      if (data.ok) {
+        clearInterval(timerId);
+        statusEl.className = "status ok";
+        statusEl.textContent = "Вход выполнен!";
+        if (tg) setTimeout(() => tg.close(), 1200);
+      } else {
+        statusEl.className = "status err";
+        statusEl.textContent = data.error || "Ошибка проверки";
+        submitBtn.disabled = false;
+      }
+    } catch (e) {
+      statusEl.className = "status err";
+      statusEl.textContent = "Нет связи с сервером";
+      submitBtn.disabled = false;
+    }
+  });
 </script>
+
 </body>
 </html>
