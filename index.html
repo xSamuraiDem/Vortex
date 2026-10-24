@@ -20,10 +20,13 @@
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background: var(--bg); color: var(--text);
-    min-height: 100vh; display: flex; align-items: center; justify-content: center;
-    padding: 20px; -webkit-font-smoothing: antialiased;
+    min-height: 100vh; padding: 20px; -webkit-font-smoothing: antialiased;
   }
-  .wrap { width: 100%; max-width: 380px; text-align: center; }
+  body.auth { display: flex; align-items: center; justify-content: center; }
+  .hidden { display: none !important; }
+
+  /* ---------- Авторизация ---------- */
+  .wrap { width: 100%; max-width: 380px; margin: 0 auto; text-align: center; }
   .logo {
     width: 64px; height: 64px; margin: 0 auto 14px; border-radius: 18px;
     background: linear-gradient(135deg, var(--accent), #1f8a4c);
@@ -114,16 +117,105 @@
   }
   @keyframes pop { 0% { transform: scale(0.4); } 70% { transform: scale(1.08); } 100% { transform: scale(1); } }
   .footer { font-size: 11px; color: var(--hint); margin-top: 18px; }
+
+  /* ---------- Приложение ---------- */
+  .app { max-width: 420px; margin: 0 auto; }
+  .topbar { display: flex; align-items: center; justify-content: space-between; padding: 4px 0 18px; }
+  .brand { font-weight: 800; font-size: 20px; }
+
+  .av {
+    border-radius: 50%; overflow: hidden; position: relative;
+    background: linear-gradient(135deg, var(--accent), #1f8a4c);
+    color: #fff; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .av img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+
+  .avatar-wrap { position: relative; }
+  .avatar-btn {
+    width: 44px; height: 44px; border: none; padding: 0; cursor: pointer; font-size: 18px;
+    box-shadow: 0 0 0 2px var(--accent); background: none;
+  }
+  .tip {
+    position: absolute; right: 0; top: calc(100% + 8px);
+    background: var(--text); color: var(--bg); font-size: 12px; font-weight: 600;
+    padding: 6px 10px; border-radius: 8px; white-space: nowrap;
+    opacity: 0; transform: translateY(-4px); pointer-events: none; transition: 0.2s;
+  }
+  .avatar-wrap:hover .tip,
+  .avatar-btn:focus-visible + .tip { opacity: 1; transform: none; }
+
+  .screen { display: none; animation: fade 0.3s ease; }
+  .screen.active { display: block; }
+
+  .greet { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+  .muted { font-size: 13px; color: var(--hint); line-height: 1.5; }
+
+  .balance {
+    background: linear-gradient(135deg, var(--accent), #1f8a4c); color: #fff;
+    border-radius: 18px; padding: 20px; margin: 16px 0 14px;
+    box-shadow: 0 8px 22px rgba(46, 166, 97, 0.3);
+  }
+  .b-label { font-size: 13px; opacity: 0.85; }
+  .b-sum { font-size: 30px; font-weight: 800; margin-top: 4px; }
+
+  .app .card { text-align: left; margin-bottom: 14px; }
+  .section-title { font-weight: 700; font-size: 15px; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+  .actions { display: flex; gap: 8px; margin-bottom: 10px; }
+  .act {
+    flex: 1; padding: 12px 6px; border: none; border-radius: 12px; background: var(--bg);
+    color: var(--hint); font-size: 13px; font-weight: 600; cursor: not-allowed;
+  }
+
+  .back {
+    background: none; border: none; color: var(--accent); font-size: 15px; font-weight: 600;
+    cursor: pointer; padding: 6px 0; margin-bottom: 8px;
+  }
+  .p-head { text-align: center; margin-bottom: 18px; }
+  .p-av-wrap { position: relative; width: 112px; height: 112px; margin: 0 auto 12px; }
+  .p-av { width: 112px; height: 112px; font-size: 44px; cursor: pointer; }
+  .p-edit {
+    position: absolute; inset: 0; border-radius: 50%; background: rgba(0, 0, 0, 0.45);
+    color: #fff; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: 0.2s; pointer-events: none;
+  }
+  .p-av-wrap:hover .p-edit { opacity: 1; }
+  .p-name { font-size: 22px; font-weight: 800; word-break: break-word; }
+  .p-user { font-size: 14px; color: var(--hint); margin-top: 2px; }
+  .p-status { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; margin-top: 8px; color: var(--hint); }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--hint); }
+  .dot.on { background: var(--ok); box-shadow: 0 0 0 3px rgba(46, 166, 97, 0.2); }
+
+  .row { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 10px 0; font-size: 14px; }
+  .row + .row { border-top: 1px solid rgba(127, 127, 127, 0.15); }
+  .row .k { color: var(--hint); }
+  .row .v { font-weight: 600; text-align: right; }
+  .row .v small { display: block; font-weight: 400; color: var(--hint); font-size: 12px; margin-top: 2px; }
+
+  textarea {
+    width: 100%; min-height: 90px; border: 2px solid transparent; border-radius: 12px;
+    background: var(--bg); color: var(--text); font: inherit; font-size: 14px;
+    padding: 12px; resize: none; outline: none;
+  }
+  textarea:focus { border-color: var(--accent); }
+  .counter { text-align: right; font-size: 12px; color: var(--hint); margin: 6px 0 10px; }
+  .counter.limit { color: var(--danger); }
+
+  .tag {
+    font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 8px;
+    background: var(--bg); color: var(--hint);
+  }
+  .app .btn { margin-top: 0; }
 </style>
 </head>
-<body>
+<body class="auth">
 
-<div class="wrap">
+<!-- ========== ЭКРАН ВХОДА ========== -->
+<div class="wrap" id="authWrap">
   <div class="logo">V</div>
   <h1>VortexPay</h1>
   <p class="sub">Быстрый и безопасный вход в сервис</p>
 
-  <!-- Шаг 1: проверка на робота -->
   <div class="card step active" id="step-robot">
     <label class="robot" id="robotBox">
       <input type="checkbox" id="robotCheck">
@@ -136,7 +228,6 @@
     </label>
   </div>
 
-  <!-- Шаг 2: запрос кода -->
   <div class="card step" id="step-request">
     <div class="code-title">Получите код</div>
     <div class="code-hint">Код придёт в чат с ботом. Он действует 30 секунд.</div>
@@ -144,7 +235,6 @@
     <div class="status" id="requestStatus"></div>
   </div>
 
-  <!-- Шаг 3: ввод кода -->
   <div class="card step" id="step-code">
     <div class="code-title">Введите код из бота</div>
     <div class="code-hint">Введите 6 цифр, пока код не устарел.</div>
@@ -169,7 +259,6 @@
     <div class="status" id="codeStatus"></div>
   </div>
 
-  <!-- Шаг 4: успех -->
   <div class="card step" id="step-done">
     <div class="success-icon"></div>
     <div class="code-title">Вход выполнен</div>
@@ -179,40 +268,185 @@
   <div class="footer">VortexPay · Защищённый вход</div>
 </div>
 
+<!-- ========== ПРИЛОЖЕНИЕ ========== -->
+<div class="app hidden" id="appWrap">
+  <header class="topbar">
+    <div class="brand">VortexPay</div>
+    <div class="avatar-wrap">
+      <button class="av avatar-btn" id="hdrAv" type="button" aria-label="Профиль"></button>
+      <span class="tip">Профиль</span>
+    </div>
+  </header>
+
+  <!-- Главный экран -->
+  <section class="screen active" id="scr-home">
+    <div class="greet">Привет, <span id="homeName">друг</span>!</div>
+    <div class="muted">Добро пожаловать в VortexPay</div>
+
+    <div class="balance">
+      <div class="b-label">Баланс</div>
+      <div class="b-sum">0,00 ₽</div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Быстрые действия</div>
+      <div class="actions">
+        <button class="act" disabled>Пополнить</button>
+        <button class="act" disabled>Перевод</button>
+        <button class="act" disabled>История</button>
+      </div>
+      <div class="muted">Платежи появятся в следующем обновлении.</div>
+    </div>
+  </section>
+
+  <!-- Профиль -->
+  <section class="screen" id="scr-profile">
+    <button class="back" id="backBtn" type="button">← Назад</button>
+
+    <div class="p-head">
+      <div class="p-av-wrap">
+        <label class="av p-av" id="pAv" for="avatarInput" title="Сменить аватарку"></label>
+        <div class="p-edit">Сменить</div>
+      </div>
+      <input type="file" id="avatarInput" accept="image/*" class="hidden">
+      <div class="p-name" id="pName">—</div>
+      <div class="p-user" id="pUser"></div>
+      <div class="p-status"><span class="dot" id="pDot"></span><span id="pStatus">—</span></div>
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <span class="k">Дата регистрации</span>
+        <span class="v" id="pReg">—</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Описание</div>
+      <textarea id="pDesc" maxlength="140" placeholder="Расскажите о себе (до 140 символов)"></textarea>
+      <div class="counter" id="pCount">0 / 140</div>
+      <button class="btn" id="saveDesc" type="button">Сохранить</button>
+      <div class="status" id="profileStatus"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Отзывы <span class="tag">в разработке</span></div>
+      <div class="muted">Скоро здесь появятся отзывы пользователей о сервисе.</div>
+    </div>
+  </section>
+</div>
+
 <script>
   const FIREBASE_DB = "https://tetete-d31c8-default-rtdb.firebaseio.com";
   const CODE_TTL = 30;
+  const DESC_MAX = 140;
+  const ONLINE_LIMIT = 60 * 1000;    // считаем онлайн, если heartbeat свежее 60 сек
+  const HEARTBEAT_EVERY = 30 * 1000;
+  const AVATAR_PX = 160;
 
   const tg = window.Telegram && window.Telegram.WebApp;
   if (tg) { tg.ready(); tg.expand(); }
-  const user = tg && tg.initDataUnsafe && tg.initDataUnsafe.user;
-  const uid = user ? String(user.id) : null;
+  const tgUser = tg && tg.initDataUnsafe && tg.initDataUnsafe.user;
+  const uid = tgUser ? String(tgUser.id) : null;
 
   const $ = (id) => document.getElementById(id);
   const inputs = [...document.querySelectorAll("#otp input")];
   let expiresAt = 0;
   let timerId = null;
-  let pollId = null;
+  let heartbeatId = null;
+  let presenceId = null;
+  let profile = null;
 
-  function show(stepId) {
-    document.querySelectorAll(".step").forEach(s => s.classList.remove("active"));
-    $(stepId).classList.add("active");
-  }
+  // ---------- Утилиты ----------
+  function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
   function setStatus(el, text, type) {
     el.textContent = text;
     el.className = "status" + (type ? " " + type : "");
   }
 
-  async function fbFetch(path, options) {
-    const res = await fetch(`${FIREBASE_DB}/${path}.json`, options);
+  function show(stepId) {
+    document.querySelectorAll(".step").forEach(s => s.classList.remove("active"));
+    $(stepId).classList.add("active");
+  }
+
+  async function fb(path, method = "GET", body) {
+    const opt = { method, headers: {} };
+    if (body !== undefined) {
+      opt.headers["Content-Type"] = "application/json";
+      opt.body = JSON.stringify(body);
+    }
+    const res = await fetch(`${FIREBASE_DB}/${path}.json`, opt);
     if (!res.ok) throw new Error("Ошибка сервера: " + res.status);
     return res.json();
   }
 
-  function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+  function plural(n, one, few, many) {
+    const m10 = n % 10, m100 = n % 100;
+    if (m10 === 1 && m100 !== 11) return one;
+    if (m10 >= 2 && m10 <= 4 && (m100 < 10 || m100 >= 20)) return few;
+    return many;
+  }
 
-  // Шаг 1: проверка на робота
+  // "месяц назад", "3 дня назад", "5 минут назад"
+  function timeAgo(ts) {
+    const sec = Math.max(0, (Date.now() - ts) / 1000);
+    if (sec < 60) return "только что";
+    const fmt = (n, one, few, many) =>
+      (n === 1 ? one : `${n} ${plural(n, one, few, many)}`) + " назад";
+
+    const min = Math.floor(sec / 60);
+    if (min < 60) return fmt(min, "минуту", "минуты", "минут");
+    const hr = Math.floor(min / 60);
+    if (hr < 24) return fmt(hr, "час", "часа", "часов");
+    const day = Math.floor(hr / 24);
+    if (day < 30) return fmt(day, "день", "дня", "дней");
+    const mon = Math.floor(day / 30);
+    if (mon < 12) return fmt(mon, "месяц", "месяца", "месяцев");
+    return fmt(Math.floor(mon / 12), "год", "года", "лет");
+  }
+
+  function fmtDate(ts) {
+    return new Date(ts).toLocaleString("ru-RU", {
+      day: "numeric", month: "long", hour: "2-digit", minute: "2-digit"
+    });
+  }
+
+  function paintAvatar(el, src, letter) {
+    el.textContent = "";
+    if (src) {
+      const img = document.createElement("img");
+      img.src = src;
+      img.alt = "";
+      el.appendChild(img);
+    } else {
+      el.textContent = letter;
+    }
+  }
+
+  function resizeImage(file, size) {
+    return new Promise((resolve, reject) => {
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        canvas.width = canvas.height = size;
+        const ctx = canvas.getContext("2d");
+        const s = Math.min(img.width, img.height);
+        const sx = (img.width - s) / 2, sy = (img.height - s) / 2;
+        ctx.drawImage(img, sx, sy, s, s, 0, 0, size, size);
+        URL.revokeObjectURL(url);
+        resolve(canvas.toDataURL("image/jpeg", 0.85));
+      };
+      img.onerror = () => {
+        URL.revokeObjectURL(url);
+        reject(new Error("Не удалось открыть изображение"));
+      };
+      img.src = url;
+    });
+  }
+
+  // ---------- Шаг 1: проверка на робота ----------
   $("robotCheck").addEventListener("change", async (e) => {
     const box = $("robotBox");
     if (!e.target.checked) return;
@@ -224,30 +458,25 @@
     show("step-request");
   });
 
-  // Шаг 2: запрос кода через Firebase
+  // ---------- Шаг 2: запрос кода ----------
   $("requestBtn").addEventListener("click", async () => {
     const btn = $("requestBtn");
     const status = $("requestStatus");
     if (!uid) {
-      setStatus(status, "Откройте приложение кнопкой Запустить в боте", "error");
+      setStatus(status, "Откройте приложение кнопкой «Запустить» в боте", "error");
       return;
     }
     btn.disabled = true;
     setStatus(status, "Запрашиваем код в боте...", "");
     try {
-      await fbFetch(`codes/${uid}`, { method: "DELETE" });
-      await fbFetch(`results/${uid}`, { method: "DELETE" });
-      await fbFetch(`requests/${uid}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(Date.now())
-      });
+      await fb(`codes/${uid}`, "DELETE");
+      await fb(`results/${uid}`, "DELETE");
+      await fb(`requests/${uid}`, "PUT", Date.now());
 
-      // Ждём, пока бот создаст код и запишет время истечения
       const deadline = Date.now() + 15000;
       let data = null;
       while (Date.now() < deadline) {
-        data = await fbFetch(`codes/${uid}`);
+        data = await fb(`codes/${uid}`);
         if (data && data.expires) break;
         await sleep(1000);
       }
@@ -266,7 +495,7 @@
     }
   });
 
-  // Таймер 30 секунд
+  // ---------- Таймер ----------
   function startTimer() {
     clearInterval(timerId);
     const tick = () => {
@@ -290,7 +519,7 @@
     setStatus($("codeStatus"), "Код устарел. Запросите новый.", "error");
   }
 
-  // Ввод цифр: автопереход, удаление, вставка из буфера
+  // ---------- Ввод кода ----------
   inputs.forEach((input, i) => {
     input.addEventListener("input", () => {
       input.value = input.value.replace(/\D/g, "").slice(0, 1);
@@ -310,13 +539,10 @@
       e.preventDefault();
       const digits = (e.clipboardData.getData("text") || "").replace(/\D/g, "").slice(0, 6);
       digits.split("").forEach((d, j) => {
-        if (inputs[j]) {
-          inputs[j].value = d;
-          inputs[j].classList.add("filled");
-        }
+        inputs[j].value = d;
+        inputs[j].classList.add("filled");
       });
-      const next = Math.min(digits.length, inputs.length - 1);
-      inputs[next].focus();
+      inputs[Math.min(digits.length, inputs.length - 1)].focus();
       updateVerifyBtn();
     });
   });
@@ -336,25 +562,22 @@
     setTimeout(() => inputs.forEach(i => i.classList.remove("error")), 900);
   }
 
-  // Шаг 3: проверка кода через Firebase
+  // ---------- Шаг 3: проверка кода ----------
   $("verifyBtn").addEventListener("click", async () => {
     const btn = $("verifyBtn");
     const status = $("codeStatus");
     if (Date.now() > expiresAt) { expireCode(); return; }
+
     btn.disabled = true;
     setStatus(status, "Проверяем код...", "");
     try {
-      await fbFetch(`results/${uid}`, { method: "DELETE" });
-      await fbFetch(`checks/${uid}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ code: getCode(), ts: Date.now() })
-      });
+      await fb(`results/${uid}`, "DELETE");
+      await fb(`checks/${uid}`, "PUT", { code: getCode(), ts: Date.now() });
 
       const deadline = Date.now() + 10000;
       let result = null;
       while (Date.now() < deadline) {
-        result = await fbFetch(`results/${uid}`);
+        result = await fb(`results/${uid}`);
         if (result) break;
         await sleep(800);
       }
@@ -364,20 +587,20 @@
         clearInterval(timerId);
         if (tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred("success");
         show("step-done");
+        setTimeout(enterApp, 900);
       } else {
         if (tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred("error");
         shakeCode();
         setStatus(status, result.error || "Неверный код", "error");
         btn.disabled = false;
       }
-      await fbFetch(`results/${uid}`, { method: "DELETE" });
+      await fb(`results/${uid}`, "DELETE");
     } catch (err) {
       setStatus(status, err.message || "Ошибка связи", "error");
       btn.disabled = false;
     }
   });
 
-  // Новый код
   $("resendBtn").addEventListener("click", () => {
     $("resendBtn").style.display = "none";
     inputs.forEach(i => { i.value = ""; i.classList.remove("filled"); });
@@ -385,8 +608,160 @@
     show("step-request");
   });
 
+  // ---------- Вход в приложение ----------
+  async function enterApp() {
+    document.body.classList.remove("auth");
+    $("authWrap").classList.add("hidden");
+    $("appWrap").classList.remove("hidden");
+    await loadProfile();
+    startHeartbeat();
+  }
+
+  async function loadProfile() {
+    const data = (await fb(`profiles/${uid}`)) || {};
+    profile = {
+      first_name: data.first_name || (tgUser && tgUser.first_name) || "Пользователь",
+      username: data.username || (tgUser && tgUser.username) || "",
+      created: data.created || null,
+      avatar: data.avatar || "",        // свой аватар с сайта
+      tgAvatar: data.tg_avatar || "",   // аватар из Telegram
+      description: data.description || ""
+    };
+    renderAll();
+  }
+
+  function avatarLetter() {
+    return (profile.first_name || "?").trim().charAt(0).toUpperCase() || "?";
+  }
+
+  function renderAll() {
+    const src = profile.avatar || profile.tgAvatar;
+    paintAvatar($("hdrAv"), src, avatarLetter());
+    paintAvatar($("pAv"), src, avatarLetter());
+    $("homeName").textContent = profile.first_name;
+    renderProfile();
+  }
+
+  function renderProfile() {
+    $("pName").textContent = profile.first_name;
+    $("pUser").textContent = profile.username ? "@" + profile.username : "";
+
+    const reg = $("pReg");
+    reg.textContent = "";
+    if (profile.created) {
+      reg.append(fmtDate(profile.created));
+      const small = document.createElement("small");
+      small.textContent = timeAgo(profile.created);
+      reg.append(small);
+    } else {
+      reg.textContent = "—";
+    }
+
+    $("pDesc").value = profile.description;
+    updateCounter();
+  }
+
+  // ---------- Онлайн-статус ----------
+  function startHeartbeat() {
+    const beat = () => fb(`presence/${uid}`, "PUT", Date.now()).catch(() => {});
+    beat();
+    clearInterval(heartbeatId);
+    heartbeatId = setInterval(beat, HEARTBEAT_EVERY);
+
+    clearInterval(presenceId);
+    presenceId = setInterval(() => {
+      if (!$("scr-profile").classList.contains("active")) return;
+      refreshPresence();
+    }, 15000);
+  }
+
+  async function refreshPresence() {
+    const ts = await fb(`presence/${uid}`).catch(() => null);
+    const dot = $("pDot");
+    const st = $("pStatus");
+    if (ts && Date.now() - ts < ONLINE_LIMIT) {
+      dot.classList.add("on");
+      st.textContent = "Онлайн";
+    } else {
+      dot.classList.remove("on");
+      st.textContent = ts ? "Был(а) " + timeAgo(ts) : "Не в сети";
+    }
+  }
+
+  // ---------- Навигация ----------
+  function openScreen(id) {
+    document.querySelectorAll(".screen").forEach(s => s.classList.toggle("active", s.id === id));
+    window.scrollTo(0, 0);
+    const isProfile = id === "scr-profile";
+    if (tg && tg.BackButton) {
+      isProfile ? tg.BackButton.show() : tg.BackButton.hide();
+    }
+    if (isProfile) {
+      renderProfile();
+      refreshPresence();
+    }
+  }
+
+  $("hdrAv").addEventListener("click", () => openScreen("scr-profile"));
+  $("backBtn").addEventListener("click", () => openScreen("scr-home"));
+  if (tg && tg.BackButton) {
+    tg.BackButton.onClick(() => openScreen("scr-home"));
+  }
+
+  // ---------- Описание ----------
+  function updateCounter() {
+    const len = $("pDesc").value.length;
+    const c = $("pCount");
+    c.textContent = `${len} / ${DESC_MAX}`;
+    c.classList.toggle("limit", len >= DESC_MAX);
+  }
+
+  $("pDesc").addEventListener("input", updateCounter);
+
+  $("saveDesc").addEventListener("click", async () => {
+    const btn = $("saveDesc");
+    const status = $("profileStatus");
+    const text = $("pDesc").value.trim().slice(0, DESC_MAX);
+    btn.disabled = true;
+    setStatus(status, "Сохраняем...", "");
+    try {
+      await fb(`profiles/${uid}/description`, "PUT", text);
+      profile.description = text;
+      $("pDesc").value = text;
+      updateCounter();
+      setStatus(status, "Описание сохранено", "ok");
+    } catch (err) {
+      setStatus(status, "Не удалось сохранить. Попробуйте ещё раз.", "error");
+    } finally {
+      btn.disabled = false;
+    }
+  });
+
+  // ---------- Аватарка ----------
+  $("avatarInput").addEventListener("change", async (e) => {
+    const file = e.target.files[0];
+    e.target.value = "";
+    if (!file) return;
+    const status = $("profileStatus");
+    if (!file.type.startsWith("image/")) {
+      setStatus(status, "Выберите изображение", "error");
+      return;
+    }
+    setStatus(status, "Загружаем аватарку...", "");
+    try {
+      const dataUrl = await resizeImage(file, AVATAR_PX);
+      await fb(`profiles/${uid}/avatar`, "PUT", dataUrl);
+      profile.avatar = dataUrl;
+      renderAll();
+      setStatus(status, "Аватарка обновлена", "ok");
+    } catch (err) {
+      setStatus(status, err.message || "Не удалось загрузить аватарку", "error");
+    }
+  });
+
+  // ---------- Старт ----------
   if (!uid) {
-    setStatus($("requestStatus"), "Откройте приложение кнопкой Запустить в боте", "error");
+    setStatus($("requestStatus"), "Откройте приложение кнопкой «Запустить» в боте", "error");
   }
 </script>
 </body>
