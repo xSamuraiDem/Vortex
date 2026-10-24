@@ -16,103 +16,65 @@
     --danger: #e5484d;
     --ok: #2ea661;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    -webkit-font-smoothing: antialiased;
+    background: var(--bg); color: var(--text);
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    padding: 20px; -webkit-font-smoothing: antialiased;
   }
-
   .wrap { width: 100%; max-width: 380px; text-align: center; }
-
   .logo {
-    width: 64px; height: 64px;
-    margin: 0 auto 14px;
-    border-radius: 18px;
+    width: 64px; height: 64px; margin: 0 auto 14px; border-radius: 18px;
     background: linear-gradient(135deg, var(--accent), #1f8a4c);
     display: flex; align-items: center; justify-content: center;
-    color: var(--accent-text);
-    font-size: 26px; font-weight: 800;
+    color: var(--accent-text); font-size: 26px; font-weight: 800;
     box-shadow: 0 8px 22px rgba(46, 166, 97, 0.35);
   }
-
   h1 { font-size: 24px; font-weight: 800; margin-bottom: 6px; }
   .sub { color: var(--hint); font-size: 14px; line-height: 1.5; margin-bottom: 24px; }
-
-  .card {
-    background: var(--card);
-    border-radius: 18px;
-    padding: 22px 18px;
-    margin-bottom: 14px;
-  }
-
+  .card { background: var(--card); border-radius: 18px; padding: 22px 18px; margin-bottom: 14px; }
   .step { display: none; animation: fade 0.3s ease; }
   .step.active { display: block; }
   @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
-  /* Robot check */
   .robot {
-    display: flex; align-items: center; gap: 14px;
-    cursor: pointer; user-select: none;
-    padding: 14px; border-radius: 14px;
-    background: var(--bg);
-    border: 1.5px solid transparent;
-    transition: border-color 0.2s;
-    text-align: left;
+    display: flex; align-items: center; gap: 14px; cursor: pointer; user-select: none;
+    padding: 14px; border-radius: 14px; background: var(--bg); text-align: left;
   }
-  .robot:active { transform: scale(0.99); }
   .robot input { display: none; }
   .box {
-    width: 28px; height: 28px; flex-shrink: 0;
-    border: 2px solid var(--hint); border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.2s;
+    width: 28px; height: 28px; flex-shrink: 0; border: 2px solid var(--hint); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center; transition: all 0.2s;
   }
   .robot.checked .box { background: var(--ok); border-color: var(--ok); }
   .robot.checked .box::after {
-    content: ""; width: 7px; height: 13px;
-    border: solid #fff; border-width: 0 3px 3px 0;
+    content: ""; width: 7px; height: 13px; border: solid #fff; border-width: 0 3px 3px 0;
     transform: rotate(45deg) translate(-1px, -1px);
   }
   .robot-label { font-weight: 600; font-size: 15px; }
   .robot-note { font-size: 12px; color: var(--hint); margin-top: 2px; }
   .spinner {
-    width: 22px; height: 22px; margin-left: auto;
-    border: 3px solid var(--hint); border-top-color: transparent;
-    border-radius: 50%; display: none;
-    animation: spin 0.7s linear infinite;
+    width: 22px; height: 22px; margin-left: auto; border: 3px solid var(--hint);
+    border-top-color: transparent; border-radius: 50%; display: none; animation: spin 0.7s linear infinite;
   }
   .robot.loading .spinner { display: block; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* Code step */
   .code-title { font-weight: 700; font-size: 16px; margin-bottom: 4px; }
   .code-hint { font-size: 13px; color: var(--hint); margin-bottom: 18px; line-height: 1.5; }
 
   .otp { display: flex; gap: 8px; justify-content: center; margin-bottom: 18px; }
   .otp input {
-    width: 44px; height: 54px;
-    border: 2px solid transparent;
-    border-radius: 12px;
-    background: var(--bg);
-    color: var(--text);
-    font-size: 24px; font-weight: 700; text-align: center;
-    outline: none;
-    transition: border-color 0.2s, transform 0.15s;
+    width: 44px; height: 54px; border: 2px solid transparent; border-radius: 12px;
+    background: var(--bg); color: var(--text); font-size: 24px; font-weight: 700;
+    text-align: center; outline: none; transition: border-color 0.2s, transform 0.15s;
     caret-color: var(--accent);
   }
   .otp input:focus { border-color: var(--accent); transform: translateY(-2px); }
   .otp input.filled { border-color: var(--accent); }
-  .otp.shake { animation: shake 0.4s; }
   .otp input.error { border-color: var(--danger); color: var(--danger); }
+  .otp.shake { animation: shake 0.4s; }
   @keyframes shake {
     0%, 100% { transform: translateX(0); }
     25% { transform: translateX(-6px); }
@@ -125,55 +87,32 @@
   }
   .timer-value { font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; }
   .bar { height: 6px; background: var(--bg); border-radius: 6px; overflow: hidden; margin-bottom: 18px; }
-  .bar-fill {
-    height: 100%; width: 100%;
-    background: var(--accent);
-    transition: width 1s linear, background 0.3s;
-  }
+  .bar-fill { height: 100%; width: 100%; background: var(--accent); transition: width 0.25s linear, background 0.3s; }
   .bar-fill.warn { background: var(--danger); }
 
   .btn {
-    width: 100%;
-    padding: 15px;
-    border: none; border-radius: 14px;
-    font-size: 16px; font-weight: 700;
-    cursor: pointer;
-    background: var(--accent); color: var(--accent-text);
-    transition: opacity 0.2s, transform 0.1s;
+    width: 100%; padding: 15px; border: none; border-radius: 14px;
+    font-size: 16px; font-weight: 700; cursor: pointer;
+    background: var(--accent); color: var(--accent-text); transition: opacity 0.2s, transform 0.1s;
   }
   .btn:active { transform: scale(0.98); }
   .btn:disabled { opacity: 0.45; cursor: not-allowed; }
-  .btn.secondary {
-    background: transparent; color: var(--accent);
-    margin-top: 10px; font-size: 14px;
-  }
+  .btn.ghost { background: transparent; color: var(--accent); margin-top: 10px; font-size: 14px; }
 
-  .status {
-    min-height: 20px; font-size: 13px; margin-top: 14px; font-weight: 600;
-  }
+  .status { min-height: 20px; font-size: 13px; margin-top: 14px; font-weight: 600; }
   .status.error { color: var(--danger); }
   .status.ok { color: var(--ok); }
 
-  .expired {
-    display: none;
-    color: var(--danger); font-weight: 700; font-size: 14px;
-    margin-bottom: 14px;
-  }
-  .expired.show { display: block; }
-
   .success-icon {
-    width: 70px; height: 70px; margin: 6px auto 16px;
-    border-radius: 50%; background: var(--ok);
-    display: flex; align-items: center; justify-content: center;
+    width: 70px; height: 70px; margin: 6px auto 16px; border-radius: 50%;
+    background: var(--ok); display: flex; align-items: center; justify-content: center;
     animation: pop 0.4s ease;
   }
   .success-icon::after {
-    content: ""; width: 20px; height: 36px;
-    border: solid #fff; border-width: 0 5px 5px 0;
+    content: ""; width: 20px; height: 36px; border: solid #fff; border-width: 0 5px 5px 0;
     transform: rotate(45deg) translate(-3px, -3px);
   }
   @keyframes pop { 0% { transform: scale(0.4); } 70% { transform: scale(1.08); } 100% { transform: scale(1); } }
-
   .footer { font-size: 11px; color: var(--hint); margin-top: 18px; }
 </style>
 </head>
@@ -197,10 +136,18 @@
     </label>
   </div>
 
-  <!-- Шаг 2: ввод кода -->
+  <!-- Шаг 2: запрос кода -->
+  <div class="card step" id="step-request">
+    <div class="code-title">Получите код</div>
+    <div class="code-hint">Код придёт в чат с ботом. Он действует 30 секунд.</div>
+    <button class="btn" id="requestBtn">Получить код</button>
+    <div class="status" id="requestStatus"></div>
+  </div>
+
+  <!-- Шаг 3: ввод кода -->
   <div class="card step" id="step-code">
     <div class="code-title">Введите код из бота</div>
-    <div class="code-hint">Нажмите <b>Получить код</b> в боте и введите 6 цифр, пока код не устарел.</div>
+    <div class="code-hint">Введите 6 цифр, пока код не устарел.</div>
 
     <div class="timer-row">
       <span>Код действует</span>
@@ -217,203 +164,230 @@
       <input type="text" inputmode="numeric" maxlength="1">
     </div>
 
-    <div class="expired" id="expired">Код устарел. Запросите новый в боте.</div>
-
-    <button class="btn" id="submitBtn" disabled>Войти</button>
-    <button class="btn secondary" id="resetBtn">Ввести заново</button>
-    <div class="status" id="status"></div>
+    <button class="btn" id="verifyBtn" disabled>Войти</button>
+    <button class="btn ghost" id="resendBtn" style="display:none">Получить новый код</button>
+    <div class="status" id="codeStatus"></div>
   </div>
 
-  <!-- Шаг 3: успех -->
+  <!-- Шаг 4: успех -->
   <div class="card step" id="step-done">
     <div class="success-icon"></div>
     <div class="code-title">Вход выполнен</div>
     <div class="code-hint">Добро пожаловать в VortexPay.</div>
-    <button class="btn" id="closeBtn">Продолжить</button>
   </div>
 
-  <div class="footer">Защищено проверкой Telegram</div>
+  <div class="footer">VortexPay · Защищённый вход</div>
 </div>
 
 <script>
-  // Адрес сервера бота, где работает маршрут /verify (HTTPS обязателен)
-  const API_URL = "https://your-domain.com/verify";
+  const FIREBASE_DB = "https://tetete-d31c8-default-rtdb.firebaseio.com";
   const CODE_TTL = 30;
 
   const tg = window.Telegram && window.Telegram.WebApp;
   if (tg) { tg.ready(); tg.expand(); }
+  const user = tg && tg.initDataUnsafe && tg.initDataUnsafe.user;
+  const uid = user ? String(user.id) : null;
 
   const $ = (id) => document.getElementById(id);
-  const inputs = Array.from(document.querySelectorAll("#otp input"));
+  const inputs = [...document.querySelectorAll("#otp input")];
+  let expiresAt = 0;
   let timerId = null;
-  let timeLeft = CODE_TTL;
+  let pollId = null;
 
-  function showStep(id) {
+  function show(stepId) {
     document.querySelectorAll(".step").forEach(s => s.classList.remove("active"));
-    $(id).classList.add("active");
+    $(stepId).classList.add("active");
   }
 
-  function setStatus(text, type = "") {
-    const el = $("status");
+  function setStatus(el, text, type) {
     el.textContent = text;
-    el.className = "status " + type;
+    el.className = "status" + (type ? " " + type : "");
   }
+
+  async function fbFetch(path, options) {
+    const res = await fetch(`${FIREBASE_DB}/${path}.json`, options);
+    if (!res.ok) throw new Error("Ошибка сервера: " + res.status);
+    return res.json();
+  }
+
+  function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
   // Шаг 1: проверка на робота
-  $("robotCheck").addEventListener("change", (e) => {
-    if (!e.target.checked) return;
+  $("robotCheck").addEventListener("change", async (e) => {
     const box = $("robotBox");
+    if (!e.target.checked) return;
     box.classList.add("loading");
-    box.style.pointerEvents = "none";
-    setTimeout(() => {
-      box.classList.remove("loading");
-      box.classList.add("checked");
-      setTimeout(() => {
-        showStep("step-code");
-        startTimer();
-        inputs[0].focus();
-      }, 350);
-    }, 900);
+    await sleep(900);
+    box.classList.remove("loading");
+    box.classList.add("checked");
+    await sleep(300);
+    show("step-request");
+  });
+
+  // Шаг 2: запрос кода через Firebase
+  $("requestBtn").addEventListener("click", async () => {
+    const btn = $("requestBtn");
+    const status = $("requestStatus");
+    if (!uid) {
+      setStatus(status, "Откройте приложение кнопкой Запустить в боте", "error");
+      return;
+    }
+    btn.disabled = true;
+    setStatus(status, "Запрашиваем код в боте...", "");
+    try {
+      await fbFetch(`codes/${uid}`, { method: "DELETE" });
+      await fbFetch(`results/${uid}`, { method: "DELETE" });
+      await fbFetch(`requests/${uid}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(Date.now())
+      });
+
+      // Ждём, пока бот создаст код и запишет время истечения
+      const deadline = Date.now() + 15000;
+      let data = null;
+      while (Date.now() < deadline) {
+        data = await fbFetch(`codes/${uid}`);
+        if (data && data.expires) break;
+        await sleep(1000);
+      }
+      if (!data || !data.expires) {
+        throw new Error("Бот не ответил. Проверьте, что он запущен.");
+      }
+      expiresAt = data.expires;
+      setStatus(status, "", "");
+      startTimer();
+      show("step-code");
+      inputs[0].focus();
+    } catch (err) {
+      setStatus(status, err.message || "Не удалось получить код", "error");
+    } finally {
+      btn.disabled = false;
+    }
   });
 
   // Таймер 30 секунд
   function startTimer() {
     clearInterval(timerId);
-    timeLeft = CODE_TTL;
-    $("expired").classList.remove("show");
-    $("barFill").classList.remove("warn");
-    updateTimer();
-    timerId = setInterval(() => {
-      timeLeft--;
-      updateTimer();
-      if (timeLeft <= 0) expire();
-    }, 1000);
+    const tick = () => {
+      const left = Math.max(0, Math.ceil((expiresAt - Date.now()) / 1000));
+      const pct = Math.max(0, Math.min(100, ((expiresAt - Date.now()) / (CODE_TTL * 1000)) * 100));
+      $("timerText").textContent = left + " сек";
+      $("barFill").style.width = pct + "%";
+      $("barFill").classList.toggle("warn", left <= 10);
+      if (left <= 0) {
+        clearInterval(timerId);
+        expireCode();
+      }
+    };
+    tick();
+    timerId = setInterval(tick, 250);
   }
 
-  function updateTimer() {
-    $("timerText").textContent = Math.max(timeLeft, 0) + " сек";
-    $("barFill").style.width = (Math.max(timeLeft, 0) / CODE_TTL * 100) + "%";
-    if (timeLeft <= 10) $("barFill").classList.add("warn");
+  function expireCode() {
+    $("verifyBtn").disabled = true;
+    $("resendBtn").style.display = "block";
+    setStatus($("codeStatus"), "Код устарел. Запросите новый.", "error");
   }
 
-  function expire() {
-    clearInterval(timerId);
-    timeLeft = 0;
-    updateTimer();
-    $("expired").classList.add("show");
-    inputs.forEach(i => { i.disabled = true; });
-    $("submitBtn").disabled = true;
-  }
-
-  // Ввод кода: переход между ячейками, вставка, Backspace
-  function getCode() {
-    return inputs.map(i => i.value).join("");
-  }
-
-  function refreshSubmit() {
-    const code = getCode();
-    $("submitBtn").disabled = code.length !== 6 || timeLeft <= 0;
-  }
-
-  inputs.forEach((input, idx) => {
-    input.addEventListener("input", (e) => {
+  // Ввод цифр: автопереход, удаление, вставка из буфера
+  inputs.forEach((input, i) => {
+    input.addEventListener("input", () => {
       input.value = input.value.replace(/\D/g, "").slice(0, 1);
       input.classList.toggle("filled", !!input.value);
-      input.classList.remove("error");
-      if (input.value && idx < inputs.length - 1) inputs[idx + 1].focus();
-      refreshSubmit();
-      if (getCode().length === 6) submitCode();
+      if (input.value && i < inputs.length - 1) inputs[i + 1].focus();
+      updateVerifyBtn();
     });
-
     input.addEventListener("keydown", (e) => {
-      if (e.key === "Backspace" && !input.value && idx > 0) {
-        inputs[idx - 1].focus();
-        inputs[idx - 1].value = "";
-        inputs[idx - 1].classList.remove("filled");
-        refreshSubmit();
+      if (e.key === "Backspace" && !input.value && i > 0) {
+        inputs[i - 1].value = "";
+        inputs[i - 1].classList.remove("filled");
+        inputs[i - 1].focus();
+        updateVerifyBtn();
       }
-      if (e.key === "Enter") submitCode();
     });
-
     input.addEventListener("paste", (e) => {
       e.preventDefault();
       const digits = (e.clipboardData.getData("text") || "").replace(/\D/g, "").slice(0, 6);
-      digits.split("").forEach((d, i) => {
-        if (inputs[i]) {
-          inputs[i].value = d;
-          inputs[i].classList.add("filled");
+      digits.split("").forEach((d, j) => {
+        if (inputs[j]) {
+          inputs[j].value = d;
+          inputs[j].classList.add("filled");
         }
       });
       const next = Math.min(digits.length, inputs.length - 1);
       inputs[next].focus();
-      refreshSubmit();
-      if (digits.length === 6) submitCode();
+      updateVerifyBtn();
     });
   });
 
-  function clearCode() {
-    inputs.forEach(i => { i.value = ""; i.classList.remove("filled", "error"); });
-    inputs[0].focus();
-    refreshSubmit();
+  function getCode() { return inputs.map(i => i.value).join(""); }
+
+  function updateVerifyBtn() {
+    $("verifyBtn").disabled = getCode().length !== 6;
   }
 
-  function shakeError(message) {
-    setStatus(message, "error");
-    inputs.forEach(i => i.classList.add("error"));
-    const otp = document.querySelector(".otp");
+  function shakeCode() {
+    const otp = $("otp");
     otp.classList.remove("shake");
     void otp.offsetWidth;
     otp.classList.add("shake");
+    inputs.forEach(i => i.classList.add("error"));
+    setTimeout(() => inputs.forEach(i => i.classList.remove("error")), 900);
   }
 
-  // Отправка кода на сервер бота
-  async function submitCode() {
-    if (timeLeft <= 0) return;
-    const code = getCode();
-    if (code.length !== 6) return;
-
-    $("submitBtn").disabled = true;
-    setStatus("Проверка...");
-
+  // Шаг 3: проверка кода через Firebase
+  $("verifyBtn").addEventListener("click", async () => {
+    const btn = $("verifyBtn");
+    const status = $("codeStatus");
+    if (Date.now() > expiresAt) { expireCode(); return; }
+    btn.disabled = true;
+    setStatus(status, "Проверяем код...", "");
     try {
-      const res = await fetch(API_URL, {
-        method: "POST",
+      await fbFetch(`results/${uid}`, { method: "DELETE" });
+      await fbFetch(`checks/${uid}`, {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          init_data: tg ? tg.initData : "",
-          code: code
-        })
+        body: JSON.stringify({ code: getCode(), ts: Date.now() })
       });
-      const data = await res.json().catch(() => ({}));
 
-      if (res.ok && data.ok) {
-        clearInterval(timerId);
-        showStep("step-done");
-        if (tg) tg.HapticFeedback && tg.HapticFeedback.notificationOccurred("success");
-      } else {
-        shakeError(data.error || "Неверный код");
-        if (tg) tg.HapticFeedback && tg.HapticFeedback.notificationOccurred("error");
-        refreshSubmit();
+      const deadline = Date.now() + 10000;
+      let result = null;
+      while (Date.now() < deadline) {
+        result = await fbFetch(`results/${uid}`);
+        if (result) break;
+        await sleep(800);
       }
+      if (!result) throw new Error("Сервер не ответил. Попробуйте ещё раз.");
+
+      if (result.ok) {
+        clearInterval(timerId);
+        if (tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred("success");
+        show("step-done");
+      } else {
+        if (tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred("error");
+        shakeCode();
+        setStatus(status, result.error || "Неверный код", "error");
+        btn.disabled = false;
+      }
+      await fbFetch(`results/${uid}`, { method: "DELETE" });
     } catch (err) {
-      shakeError("Нет связи с сервером");
-      refreshSubmit();
+      setStatus(status, err.message || "Ошибка связи", "error");
+      btn.disabled = false;
     }
+  });
+
+  // Новый код
+  $("resendBtn").addEventListener("click", () => {
+    $("resendBtn").style.display = "none";
+    inputs.forEach(i => { i.value = ""; i.classList.remove("filled"); });
+    setStatus($("codeStatus"), "", "");
+    show("step-request");
+  });
+
+  if (!uid) {
+    setStatus($("requestStatus"), "Откройте приложение кнопкой Запустить в боте", "error");
   }
-
-  $("submitBtn").addEventListener("click", submitCode);
-
-  $("resetBtn").addEventListener("click", () => {
-    clearCode();
-    setStatus("");
-    startTimer();
-    inputs.forEach(i => { i.disabled = false; });
-    inputs[0].focus();
-  });
-
-  $("closeBtn").addEventListener("click", () => {
-    if (tg) tg.close();
-  });
 </script>
 </body>
 </html>
